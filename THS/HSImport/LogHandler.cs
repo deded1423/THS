@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Security.AccessControl;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using PostSharp.Patterns.Threading;
@@ -18,6 +19,7 @@ namespace THS.HSImport
         private LogReader _loadingscreenReader;
         private LogReader _fullscreenReader;
         private bool _stop;
+        private TcpClient _tcp;
 
         public LogHandler()
         {
@@ -38,6 +40,21 @@ namespace THS.HSImport
             while (!_stop)
             {
                 var newlines = GetLogLines();
+                foreach (var line in newlines)
+                {
+                    if (ConfigFile.SendTCP)
+                    {
+                        if (_tcp == null)
+                        {
+                            _tcp = new TcpClient(ConfigFile.TCPIP, 8888);
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
+                }
             }
         }
 
@@ -67,7 +84,7 @@ namespace THS.HSImport
                 lines.Add(line);
             }
             return lines;
-            
+
         }
 
     }

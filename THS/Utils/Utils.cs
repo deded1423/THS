@@ -58,11 +58,7 @@ namespace THS.Utils
             _outputFile?.Dispose();
             _logreaderFile?.Dispose();
         }
-        public static void LogDebug(string message)
-        {
-            LogDebug(message, DebugFile.Output);
-        }
-        public static void LogDebug(string message, IO.DebugFile file, bool console = true)
+        public static void LogDebug(string message, IO.DebugFile file = DebugFile.Output, bool console = true)
         {
             switch (file)
             {

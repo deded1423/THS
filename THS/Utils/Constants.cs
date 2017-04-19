@@ -11,7 +11,6 @@ namespace THS.Utils
     public class GlobalConstants
     {
         //TODO: Hacer si quiero una configuracion que lea de un archivo y todas esas mierdas
-        public static string HearthstonePath = @"D:\Juegos\BattleNet\Hearthstone";
         public static string LogPath = @"C:\";
     }
     public class InstructionType

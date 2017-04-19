@@ -25,7 +25,7 @@ namespace THS.HSImport
         public LogReader(string name)
         {
             Namespace = name;
-            _filepath = Path.Combine(Utils.GlobalConstants.HearthstonePath, "Logs", Namespace + ".log");
+            _filepath = Path.Combine(ConfigFile.HearthstonePath, "Logs", Namespace + ".log");
         }
 
         public void Start()
@@ -51,7 +51,7 @@ namespace THS.HSImport
                     using (var fs = new FileStream(_filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         var sr = new StreamReader(fs);
-                        IO.LogDebug("Beginning the copy");
+                        IO.LogDebug("Beginning the copy", IO.DebugFile.LogReader);
                         Console.WriteLine(sr.EndOfStream);
                         while (!sr.EndOfStream)
                         {
@@ -89,7 +89,6 @@ namespace THS.HSImport
                     while (!sr.EndOfStream && ((tmp = sr.ReadLine()) != null))
                     {
                         Lines.Enqueue(new LogLine(tmp, Namespace));
-                        IO.LogDebug(tmp, IO.DebugFile.LogReader, false);
                     }
                     //IO.LogDebug("Finalized", IO.DebugFile.LogReader);
                 }
