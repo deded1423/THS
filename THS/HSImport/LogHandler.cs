@@ -19,24 +19,26 @@ namespace THS.HSImport
         private LogReader _loadingscreenReader;
         private LogReader _fullscreenReader;
         private bool _stop;
+        private bool _running;
         private TcpClient _tcp;
 
         public LogHandler()
-        {
-
-        }
-        [Background]
-        public void StartLogReader()
         {
             _powerReader = new LogReader("Power");
             _rachelleReader = new LogReader("Rachelle");
             _loadingscreenReader = new LogReader("LoadingScreen");
             _fullscreenReader = new LogReader("FullScreenFX");
+        }
+        [Background]
+        public void StartLogReader()
+        {
+
             _powerReader.Start();
             _rachelleReader.Start();
             _loadingscreenReader.Start();
             _fullscreenReader.Start();
             _stop = false;
+            _running = true;
             while (!_stop)
             {
                 var newlines = GetLogLines();
@@ -52,10 +54,11 @@ namespace THS.HSImport
                     }
                     else
                     {
-
+                        //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL
                     }
                 }
             }
+            _running = false;
         }
 
         public void CopyLogs()
@@ -87,6 +90,14 @@ namespace THS.HSImport
 
         }
 
+        public void Stop()
+        {
+            _stop = true;
+            _fullscreenReader.Stop();
+            _loadingscreenReader.Stop();
+            _powerReader.Stop();
+            _rachelleReader.Stop();
+        }
     }
 
     class PowerDecoder

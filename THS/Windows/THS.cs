@@ -20,13 +20,15 @@ namespace THS.Windows
 
         //UI SHIT
         private Config _configwindow;
+        
 
-        LogHandler a = new LogHandler();
+        LogHandler _logHandler;
         public THS()
         {
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
+            _logHandler = new LogHandler();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,7 +58,25 @@ namespace THS.Windows
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            a.StartLogReader();
+            if (ButtonStart.Text.Equals("Start"))
+            {
+                _logHandler.StartLogReader();
+                ButtonStart.Text = "Stop";
+            }
+            else
+            {
+                _logHandler.Stop();
+                ButtonStart.Text = "Start";
+            }
+        }
+
+        private void ButtonTest1_Click(object sender, EventArgs e)
+        {
+            var tmp = irc.GetCommandChats();
+            foreach (var cmd in tmp)
+            {
+                Console.WriteLine(cmd.ToString());
+            }
         }
     }
 }

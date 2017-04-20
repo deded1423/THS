@@ -31,9 +31,10 @@ namespace THS.HSImport
         public void Start()
         {   //TODO: Comprobar que pasa cuando no esta abierto el hs y se inicia y luego se inicia el hs, de momento lo voy a hacer como si se iniciara antes que el hs
             //TODO: hacer que se lea cuando se haga "update" del log, creo que ya esta hecho pero hay que hacer comprobaciones
-            OpenFiles();
+
             if (_running)
                 return;
+            OpenFiles();
             _running = true;
             _stop = false;
             _thread = new Thread(ReadLog) { IsBackground = true };
@@ -85,15 +86,19 @@ namespace THS.HSImport
 
                     var sr = new StreamReader(_fs);
                     string tmp;
-                    //IO.LogDebug("Reading file", IO.DebugFile.LogReader);
                     while (!sr.EndOfStream && ((tmp = sr.ReadLine()) != null))
                     {
                         Lines.Enqueue(new LogLine(tmp, Namespace));
                     }
-                    //IO.LogDebug("Finalized", IO.DebugFile.LogReader);
                 }
                 Thread.Sleep(1000);
             }
+            CloseFiles();
+        }
+
+        public void Stop()
+        {
+            _stop = true;
         }
     }
 }

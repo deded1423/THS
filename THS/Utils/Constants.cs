@@ -18,11 +18,11 @@ namespace THS.Utils
         public static Regex InstructionPlayOnRegex = new Regex(@"play\s+(?<name>(.+))\s+on\s+(?<target>.+)");
         public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
         public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
-        public static Regex InstructionAttackRegex = new Regex(@"(?<minion>.+)\s+attacks?\s+(?<target>.+)");
+        public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+attacks?\s+(?<target>.+)");
     }
     public enum PlayType
     {
-        Play, HeroPower
+        Play, HeroPower,Attack, Incorrect
     }
     public enum CardZone
     {

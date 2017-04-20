@@ -50,7 +50,7 @@ namespace THS.Windows
             // 
             // ButtonConfigAccept
             // 
-            this.ButtonConfigAccept.Location = new System.Drawing.Point(161, 159);
+            this.ButtonConfigAccept.Location = new System.Drawing.Point(161, 150);
             this.ButtonConfigAccept.Name = "ButtonConfigAccept";
             this.ButtonConfigAccept.Size = new System.Drawing.Size(75, 23);
             this.ButtonConfigAccept.TabIndex = 0;
@@ -60,7 +60,7 @@ namespace THS.Windows
             // 
             // ButtonConfigCancel
             // 
-            this.ButtonConfigCancel.Location = new System.Drawing.Point(242, 159);
+            this.ButtonConfigCancel.Location = new System.Drawing.Point(242, 150);
             this.ButtonConfigCancel.Name = "ButtonConfigCancel";
             this.ButtonConfigCancel.Size = new System.Drawing.Size(75, 23);
             this.ButtonConfigCancel.TabIndex = 1;
@@ -211,22 +211,21 @@ namespace THS.Windows
         }
 
         #endregion
-
-        public System.Windows.Forms.Button ButtonConfigAccept;
-        public System.Windows.Forms.Button ButtonConfigCancel;
-        public System.Windows.Forms.TextBox TextHearthstonePath;
-        public System.Windows.Forms.Label LabelConfig;
-        public System.Windows.Forms.Label LabelTwitchLoginName;
-        public System.Windows.Forms.TextBox TextTwitchLoginName;
-        public System.Windows.Forms.Label LabelTwitchLoginOauth;
-        public System.Windows.Forms.TextBox TextTwitchLoginOauth;
-        public System.Windows.Forms.Label LabelIP;
-        public System.Windows.Forms.TextBox TextTCPIP;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.TextBox textBox2;
-        public System.Windows.Forms.TextBox TextTCPPort;
-        public System.Windows.Forms.Label LabelTCPPort;
         public System.Windows.Forms.Label LabelTCPIP;
-        public System.Windows.Forms.CheckBox CheckBoxTCP;
+        protected System.Windows.Forms.Button ButtonConfigAccept;
+        protected System.Windows.Forms.Button ButtonConfigCancel;
+        protected System.Windows.Forms.TextBox TextHearthstonePath;
+        protected System.Windows.Forms.Label LabelConfig;
+        protected System.Windows.Forms.Label LabelTwitchLoginName;
+        protected System.Windows.Forms.TextBox TextTwitchLoginName;
+        protected System.Windows.Forms.Label LabelTwitchLoginOauth;
+        protected System.Windows.Forms.TextBox TextTwitchLoginOauth;
+        protected System.Windows.Forms.Label LabelIP;
+        protected System.Windows.Forms.TextBox TextTCPIP;
+        protected System.Windows.Forms.Label label2;
+        protected System.Windows.Forms.TextBox textBox2;
+        protected System.Windows.Forms.TextBox TextTCPPort;
+        protected System.Windows.Forms.Label LabelTCPPort;
+        protected System.Windows.Forms.CheckBox CheckBoxTCP;
     }
 }

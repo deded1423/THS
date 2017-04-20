@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
@@ -13,11 +15,13 @@ namespace THS.Twitch_Integration
 
         private string userName;
         private string _channel;
-        public bool stop = false;
+        private bool _stop = false;
 
         private TcpClient tcpClient;
         private StreamReader inputStream;
         private StreamWriter outputStream;
+
+        private ConcurrentQueue<CommandChat> _queue = new ConcurrentQueue<CommandChat>();
 
         public IrcClient(string ip, int port, string userName, string password)
         {
@@ -40,23 +44,20 @@ namespace THS.Twitch_Integration
             {
                 this._channel = (string)channel;
                 JoinRoom((string)channel);
-                while (!stop)
+                while (!_stop)
                 {
                     string msg = ReadMessage();
                     msg = msg.ToLower();
-                    if (InstructionRegexType.InstructionPlayOnRegex.IsMatch(msg))
+                    var cmd = new CommandChat(msg);
+                    if (cmd.Type != PlayType.Incorrect)
                     {
-                        var cmd = new CommandChat(msg);
-                    }
-                    else if (InstructionRegexType.InstructionPlayRegex.IsMatch(msg))
-                    {
-                        
+                        _queue.Enqueue(cmd);
+                        Utils.IO.LogDebug(cmd.ToString(), Utils.IO.DebugFile.Twitch, false);
                     }
                     else
                     {
-                        
+                        Utils.IO.LogDebug(msg, Utils.IO.DebugFile.Twitch);
                     }
-                    Utils.IO.LogDebug(msg, Utils.IO.DebugFile.Twitch);
                 }
             }
         }
@@ -89,6 +90,15 @@ namespace THS.Twitch_Integration
             }
             return message;
         }
-        public CommandChat
+
+        public List<CommandChat> GetCommandChats()
+        {
+            List<CommandChat> list = new List<CommandChat>();
+            foreach (var commandChat in _queue)
+            {
+                list.Add(commandChat);
+            }
+            return list;
+        }
     }
 }
