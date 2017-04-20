@@ -1,11 +1,14 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using THS;
+using THS.Utils;
 
 //TODO: Hay que pasar todo lo de twitch a lower case para que el regex no se lie
 namespace THS.Twitch_Integration
 {
-     class IrcClient
+    class IrcClient
     {
 
         private string userName;
@@ -40,6 +43,19 @@ namespace THS.Twitch_Integration
                 while (!stop)
                 {
                     string msg = ReadMessage();
+                    msg = msg.ToLower();
+                    if (InstructionRegexType.InstructionPlayOnRegex.IsMatch(msg))
+                    {
+                        var cmd = new CommandChat(msg);
+                    }
+                    else if (InstructionRegexType.InstructionPlayRegex.IsMatch(msg))
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
                     Utils.IO.LogDebug(msg, Utils.IO.DebugFile.Twitch);
                 }
             }
@@ -65,7 +81,6 @@ namespace THS.Twitch_Integration
 
         public string ReadMessage()
         {
-            // DEBUG: :deded1423!deded1423@deded1423.tmi.twitch.tv PRIVMSG #deded1423 :Hola
             string message = inputStream.ReadLine();
             if (message?.Contains("PRIVMSG") == true)
             {
@@ -74,6 +89,6 @@ namespace THS.Twitch_Integration
             }
             return message;
         }
-        //:deded1423!deded1423@deded1423.tmi.twitch.tv PRIVMSG #deded1423 :aaaa
+        public CommandChat
     }
 }

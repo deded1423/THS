@@ -10,18 +10,20 @@ namespace THS.Utils
 {
     public class GlobalConstants
     {
-        //TODO: Hacer si quiero una configuracion que lea de un archivo y todas esas mierdas
         public static string LogPath = @"C:\";
     }
-    public class InstructionType
-    { //TODO: Hacer lo de dani
+    public class InstructionRegexType
+    { //TODO: Ver como se diferencian 2 cartas que son iguales
         public static Regex InstructionPlayRegex = new Regex(@"play\s+(?<name>(.+))");
         public static Regex InstructionPlayOnRegex = new Regex(@"play\s+(?<name>(.+))\s+on\s+(?<target>.+)");
         public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
         public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
         public static Regex InstructionAttackRegex = new Regex(@"(?<minion>.+)\s+attacks?\s+(?<target>.+)");
     }
-
+    public enum PlayType
+    {
+        Play, HeroPower
+    }
     public enum CardZone
     {
         Deck, Player, Opponent, Graveyard
