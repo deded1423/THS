@@ -113,10 +113,13 @@
     <Compile Include="HSGame\Card.cs" />
     <Compile Include="HSGame\Game.cs" />
     <Compile Include="HSImport.cs" />
+    <Compile Include="HSImport\Decoder\LoadingScreenDecoder.cs" />
+    <Compile Include="HSImport\Decoder\FullScreenFXDecoder.cs" />
     <Compile Include="HSImport\LogHandler.cs" />
     <Compile Include="HSImport\LogLine.cs" />
     <Compile Include="HSImport\LogReader.cs" />
     <Compile Include="HSImport\Decoder\PowerDecoder.cs" />
+    <Compile Include="HSImport\Decoder\RachelleDecoder.cs" />
     <Compile Include="Twitch Integration\CommandChat.cs" />
     <Compile Include="Twitch Integration\TwitchIRC.cs" />
     <Compile Include="Windows\Config.cs">

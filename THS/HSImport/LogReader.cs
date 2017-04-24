@@ -91,7 +91,7 @@ namespace THS.HSImport
                         Lines.Enqueue(new LogLine(tmp, Namespace));
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
             CloseFiles();
         }

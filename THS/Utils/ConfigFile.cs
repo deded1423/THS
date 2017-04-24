@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace THS.Utils
 {
     static class ConfigFile
     {
-        public static string HearthstonePath = null;
-        public static string TwitchLoginName = null;
-        public static string TwitchLoginOauth = null;
-        public static bool SendTCP = false;
-        public static string SendTCPIP = null;
-        public static string SendTCPPort = null;
-        public static bool ReceiveTCP = false;
-        public static string ReceiveTCPIP = null;
-        public static string ReceiveTCPPort = null;
+        public static string HearthstonePath;
+        public static string TwitchLoginName;
+        public static string TwitchLoginOauth;
+        public static bool SendTCP;
+        public static string SendTCPIP;
+        public static string SendTCPPort;
+        public static bool ReceiveTCP;
+        public static string ReceiveTCPIP;
+        public static string ReceiveTCPPort;
 
         public static void readConfigFile()
         {
@@ -41,7 +34,7 @@ namespace THS.Utils
             }
             catch (Exception e)
             {
-                IO.LogDebug("Error reading app settings");
+                IO.LogDebug("Error reading app settings: " + e);
                 HearthstonePath = @"D:\Juegos\BattleNet\Hearthstone";
                 TwitchLoginName = "deded1423";
                 TwitchLoginOauth = "oauth:p26a360ks4lpg359oh5v8mbamsf3v1";
@@ -74,7 +67,7 @@ namespace THS.Utils
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error saving app settings");
+                Console.WriteLine("Error saving app settings: " + e);
             }
 
         }

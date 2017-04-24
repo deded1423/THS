@@ -7,12 +7,13 @@ namespace THS.Utils
     public class IO
     {
         private static StreamWriter _twitchFile;
-        private static StreamWriter _outputFile;
         private static StreamWriter _logreaderFile;
+        private static StreamWriter _outputFile;
+        private static StreamWriter _tcpFile;
 
         public enum DebugFile
         {
-            Twitch, Output, LogReader
+            Twitch, Output, LogReader, Tcp
         }
 
         public static bool OpenDebugFiles()
@@ -49,6 +50,15 @@ namespace THS.Utils
             {
                 _outputFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Output.txt"));
             }
+            //Open Tcp.txt
+            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt")))
+            {
+                _tcpFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt"), FileMode.CreateNew));
+            }
+            else
+            {
+                _tcpFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt"));
+            }
             return true;
         }
 
@@ -57,6 +67,7 @@ namespace THS.Utils
             _twitchFile?.Dispose();
             _outputFile?.Dispose();
             _logreaderFile?.Dispose();
+            _tcpFile?.Dispose();
         }
         public static void LogDebug(string message, IO.DebugFile file = DebugFile.Output, bool console = true)
         {
@@ -73,6 +84,10 @@ namespace THS.Utils
                 case DebugFile.LogReader:
                     _logreaderFile.WriteLine(DateTime.Now + " " + message);
                     _logreaderFile.Flush();
+                    break;
+                case DebugFile.Tcp:
+                    _tcpFile.WriteLine(DateTime.Now + " " + message);
+                    _tcpFile.Flush();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(file), file, null);

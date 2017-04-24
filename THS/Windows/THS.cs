@@ -23,14 +23,12 @@ namespace THS.Windows
 
         //IMPORT SHIT
         LogHandler _logHandler;
-        private Thread _tcpServer;
-
         public THS()
         {
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            _logHandler = new LogHandler();
+            _logHandler = new LogHandler(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -74,7 +72,6 @@ namespace THS.Windows
 
         private void ButtonTest1_Click(object sender, EventArgs e)
         {
-
             _logHandler.ToggleServerLogReader();
         }
 
@@ -82,5 +79,6 @@ namespace THS.Windows
         {
             irc.Stop();
         }
+
     }
 }

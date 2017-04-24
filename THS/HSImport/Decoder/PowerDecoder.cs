@@ -1,51 +1,53 @@
-﻿using THS.Utils;
+﻿using System;
+using THS.Utils;
 
 namespace THS.HSImport
 {
-    class PowerDecoder
+    static class PowerDecoder
     {
-        public void Decode(string line)
+        public static void Decode(LogLine line)
         {
-            if (PowerTaskList.BlockStartRegex.IsMatch(line))
+            if (PowerTaskList.BlockStartRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.CardIdRegex.IsMatch(line))
+            else if (PowerTaskList.CardIdRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.CreationRegex.IsMatch(line))
+            else if (PowerTaskList.CreationRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.CreationTagRegex.IsMatch(line))
+            else if (PowerTaskList.CreationTagRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.EntityRegex.IsMatch(line))
+            else if (PowerTaskList.EntityRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.GameEntityRegex.IsMatch(line))
+            else if (PowerTaskList.GameEntityRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line))
+            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.TagChangeRegex.IsMatch(line))
+            else if (PowerTaskList.TagChangeRegex.IsMatch(line.Line))
             {
 
             }
-            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line))
+            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Line))
             {
 
             }
             else
             {
-
+                Console.WriteLine("NOT PROCESSED: "+ line);
             }
         }
+
     }
 }

@@ -12,6 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using PostSharp.Patterns.Threading;
 using THS.Utils;
+using THS.Windows;
+using System.Windows.Forms;
 
 namespace THS.HSImport
 {
@@ -30,14 +32,19 @@ namespace THS.HSImport
         private StreamReader _tcpReader;
         private TcpListener _tcpListener;
 
-        public LogHandler()
+        //UI SHIT
+        private Windows.THS _ths;
+        private int _count = 0;
+        private int _countTCP = 0;
+
+        public LogHandler(Windows.THS ths)
         {
             _powerReader = new LogReader("Power");
             _rachelleReader = new LogReader("Rachelle");
             _loadingscreenReader = new LogReader("LoadingScreen");
             _fullscreenReader = new LogReader("FullScreenFX");
+            _ths = ths;
         }
-
         [Background]
         public void StartLogReader()
         {
@@ -73,14 +80,16 @@ namespace THS.HSImport
             }
             _stop = false;
             _running = true;
+            List<LogLine> newlines = null;
             while (!_stop)
             {
-                List<LogLine> newlines = null;
                 if (ConfigFile.ReceiveTCP)
                 {
                     //TODO: ARREGLAR ESTO
                     List<string> tcplines = GetTcpLogLines();
                     newlines = new List<LogLine>();
+                    _countTCP += newlines.Count;
+                    _ths.SetText(_ths.LabelTCP, _countTCP.ToString());
                     foreach (var tcpline in tcplines)
                     {
                         newlines.Add(new LogLine(tcpline, "Power"));
@@ -90,57 +99,77 @@ namespace THS.HSImport
                 {
                     newlines = GetLogLines();
                 }
-                foreach (var line in newlines)
+
+
+                foreach (LogLine line in newlines)
                 {
                     if (ConfigFile.SendTCP)
                     {
-                        if (line.LogFile == "Power")
+                        if (line.LogFile.Equals("Power"))
                         {
                             _tcpWriter.WriteLine(line);
                             _tcpWriter.Flush();
-                            IO.LogDebug("CLIENT   " + line.ToString());
+                            _countTCP += 1;
+                            _ths.SetText(_ths.LabelTCP, _countTCP.ToString());
+                            IO.LogDebug(line.ToString(), IO.DebugFile.Tcp, false);
                         }
                     }
                     else
                     {
-                        //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL
-                        IO.LogDebug(line.ToString());
+                        //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL O RECIBO CON TCP
+                        ProcessLines(line);
+                        IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
                     }
 
                 }
-                _running = false;
             }
+            _running = false;
         }
 
-        private bool _stopServer = true;
-        public ConcurrentQueue<LogLine> Lines = new ConcurrentQueue<LogLine>();
+        private bool _stopServer = true, _serverCreated = false;
+
         [Background]
         public void ToggleServerLogReader()
         {
             _stopServer = !_stopServer;
-            IO.LogDebug("Creating TCP SERVER" + ConfigFile.SendTCPIP + ":" + ConfigFile.SendTCPPort);
-            _tcpListener = new TcpListener(IPAddress.Parse(ConfigFile.ReceiveTCPIP), int.Parse(ConfigFile.ReceiveTCPPort));
-            _tcpListener.Start();
-            _tcp = _tcpListener.AcceptTcpClient();
-            _tcpReader = new StreamReader(_tcp.GetStream());
+            if (!_stopServer && !_serverCreated)
+            {
+                IO.LogDebug("Creating TCP SERVER" + ConfigFile.SendTCPIP + ":" + ConfigFile.SendTCPPort);
+                _tcpListener = new TcpListener(IPAddress.Parse(ConfigFile.ReceiveTCPIP), int.Parse(ConfigFile.ReceiveTCPPort));
+                _tcpListener.Start();
+                _tcp = _tcpListener.AcceptTcpClient();
+                _tcp.ReceiveBufferSize = 32000;
+                _tcpReader = new StreamReader(_tcp.GetStream());
+                _serverCreated = true;
+            }
             while (!_stopServer)
             {
                 List<string> newlines = GetTcpLogLines();
-                //TODO: ARREGLAR ESTO
                 List<LogLine> loglines = new List<LogLine>();
                 foreach (var line in newlines)
                 {
                     loglines = new List<LogLine>();
                     loglines.Add(new LogLine(line, "Power"));
-                    Console.WriteLine("SERVER   " + line.ToString());
+                    //IO.LogDebug(line.ToString(),IO.DebugFile.Tcp, false);
 
                 }
-                foreach (var log in loglines)
+                foreach (var line in loglines)
                 {
-
+                    ProcessLines(line);
                 }
             }
             _running = false;
+        }
+
+
+        public void Stop()
+        {
+            _stop = true;
+            _count = 0;
+            _fullscreenReader.Stop();
+            _loadingscreenReader.Stop();
+            _powerReader.Stop();
+            _rachelleReader.Stop();
         }
 
         public void CopyLogs()
@@ -171,18 +200,12 @@ namespace THS.HSImport
             {
                 lines.Add(line);
             }
+            _count += lines.Count;
+            _ths.SetText(_ths.LabelRead, _count.ToString());
             return lines;
 
         }
 
-        public void Stop()
-        {
-            _stop = true;
-            _fullscreenReader.Stop();
-            _loadingscreenReader.Stop();
-            _powerReader.Stop();
-            _rachelleReader.Stop();
-        }
 
         public List<string> GetTcpLogLines()
         {
@@ -191,8 +214,14 @@ namespace THS.HSImport
             do
             {
                 lines.Add(_tcpReader.ReadLine());
+                var a = new StreamWriter(_tcp.GetStream());
             } while (_tcpReader.Peek() != -1);
             return lines;
+        }
+
+        public void ProcessLines(LogLine logline)
+        {
+            logline.SortLine();
         }
     }
 }

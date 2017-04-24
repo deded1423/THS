@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using THS.Utils;
 
 namespace THS.HSImport
 {
@@ -13,12 +14,38 @@ namespace THS.HSImport
         public string Process;
         public string Log;
         public string LogFile;
+        public string Line;
 
         public LogLine(string line, string logFile)
         {
-            var regex = new Regex(@"^(D|W) (?<ts>([\d:.]+)) (?<process>([\w.()]+)) (-\s+) (?<log>(.*))$");
+            var regexRachelle = new Regex(@"^(D|W) (?<ts>([\d:.]+)) (?<process>([\w.:]+))([-\s]+)(?<log>(.*))$");
+            var regexSimple = new Regex(@"^(D|W) (?<ts>([\d:.]+)) (?<process>([\w.()]+))");
+            var regex = new Regex(@"^(D|W) (?<ts>([\d:.]+)) (?<process>([\w.()]+))([-\s]+)(?<log>(.*))$");
+            Match match = null;
+            if (regex.IsMatch(line))
+            {
+                match = regex.Match(line);
+            }
+            else
+            {
+                if (regexRachelle.IsMatch(line))
+                {
+                    match = regexRachelle.Match(line);
+                }
+                else
+                {
+                    if (regexSimple.IsMatch(line))
+                    {
+                        match = regexSimple.Match(line);
+                    }
+                    else
+                    {
+                        IO.LogDebug("ERROR IN LOGLINE: " + line + " // " + logFile, IO.DebugFile.LogReader);
+                    }
+                }
+            }
 
-            var match = regex.Match(line);
+            Line = line;
             DateTime time;
             if (DateTime.TryParse(match.Groups["ts"].Value, out time))
             {
@@ -37,7 +64,23 @@ namespace THS.HSImport
 
         public override string ToString()
         {
-            return "Process: " + Process + ", Log: " + Log + ", LogFile:" + LogFile;
+            return "Process: " + Process + " // Log: " + Log + " // LogFile: " + LogFile + " // " + Line;
+        }
+
+        public void SortLine()
+        {
+            switch (LogFile)
+            {
+                case "Power":
+                    PowerDecoder.Decode(this);
+                    break;
+                case "Rachelle":
+                    break;
+                case "LoadingScreen":
+                    break;
+                case "FullScreenFX":
+                    break;
+            }
         }
     }
 }
