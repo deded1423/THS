@@ -117,7 +117,7 @@ namespace THS.HSImport
                     else
                     {
                         //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL O RECIBO CON TCP
-                        ProcessLines(line);
+                        ProcessLine(line);
                         IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
                     }
 
@@ -155,7 +155,7 @@ namespace THS.HSImport
                 }
                 foreach (var line in loglines)
                 {
-                    ProcessLines(line);
+                    ProcessLine(line);
                 }
             }
             _running = false;
@@ -219,7 +219,7 @@ namespace THS.HSImport
             return lines;
         }
 
-        public void ProcessLines(LogLine logline)
+        public void ProcessLine(LogLine logline)
         {
             logline.SortLine();
         }
