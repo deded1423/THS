@@ -59,9 +59,9 @@
             this.CheckBoxTCP.AutoSize = true;
             this.CheckBoxTCP.Location = new System.Drawing.Point(8, 12);
             this.CheckBoxTCP.Name = "CheckBoxTCP";
-            this.CheckBoxTCP.Size = new System.Drawing.Size(118, 17);
+            this.CheckBoxTCP.Size = new System.Drawing.Size(133, 17);
             this.CheckBoxTCP.TabIndex = 2;
-            this.CheckBoxTCP.Text = "Send Through TCP";
+            this.CheckBoxTCP.Text = "Recieve Through TCP";
             this.CheckBoxTCP.UseVisualStyleBackColor = true;
             // 
             // ButtonTest1
@@ -85,6 +85,7 @@
             this.Controls.Add(this.ButtonConfig);
             this.Name = "THS";
             this.Text = "THS";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.THS_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -19,14 +19,12 @@ namespace THS.Windows
             TextHearthstonePath.Text = ConfigFile.HearthstonePath;
             TextTwitchLoginName.Text = ConfigFile.TwitchLoginName;
             TextTwitchLoginOauth.Text = ConfigFile.TwitchLoginOauth;
-            CheckBoxTCP.Checked = ConfigFile.SendTCP;
-            TextTCPIP.Text = ConfigFile.TCPIP;
-            TextTCPPort.Text = ConfigFile.TCPPort;
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+            CheckBoxSendTCP.Checked = ConfigFile.SendTCP;
+            TextSendTCPIP.Text = ConfigFile.SendTCPIP;
+            TextSendTCPPort.Text = ConfigFile.SendTCPPort;
+            CheckBoxReceiveTCP.Checked = ConfigFile.ReceiveTCP;
+            TextReceiveTCPIP.Text = ConfigFile.ReceiveTCPIP;
+            TextReceiveTCPPort.Text = ConfigFile.ReceiveTCPPort;
         }
 
         private void ButtonConfigAccept_Click(object sender, EventArgs e)
@@ -34,9 +32,12 @@ namespace THS.Windows
             ConfigFile.HearthstonePath = TextHearthstonePath.Text;
             ConfigFile.TwitchLoginName = TextTwitchLoginName.Text;
             ConfigFile.TwitchLoginOauth = TextTwitchLoginOauth.Text;
-            ConfigFile.SendTCP = CheckBoxTCP.Checked;
-            ConfigFile.TCPIP = TextTCPIP.Text;
-            ConfigFile.TCPPort = TextTCPPort.Text;
+            ConfigFile.SendTCP = CheckBoxSendTCP.Checked;
+            ConfigFile.SendTCPIP = TextSendTCPIP.Text;
+            ConfigFile.SendTCPPort = TextSendTCPPort.Text;
+            ConfigFile.ReceiveTCP = CheckBoxReceiveTCP.Checked;
+            ConfigFile.ReceiveTCPIP = TextReceiveTCPIP.Text;
+            ConfigFile.ReceiveTCPPort = TextReceiveTCPPort.Text;
             ConfigFile.saveConfigFile();
             this.Dispose(true);
         }
@@ -44,6 +45,16 @@ namespace THS.Windows
         private void ButtonConfigCancel_Click(object sender, EventArgs e)
         {
             this.Dispose(true);
+        }
+
+        private void CheckBoxSendTCP_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBoxReceiveTCP.Checked = false;
+        }
+
+        private void CheckBoxReceiveTCP_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBoxSendTCP.Checked = false;
         }
     }
 }

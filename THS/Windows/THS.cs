@@ -20,9 +20,11 @@ namespace THS.Windows
 
         //UI SHIT
         private Config _configwindow;
-        
 
+        //IMPORT SHIT
         LogHandler _logHandler;
+        private Thread _tcpServer;
+
         public THS()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace THS.Windows
         private void Form1_Load(object sender, EventArgs e)
         {
             irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
-            _twitchThread = new Thread(irc.StartTwitchChat) {Name = "TwitchChatReader"};
+            _twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
             _twitchThread.Start("deded1423");
             //string str = "Play mark of nature on me";
             //str = str.ToLower();
@@ -72,11 +74,13 @@ namespace THS.Windows
 
         private void ButtonTest1_Click(object sender, EventArgs e)
         {
-            var tmp = irc.GetCommandChats();
-            foreach (var cmd in tmp)
-            {
-                Console.WriteLine(cmd.ToString());
-            }
+
+            _logHandler.ToggleServerLogReader();
+        }
+
+        private void THS_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            irc.Stop();
         }
     }
 }

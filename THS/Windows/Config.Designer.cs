@@ -38,14 +38,18 @@ namespace THS.Windows
             this.TextTwitchLoginName = new System.Windows.Forms.TextBox();
             this.LabelTwitchLoginOauth = new System.Windows.Forms.Label();
             this.TextTwitchLoginOauth = new System.Windows.Forms.TextBox();
-            this.LabelIP = new System.Windows.Forms.Label();
-            this.TextTCPIP = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.TextTCPPort = new System.Windows.Forms.TextBox();
-            this.CheckBoxTCP = new System.Windows.Forms.CheckBox();
-            this.LabelTCPPort = new System.Windows.Forms.Label();
-            this.LabelTCPIP = new System.Windows.Forms.Label();
+            this.LabelSendIP = new System.Windows.Forms.Label();
+            this.TextSendTCPIP = new System.Windows.Forms.TextBox();
+            this.TextSendTCPPort = new System.Windows.Forms.TextBox();
+            this.CheckBoxSendTCP = new System.Windows.Forms.CheckBox();
+            this.LabelSendTCPPort = new System.Windows.Forms.Label();
+            this.LabelSendTCPIP = new System.Windows.Forms.Label();
+            this.LabelReceiveTCPIP = new System.Windows.Forms.Label();
+            this.LabelReceiveTCPPort = new System.Windows.Forms.Label();
+            this.CheckBoxReceiveTCP = new System.Windows.Forms.CheckBox();
+            this.TextReceiveTCPPort = new System.Windows.Forms.TextBox();
+            this.LabelReceiveIP = new System.Windows.Forms.Label();
+            this.TextReceiveTCPIP = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ButtonConfigAccept
@@ -116,85 +120,125 @@ namespace THS.Windows
             this.TextTwitchLoginOauth.Size = new System.Drawing.Size(206, 20);
             this.TextTwitchLoginOauth.TabIndex = 6;
             // 
-            // LabelIP
+            // LabelSendIP
             // 
-            this.LabelIP.AutoSize = true;
-            this.LabelIP.Location = new System.Drawing.Point(12, 93);
-            this.LabelIP.Name = "LabelIP";
-            this.LabelIP.Size = new System.Drawing.Size(56, 13);
-            this.LabelIP.TabIndex = 9;
-            this.LabelIP.Text = "Send TCP";
+            this.LabelSendIP.AutoSize = true;
+            this.LabelSendIP.Location = new System.Drawing.Point(12, 93);
+            this.LabelSendIP.Name = "LabelSendIP";
+            this.LabelSendIP.Size = new System.Drawing.Size(56, 13);
+            this.LabelSendIP.TabIndex = 9;
+            this.LabelSendIP.Text = "Send TCP";
             // 
-            // TextTCPIP
+            // TextSendTCPIP
             // 
-            this.TextTCPIP.Location = new System.Drawing.Point(129, 90);
-            this.TextTCPIP.Name = "TextTCPIP";
-            this.TextTCPIP.Size = new System.Drawing.Size(105, 20);
-            this.TextTCPIP.TabIndex = 8;
+            this.TextSendTCPIP.Location = new System.Drawing.Point(129, 90);
+            this.TextSendTCPIP.Name = "TextSendTCPIP";
+            this.TextSendTCPIP.Size = new System.Drawing.Size(105, 20);
+            this.TextSendTCPIP.TabIndex = 8;
             // 
-            // label2
+            // TextSendTCPPort
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 119);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "aaaaaaaa";
+            this.TextSendTCPPort.Location = new System.Drawing.Point(275, 90);
+            this.TextSendTCPPort.Name = "TextSendTCPPort";
+            this.TextSendTCPPort.Size = new System.Drawing.Size(42, 20);
+            this.TextSendTCPPort.TabIndex = 12;
             // 
-            // textBox2
+            // CheckBoxSendTCP
             // 
-            this.textBox2.Location = new System.Drawing.Point(111, 116);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(206, 20);
-            this.textBox2.TabIndex = 10;
+            this.CheckBoxSendTCP.AutoSize = true;
+            this.CheckBoxSendTCP.Location = new System.Drawing.Point(82, 93);
+            this.CheckBoxSendTCP.Name = "CheckBoxSendTCP";
+            this.CheckBoxSendTCP.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxSendTCP.TabIndex = 13;
+            this.CheckBoxSendTCP.UseVisualStyleBackColor = true;
+            this.CheckBoxSendTCP.Click += new System.EventHandler(this.CheckBoxSendTCP_CheckedChanged);
             // 
-            // TextTCPPort
+            // LabelSendTCPPort
             // 
-            this.TextTCPPort.Location = new System.Drawing.Point(275, 90);
-            this.TextTCPPort.Name = "TextTCPPort";
-            this.TextTCPPort.Size = new System.Drawing.Size(42, 20);
-            this.TextTCPPort.TabIndex = 12;
+            this.LabelSendTCPPort.AutoSize = true;
+            this.LabelSendTCPPort.Location = new System.Drawing.Point(240, 93);
+            this.LabelSendTCPPort.Name = "LabelSendTCPPort";
+            this.LabelSendTCPPort.Size = new System.Drawing.Size(29, 13);
+            this.LabelSendTCPPort.TabIndex = 14;
+            this.LabelSendTCPPort.Text = "Port:";
             // 
-            // CheckBoxTCP
+            // LabelSendTCPIP
             // 
-            this.CheckBoxTCP.AutoSize = true;
-            this.CheckBoxTCP.Location = new System.Drawing.Point(82, 93);
-            this.CheckBoxTCP.Name = "CheckBoxTCP";
-            this.CheckBoxTCP.Size = new System.Drawing.Size(15, 14);
-            this.CheckBoxTCP.TabIndex = 13;
-            this.CheckBoxTCP.UseVisualStyleBackColor = true;
+            this.LabelSendTCPIP.AutoSize = true;
+            this.LabelSendTCPIP.Location = new System.Drawing.Point(103, 93);
+            this.LabelSendTCPIP.Name = "LabelSendTCPIP";
+            this.LabelSendTCPIP.Size = new System.Drawing.Size(20, 13);
+            this.LabelSendTCPIP.TabIndex = 15;
+            this.LabelSendTCPIP.Text = "IP:";
             // 
-            // LabelTCPPort
+            // LabelReceiveTCPIP
             // 
-            this.LabelTCPPort.AutoSize = true;
-            this.LabelTCPPort.Location = new System.Drawing.Point(240, 93);
-            this.LabelTCPPort.Name = "LabelTCPPort";
-            this.LabelTCPPort.Size = new System.Drawing.Size(29, 13);
-            this.LabelTCPPort.TabIndex = 14;
-            this.LabelTCPPort.Text = "Port:";
+            this.LabelReceiveTCPIP.AutoSize = true;
+            this.LabelReceiveTCPIP.Location = new System.Drawing.Point(103, 119);
+            this.LabelReceiveTCPIP.Name = "LabelReceiveTCPIP";
+            this.LabelReceiveTCPIP.Size = new System.Drawing.Size(20, 13);
+            this.LabelReceiveTCPIP.TabIndex = 21;
+            this.LabelReceiveTCPIP.Text = "IP:";
             // 
-            // LabelTCPIP
+            // LabelReceiveTCPPort
             // 
-            this.LabelTCPIP.AutoSize = true;
-            this.LabelTCPIP.Location = new System.Drawing.Point(103, 93);
-            this.LabelTCPIP.Name = "LabelTCPIP";
-            this.LabelTCPIP.Size = new System.Drawing.Size(20, 13);
-            this.LabelTCPIP.TabIndex = 15;
-            this.LabelTCPIP.Text = "IP:";
+            this.LabelReceiveTCPPort.AutoSize = true;
+            this.LabelReceiveTCPPort.Location = new System.Drawing.Point(240, 119);
+            this.LabelReceiveTCPPort.Name = "LabelReceiveTCPPort";
+            this.LabelReceiveTCPPort.Size = new System.Drawing.Size(29, 13);
+            this.LabelReceiveTCPPort.TabIndex = 20;
+            this.LabelReceiveTCPPort.Text = "Port:";
+            // 
+            // CheckBoxReceiveTCP
+            // 
+            this.CheckBoxReceiveTCP.AutoSize = true;
+            this.CheckBoxReceiveTCP.Location = new System.Drawing.Point(82, 119);
+            this.CheckBoxReceiveTCP.Name = "CheckBoxReceiveTCP";
+            this.CheckBoxReceiveTCP.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxReceiveTCP.TabIndex = 19;
+            this.CheckBoxReceiveTCP.UseVisualStyleBackColor = true;
+            this.CheckBoxReceiveTCP.Click += new System.EventHandler(this.CheckBoxReceiveTCP_CheckedChanged);
+            // 
+            // TextReceiveTCPPort
+            // 
+            this.TextReceiveTCPPort.Location = new System.Drawing.Point(275, 116);
+            this.TextReceiveTCPPort.Name = "TextReceiveTCPPort";
+            this.TextReceiveTCPPort.Size = new System.Drawing.Size(42, 20);
+            this.TextReceiveTCPPort.TabIndex = 18;
+            // 
+            // LabelReceiveIP
+            // 
+            this.LabelReceiveIP.AutoSize = true;
+            this.LabelReceiveIP.Location = new System.Drawing.Point(12, 119);
+            this.LabelReceiveIP.Name = "LabelReceiveIP";
+            this.LabelReceiveIP.Size = new System.Drawing.Size(71, 13);
+            this.LabelReceiveIP.TabIndex = 17;
+            this.LabelReceiveIP.Text = "Receive TCP";
+            // 
+            // TextReceiveTCPIP
+            // 
+            this.TextReceiveTCPIP.Location = new System.Drawing.Point(129, 116);
+            this.TextReceiveTCPIP.Name = "TextReceiveTCPIP";
+            this.TextReceiveTCPIP.Size = new System.Drawing.Size(105, 20);
+            this.TextReceiveTCPIP.TabIndex = 16;
             // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(321, 185);
-            this.Controls.Add(this.LabelTCPIP);
-            this.Controls.Add(this.LabelTCPPort);
-            this.Controls.Add(this.CheckBoxTCP);
-            this.Controls.Add(this.TextTCPPort);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.LabelIP);
-            this.Controls.Add(this.TextTCPIP);
+            this.Controls.Add(this.LabelReceiveTCPIP);
+            this.Controls.Add(this.LabelReceiveTCPPort);
+            this.Controls.Add(this.CheckBoxReceiveTCP);
+            this.Controls.Add(this.TextReceiveTCPPort);
+            this.Controls.Add(this.LabelReceiveIP);
+            this.Controls.Add(this.TextReceiveTCPIP);
+            this.Controls.Add(this.LabelSendTCPIP);
+            this.Controls.Add(this.LabelSendTCPPort);
+            this.Controls.Add(this.CheckBoxSendTCP);
+            this.Controls.Add(this.TextSendTCPPort);
+            this.Controls.Add(this.LabelSendIP);
+            this.Controls.Add(this.TextSendTCPIP);
             this.Controls.Add(this.LabelTwitchLoginOauth);
             this.Controls.Add(this.TextTwitchLoginOauth);
             this.Controls.Add(this.LabelTwitchLoginName);
@@ -211,7 +255,7 @@ namespace THS.Windows
         }
 
         #endregion
-        public System.Windows.Forms.Label LabelTCPIP;
+        public System.Windows.Forms.Label LabelSendTCPIP;
         protected System.Windows.Forms.Button ButtonConfigAccept;
         protected System.Windows.Forms.Button ButtonConfigCancel;
         protected System.Windows.Forms.TextBox TextHearthstonePath;
@@ -220,12 +264,16 @@ namespace THS.Windows
         protected System.Windows.Forms.TextBox TextTwitchLoginName;
         protected System.Windows.Forms.Label LabelTwitchLoginOauth;
         protected System.Windows.Forms.TextBox TextTwitchLoginOauth;
-        protected System.Windows.Forms.Label LabelIP;
-        protected System.Windows.Forms.TextBox TextTCPIP;
-        protected System.Windows.Forms.Label label2;
-        protected System.Windows.Forms.TextBox textBox2;
-        protected System.Windows.Forms.TextBox TextTCPPort;
-        protected System.Windows.Forms.Label LabelTCPPort;
-        protected System.Windows.Forms.CheckBox CheckBoxTCP;
+        protected System.Windows.Forms.Label LabelSendIP;
+        protected System.Windows.Forms.TextBox TextSendTCPIP;
+        protected System.Windows.Forms.TextBox TextSendTCPPort;
+        protected System.Windows.Forms.Label LabelSendTCPPort;
+        protected System.Windows.Forms.CheckBox CheckBoxSendTCP;
+        public System.Windows.Forms.Label LabelReceiveTCPIP;
+        protected System.Windows.Forms.Label LabelReceiveTCPPort;
+        protected System.Windows.Forms.CheckBox CheckBoxReceiveTCP;
+        protected System.Windows.Forms.TextBox TextReceiveTCPPort;
+        protected System.Windows.Forms.Label LabelReceiveIP;
+        protected System.Windows.Forms.TextBox TextReceiveTCPIP;
     }
 }

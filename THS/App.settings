@@ -14,11 +14,20 @@
     <Setting Name="SendTCP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="TCPPort" Type="System.String" Scope="User">
+    <Setting Name="SendTCPPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8888</Value>
+    </Setting>
+    <Setting Name="SendTCPIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">82.158.3.104</Value>
     </Setting>
-    <Setting Name="TCPIP" Type="System.String" Scope="User">
+    <Setting Name="ReceiveTCP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReceiveTCPPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8888</Value>
+    </Setting>
+    <Setting Name="ReceiveTCPIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

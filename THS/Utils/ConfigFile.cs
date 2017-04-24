@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -15,8 +16,11 @@ namespace THS.Utils
         public static string TwitchLoginName = null;
         public static string TwitchLoginOauth = null;
         public static bool SendTCP = false;
-        public static string TCPIP = null;
-        public static string TCPPort = null;
+        public static string SendTCPIP = null;
+        public static string SendTCPPort = null;
+        public static bool ReceiveTCP = false;
+        public static string ReceiveTCPIP = null;
+        public static string ReceiveTCPPort = null;
 
         public static void readConfigFile()
         {
@@ -28,8 +32,11 @@ namespace THS.Utils
                 TwitchLoginName = App.Default.TwitchLoginName;
                 TwitchLoginOauth = App.Default.TwitchLoginOauth;
                 SendTCP = App.Default.SendTCP;
-                TCPIP = App.Default.TCPIP;
-                TCPPort = App.Default.TCPPort;
+                SendTCPIP = App.Default.SendTCPIP;
+                SendTCPPort = App.Default.SendTCPPort.ToString();
+                ReceiveTCP = App.Default.ReceiveTCP;
+                ReceiveTCPIP = App.Default.ReceiveTCPIP;
+                ReceiveTCPPort = App.Default.ReceiveTCPPort.ToString();
                 IO.LogDebug("Loaded App Settings");
             }
             catch (Exception e)
@@ -39,8 +46,8 @@ namespace THS.Utils
                 TwitchLoginName = "deded1423";
                 TwitchLoginOauth = "oauth:p26a360ks4lpg359oh5v8mbamsf3v1";
                 SendTCP = false;
-                TCPIP = "localhost";
-                TCPPort = "8888";
+                SendTCPIP = "localhost";
+                SendTCPPort = "8888";
             }
         }
 
@@ -53,9 +60,15 @@ namespace THS.Utils
                 App.Default.HearthstonePath = HearthstonePath;
                 App.Default.TwitchLoginName = TwitchLoginName;
                 App.Default.TwitchLoginOauth = TwitchLoginOauth;
+                IPAddress tmp;
                 App.Default.SendTCP = SendTCP;
-                App.Default.TCPIP = TCPIP;
-                App.Default.TCPPort = TCPPort;
+                if (IPAddress.TryParse(SendTCPIP, out tmp))
+                    App.Default.SendTCPIP = SendTCPIP;
+                App.Default.SendTCPPort = Convert.ToInt32(SendTCPPort);
+                App.Default.ReceiveTCP = ReceiveTCP;
+                if (IPAddress.TryParse(ReceiveTCPIP, out tmp))
+                    App.Default.ReceiveTCPIP = ReceiveTCPIP;
+                App.Default.ReceiveTCPPort = Convert.ToInt32(ReceiveTCPPort);
                 App.Default.Save();
                 IO.LogDebug("Saved App settings");
             }

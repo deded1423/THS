@@ -73,25 +73,61 @@ namespace THS {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("82.158.3.104")]
-        public string TCPPort {
+        [global::System.Configuration.DefaultSettingValueAttribute("8888")]
+        public int SendTCPPort {
             get {
-                return ((string)(this["TCPPort"]));
+                return ((int)(this["SendTCPPort"]));
             }
             set {
-                this["TCPPort"] = value;
+                this["SendTCPPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("82.158.3.104")]
+        public string SendTCPIP {
+            get {
+                return ((string)(this["SendTCPIP"]));
+            }
+            set {
+                this["SendTCPIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReceiveTCP {
+            get {
+                return ((bool)(this["ReceiveTCP"]));
+            }
+            set {
+                this["ReceiveTCP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8888")]
-        public string TCPIP {
+        public int ReceiveTCPPort {
             get {
-                return ((string)(this["TCPIP"]));
+                return ((int)(this["ReceiveTCPPort"]));
             }
             set {
-                this["TCPIP"] = value;
+                this["ReceiveTCPPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string ReceiveTCPIP {
+            get {
+                return ((string)(this["ReceiveTCPIP"]));
+            }
+            set {
+                this["ReceiveTCPIP"] = value;
             }
         }
     }

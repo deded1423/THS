@@ -30,9 +30,14 @@ namespace THS.HSImport
                 LogFile = logFile;
                 if (LogFile.Equals("FullScreenFX"))
                 {
-                    
+
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return "Process: " + Process + ", Log: " + Log + ", LogFile:" + LogFile;
         }
     }
 }

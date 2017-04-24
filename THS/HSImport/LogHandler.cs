@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Security.AccessControl;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using PostSharp.Patterns.Threading;
 using THS.Utils;
@@ -20,7 +23,12 @@ namespace THS.HSImport
         private LogReader _fullscreenReader;
         private bool _stop;
         private bool _running;
+
+        //TCP SHIT
         private TcpClient _tcp;
+        private StreamWriter _tcpWriter;
+        private StreamReader _tcpReader;
+        private TcpListener _tcpListener;
 
         public LogHandler()
         {
@@ -29,33 +37,107 @@ namespace THS.HSImport
             _loadingscreenReader = new LogReader("LoadingScreen");
             _fullscreenReader = new LogReader("FullScreenFX");
         }
+
         [Background]
         public void StartLogReader()
         {
-
+            if (_running)
+                return;
             _powerReader.Start();
             _rachelleReader.Start();
             _loadingscreenReader.Start();
             _fullscreenReader.Start();
+            if (ConfigFile.SendTCP)
+            {
+                try
+                {
+                    IO.LogDebug("Creating TCP" + ConfigFile.SendTCPIP + ":" + ConfigFile.SendTCPPort);
+                    _tcp = new TcpClient(ConfigFile.SendTCPIP, int.Parse(ConfigFile.SendTCPPort));
+                    _tcpWriter = new StreamWriter(_tcp.GetStream());
+                }
+                catch (Exception e)
+                {
+                    IO.LogDebug(e.ToString());
+                    Stop();
+                    return;
+                }
+            }
+            else if (ConfigFile.ReceiveTCP)
+            {
+                IO.LogDebug("Creating TCP SERVER" + ConfigFile.SendTCPIP + ":" + ConfigFile.SendTCPPort);
+                _tcpListener = new TcpListener(IPAddress.Parse(ConfigFile.ReceiveTCPIP),
+                    int.Parse(ConfigFile.ReceiveTCPPort));
+                _tcpListener.Start();
+                _tcp = _tcpListener.AcceptTcpClient();
+                _tcpReader = new StreamReader(_tcp.GetStream());
+            }
             _stop = false;
             _running = true;
             while (!_stop)
             {
-                var newlines = GetLogLines();
+                List<LogLine> newlines = null;
+                if (ConfigFile.ReceiveTCP)
+                {
+                    //TODO: ARREGLAR ESTO
+                    List<string> tcplines = GetTcpLogLines();
+                    newlines = new List<LogLine>();
+                    foreach (var tcpline in tcplines)
+                    {
+                        newlines.Add(new LogLine(tcpline, "Power"));
+                    }
+                }
+                else
+                {
+                    newlines = GetLogLines();
+                }
                 foreach (var line in newlines)
                 {
                     if (ConfigFile.SendTCP)
                     {
-                        if (_tcp == null)
+                        if (line.LogFile == "Power")
                         {
-                            _tcp = new TcpClient(ConfigFile.TCPIP, 8888);
+                            _tcpWriter.WriteLine(line);
+                            _tcpWriter.Flush();
+                            IO.LogDebug("CLIENT   " + line.ToString());
                         }
-
                     }
                     else
                     {
                         //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL
+                        IO.LogDebug(line.ToString());
                     }
+
+                }
+                _running = false;
+            }
+        }
+
+        private bool _stopServer = true;
+        public ConcurrentQueue<LogLine> Lines = new ConcurrentQueue<LogLine>();
+        [Background]
+        public void ToggleServerLogReader()
+        {
+            _stopServer = !_stopServer;
+            IO.LogDebug("Creating TCP SERVER" + ConfigFile.SendTCPIP + ":" + ConfigFile.SendTCPPort);
+            _tcpListener = new TcpListener(IPAddress.Parse(ConfigFile.ReceiveTCPIP), int.Parse(ConfigFile.ReceiveTCPPort));
+            _tcpListener.Start();
+            _tcp = _tcpListener.AcceptTcpClient();
+            _tcpReader = new StreamReader(_tcp.GetStream());
+            while (!_stopServer)
+            {
+                List<string> newlines = GetTcpLogLines();
+                //TODO: ARREGLAR ESTO
+                List<LogLine> loglines = new List<LogLine>();
+                foreach (var line in newlines)
+                {
+                    loglines = new List<LogLine>();
+                    loglines.Add(new LogLine(line, "Power"));
+                    Console.WriteLine("SERVER   " + line.ToString());
+
+                }
+                foreach (var log in loglines)
+                {
+
                 }
             }
             _running = false;
@@ -64,6 +146,9 @@ namespace THS.HSImport
         public void CopyLogs()
         {
             _powerReader.CopyLog();
+            _rachelleReader.CopyLog();
+            _fullscreenReader.CopyLog();
+            _loadingscreenReader.CopyLog();
         }
 
         public List<LogLine> GetLogLines()
@@ -98,52 +183,16 @@ namespace THS.HSImport
             _powerReader.Stop();
             _rachelleReader.Stop();
         }
-    }
 
-    class PowerDecoder
-    {
-        public void Decode(string line)
+        public List<string> GetTcpLogLines()
         {
-            if (PowerTaskList.BlockStartRegex.IsMatch(line))
+            //TODO: Hacerlo
+            List<string> lines = new List<string>();
+            do
             {
-
-            }
-            else if (PowerTaskList.CardIdRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.CreationRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.CreationTagRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.EntityRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.GameEntityRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.TagChangeRegex.IsMatch(line))
-            {
-
-            }
-            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line))
-            {
-
-            }
-            else
-            {
-
-            }
+                lines.Add(_tcpReader.ReadLine());
+            } while (_tcpReader.Peek() != -1);
+            return lines;
         }
     }
 }

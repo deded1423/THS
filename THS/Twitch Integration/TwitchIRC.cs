@@ -46,17 +46,22 @@ namespace THS.Twitch_Integration
                 JoinRoom((string)channel);
                 while (!_stop)
                 {
+
                     string msg = ReadMessage();
-                    msg = msg.ToLower();
-                    var cmd = new CommandChat(msg);
-                    if (cmd.Type != PlayType.Incorrect)
+                    if (msg != null)
                     {
-                        _queue.Enqueue(cmd);
-                        Utils.IO.LogDebug(cmd.ToString(), Utils.IO.DebugFile.Twitch, false);
-                    }
-                    else
-                    {
-                        Utils.IO.LogDebug(msg, Utils.IO.DebugFile.Twitch);
+
+                        msg = msg.ToLower();
+                        var cmd = new CommandChat(msg);
+                        if (cmd.Type != PlayType.Incorrect)
+                        {
+                            _queue.Enqueue(cmd);
+                            IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                        }
+                        else
+                        {
+                            IO.LogDebug(msg, IO.DebugFile.Twitch);
+                        }
                     }
                 }
             }
@@ -77,12 +82,17 @@ namespace THS.Twitch_Integration
 
         public void SendChatMessage(string message)
         {
-            SendIrcMessage(":" + userName + "!" + userName + "@" + userName + ".tmi.twitch.tv PRIVMSG #" + _channel + " :" + message);
+            SendIrcMessage(":" + userName + "!" + userName + "@" + userName + ".tmi.twitch.tv PRIVMSG #" + _channel +
+                           " :" + message);
         }
 
         public string ReadMessage()
         {
-            string message = inputStream.ReadLine();
+            string message = null;
+            if (inputStream.Peek() >= 0)
+            {
+                message = inputStream.ReadLine();
+            }
             if (message?.Contains("PRIVMSG") == true)
             {
                 string[] msg = message.Split(':');
@@ -99,6 +109,11 @@ namespace THS.Twitch_Integration
                 list.Add(commandChat);
             }
             return list;
+        }
+
+        public void Stop()
+        {
+            _stop = true;
         }
     }
 }
