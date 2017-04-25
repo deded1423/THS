@@ -72,7 +72,7 @@ namespace THS.Windows
 
         private void ButtonTest1_Click(object sender, EventArgs e)
         {
-            _logHandler.ToggleServerLogReader();
+            _logHandler.CopyLogs();
         }
 
         private void THS_FormClosed(object sender, FormClosedEventArgs e)

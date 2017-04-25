@@ -72,7 +72,11 @@ namespace THS.HSImport
             switch (LogFile)
             {
                 case "Power":
-                    PowerDecoder.Decode(this);
+                    //PowerDecoder.Decode(this);
+                    if (Process.Contains("GameState"))
+                    {
+                        IO.LogDebug(Log, IO.DebugFile.Output,false);
+                    }
                     break;
                 case "Rachelle":
                     break;

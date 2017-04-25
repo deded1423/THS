@@ -101,9 +101,10 @@ namespace THS.HSImport
                 }
 
 
-                foreach (LogLine line in newlines)
+
+                if (ConfigFile.SendTCP)
                 {
-                    if (ConfigFile.SendTCP)
+                    foreach (LogLine line in newlines)
                     {
                         if (line.LogFile.Equals("Power"))
                         {
@@ -114,15 +115,15 @@ namespace THS.HSImport
                             IO.LogDebug(line.ToString(), IO.DebugFile.Tcp, false);
                         }
                     }
-                    else
-                    {
-                        //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL O RECIBO CON TCP
-                        ProcessLine(line);
-                        IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
-                    }
-
                 }
+                else
+                {
+                    //TODO: COMPLETAR, CUANDO LEO EL LOG EN LOCAL O RECIBO CON TCP
+                    ProcessLines(newlines);
+                }
+
             }
+
             _running = false;
         }
 
@@ -153,10 +154,8 @@ namespace THS.HSImport
                     //IO.LogDebug(line.ToString(),IO.DebugFile.Tcp, false);
 
                 }
-                foreach (var line in loglines)
-                {
-                    ProcessLine(line);
-                }
+                
+                    ProcessLines(loglines);
             }
             _running = false;
         }
@@ -219,9 +218,14 @@ namespace THS.HSImport
             return lines;
         }
 
-        public void ProcessLine(LogLine logline)
+        public void ProcessLines(List<LogLine> list)
         {
-            logline.SortLine();
+            LogLine line;
+            for (int i = 0; i < list.Count; i++)
+            {
+                line = list[i];
+                line.SortLine();
+            }
         }
     }
 }

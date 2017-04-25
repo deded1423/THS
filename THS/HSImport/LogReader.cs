@@ -46,7 +46,7 @@ namespace THS.HSImport
         {
             if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", DateTime.Now + ".txt")))
             {
-                var sw = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", DateTime.Now.ToString(Namespace+"_dd_MM_hh-mm-ss") + ".txt"), FileMode.CreateNew));
+                var sw = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", Namespace+DateTime.Now.ToString("_dd_MM_hh-mm-ss") + ".txt"), FileMode.CreateNew));
                 if (File.Exists(_filepath))
                 {
                     using (var fs = new FileStream(_filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -60,7 +60,8 @@ namespace THS.HSImport
                             sw.Flush();
                         }
                         IO.LogDebug("Finalized the copy", IO.DebugFile.LogReader);
-                        sw.Dispose();
+                        sw.Close();
+                        fs.Close();
                     }
                 }
             }

@@ -32,7 +32,7 @@ namespace THS.Utils
     public static class PowerTaskList
     {
         public static readonly Regex BlockStartRegex =
-            new Regex(@".*BLOCK_START.*BlockType=(?<type>(POWER|TRIGGER)).*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*Target=(?<target>(.+))");
+            new Regex(@"BLOCK_START.*BlockType=(?<type>(POWER|TRIGGER)).*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*Target=(?<target>(.+))");
 
         public static readonly Regex CardIdRegex =
             new Regex(@"cardId=(?<cardId>(\w+))");
@@ -55,5 +55,8 @@ namespace THS.Utils
 
         public static readonly Regex UpdatingEntityRegex =
             new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
+
+        public static readonly Regex CreateGameRegex =
+            new Regex(@"");
     }
 }

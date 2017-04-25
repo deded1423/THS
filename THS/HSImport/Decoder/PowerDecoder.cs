@@ -9,7 +9,6 @@ namespace THS.HSImport
         {
             if (PowerTaskList.BlockStartRegex.IsMatch(line.Line))
             {
-
             }
             else if (PowerTaskList.CardIdRegex.IsMatch(line.Line))
             {
@@ -43,9 +42,13 @@ namespace THS.HSImport
             {
 
             }
+            else if (PowerTaskList.CreateGameRegex.IsMatch(line.Line))
+            {
+                
+            }
             else
             {
-                Console.WriteLine("NOT PROCESSED: "+ line);
+                //Console.WriteLine("NOT PROCESSED: "+ line);
             }
         }
 
