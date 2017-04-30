@@ -111,8 +111,7 @@
     <Compile Include="DB\Dictionaries.cs" />
     <Compile Include="DB\Enums.cs" />
     <Compile Include="HSGame\Card.cs" />
-    <Compile Include="HSGame\Game.cs" />
-    <Compile Include="HSImport.cs" />
+    <Compile Include="HSGame\HsGame.cs" />
     <Compile Include="HSImport\Decoder\LoadingScreenDecoder.cs" />
     <Compile Include="HSImport\Decoder\FullScreenFXDecoder.cs" />
     <Compile Include="HSImport\LogHandler.cs" />

@@ -187,6 +187,8 @@ namespace THS.HSImport
             {
                 lines.Add(line);
             }
+            _count += lines.Count;
+            _ths.SetText(_ths.LabelRead, _count.ToString());
             while (_fullscreenReader.Lines.TryDequeue(out line))
             {
                 lines.Add(line);
@@ -199,8 +201,6 @@ namespace THS.HSImport
             {
                 lines.Add(line);
             }
-            _count += lines.Count;
-            _ths.SetText(_ths.LabelRead, _count.ToString());
             return lines;
 
         }

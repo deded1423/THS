@@ -7,48 +7,92 @@ namespace THS.HSImport
     {
         public static void Decode(LogLine line)
         {
-            if (PowerTaskList.BlockStartRegex.IsMatch(line.Line))
+            if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
             {
             }
-            else if (PowerTaskList.CardIdRegex.IsMatch(line.Line))
+            else if (PowerTaskList.CardIdRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.CreationRegex.IsMatch(line.Line))
+            else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.CreationTagRegex.IsMatch(line.Line))
+            else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.EntityRegex.IsMatch(line.Line))
+            else if (PowerTaskList.EntityRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.GameEntityRegex.IsMatch(line.Line))
+            else if (PowerTaskList.GameEntityRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Line))
+            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.TagChangeRegex.IsMatch(line.Line))
+            else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Line))
+            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
             {
 
             }
-            else if (PowerTaskList.CreateGameRegex.IsMatch(line.Line))
+            else if (PowerTaskList.TagRegex.IsMatch(line.Log))
             {
-                
+
+            }
+            else if (line.Log.Equals("CREATE_GAME"))
+            {
+
+            }
+            else if (line.Log.Equals("BLOCK_END"))
+            {
+
+            }
+            else if (PowerTaskList.CountRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.BlockNullRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.CurrentTaskListRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.MetaDataRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.OptionRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.SelectedOptionRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
+            {
+
+            }
+            else if (PowerTaskList.TargetRegex.IsMatch(line.Log))
+            {
+
             }
             else
             {
-                //Console.WriteLine("NOT PROCESSED: "+ line);
+                Console.WriteLine("NOT PROCESSED: "+ line);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using THS.Utils;
+using THS.DB;
 
 namespace THS.HSImport
 {
@@ -72,11 +73,7 @@ namespace THS.HSImport
             switch (LogFile)
             {
                 case "Power":
-                    //PowerDecoder.Decode(this);
-                    if (Process.Contains("GameState"))
-                    {
-                        IO.LogDebug(Log, IO.DebugFile.Output,false);
-                    }
+                    PowerDecoder.Decode(this);
                     break;
                 case "Rachelle":
                     break;

@@ -22,7 +22,7 @@ namespace THS.Utils
     }
     public enum PlayType
     {
-        Play, HeroPower,Attack, Incorrect
+        Play, HeroPower, Attack, Incorrect
     }
     public enum CardZone
     {
@@ -32,13 +32,13 @@ namespace THS.Utils
     public static class PowerTaskList
     {
         public static readonly Regex BlockStartRegex =
-            new Regex(@"BLOCK_START.*BlockType=(?<type>(POWER|TRIGGER)).*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*Target=(?<target>(.+))");
+            new Regex(@"BLOCK_START.*BlockType=((?<type>(POWER|TRIGGER|DEATHS)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>[\d-]*))");
 
         public static readonly Regex CardIdRegex =
             new Regex(@"cardId=(?<cardId>(\w+))");
-        public static readonly Regex CreationRegex =
+        public static readonly Regex FullEntityUpdatingRegex =
             new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*CardID=(?<cardId>(\w*))");
-        public static readonly Regex CreationTagRegex =
+        public static readonly Regex TagRegex =
             new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 
         public static readonly Regex EntityRegex =
@@ -56,7 +56,27 @@ namespace THS.Utils
         public static readonly Regex UpdatingEntityRegex =
             new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 
-        public static readonly Regex CreateGameRegex =
-            new Regex(@"");
+        //NUEVO
+        public static readonly Regex FullEntityCreatingRegex =
+            new Regex(@"FULL_ENTITY - Creating.*ID=(?<id>(\d+)).*CardID=(?<cardId>([\w.]*))");
+        public static readonly Regex CountRegex =
+            new Regex(@"Count=(?<id>(\d*))");
+        public static readonly Regex BlockNullRegex =
+            new Regex(@"Block (Start|End)=\(null\)");
+        public static readonly Regex CurrentTaskListRegex =
+            new Regex(@"m_currentTaskList=(?<id>\d*)");
+        public static readonly Regex SourceRegex =
+            new Regex(@"Source=(?<source>\w*)");
+        public static readonly Regex MetaDataRegex =
+            new Regex(@"META_DATA - Meta=(?<meta>\w*) Data=(?<data>\d*) Info=(?<info>\d*)");
+        public static readonly Regex OptionRegex =
+            new Regex(@"option (?<option>\d*) type=(?<type>(END_TURN|POWER)) mainEntity=(?<mainentity>.*) error=(?<error>.*) errorParam=(?<errorParam>.*)");
+        public static readonly Regex SelectedOptionRegex =
+            new Regex(@"selectedOption=(?<option>\d*) selectedSubOption=(?<suboption>[\d-]*) selectedTarget=(?<target>\d*) selectedPosition=(?<position>\d*)");
+        public static readonly Regex InfoRegex =
+            new Regex(@"Info\[(?<id>\d*)\] = (?<result>.*)");
+        public static readonly Regex TargetRegex =
+            new Regex(@"target (?<target>\d*) entity=(?<entity>.*) error=(?<error>.*) errorParam=(?<errorParam>.*)");
+
     }
 }

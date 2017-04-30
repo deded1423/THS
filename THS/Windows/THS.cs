@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using THS;
+using THS.HSGame;
 using THS.HSImport;
 using THS.Twitch_Integration;
 using THS.Utils;
@@ -13,6 +15,7 @@ namespace THS.Windows
 
     public partial class THS : Form
     {
+        //TODO: CAMBIAR TODA ESTA MIERDA PARA QUE ESTE EN OTRA CLASE
         //TWITCH SHIT
         Queue<string> chat = new Queue<string>();
         static IrcClient irc;
@@ -22,13 +25,13 @@ namespace THS.Windows
         private Config _configwindow;
 
         //IMPORT SHIT
-        LogHandler _logHandler;
+        private HsGame _game;
         public THS()
         {
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            _logHandler = new LogHandler(this);
+            _game = new HsGame(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -60,19 +63,18 @@ namespace THS.Windows
         {
             if (ButtonStart.Text.Equals("Start"))
             {
-                _logHandler.StartLogReader();
+                _game.Start();
                 ButtonStart.Text = "Stop";
             }
             else
             {
-                _logHandler.Stop();
+                _game.Stop();
                 ButtonStart.Text = "Start";
             }
         }
 
         private void ButtonTest1_Click(object sender, EventArgs e)
         {
-            _logHandler.CopyLogs();
         }
 
         private void THS_FormClosed(object sender, FormClosedEventArgs e)
