@@ -60,7 +60,7 @@ namespace THS.HSImport
 
         public override string ToString()
         {
-            return "Process: " + Process + " // Log: " + Log + " // LogFile: " + LogFile + " // " + Line;
+            return "LF: " + LogFile + " / P: " + Process + " / L: " + Log + " / " + Line;
         }
 
         public void SortLine()

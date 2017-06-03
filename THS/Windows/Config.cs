@@ -12,12 +12,6 @@ namespace THS.Windows
             TextHearthstonePath.Text = ConfigFile.HearthstonePath;
             TextTwitchLoginName.Text = ConfigFile.TwitchLoginName;
             TextTwitchLoginOauth.Text = ConfigFile.TwitchLoginOauth;
-            CheckBoxSendTCP.Checked = ConfigFile.SendTCP;
-            TextSendTCPIP.Text = ConfigFile.SendTCPIP;
-            TextSendTCPPort.Text = ConfigFile.SendTCPPort;
-            CheckBoxReceiveTCP.Checked = ConfigFile.ReceiveTCP;
-            TextReceiveTCPIP.Text = ConfigFile.ReceiveTCPIP;
-            TextReceiveTCPPort.Text = ConfigFile.ReceiveTCPPort;
         }
 
         private void ButtonConfigAccept_Click(object sender, EventArgs e)
@@ -25,12 +19,6 @@ namespace THS.Windows
             ConfigFile.HearthstonePath = TextHearthstonePath.Text;
             ConfigFile.TwitchLoginName = TextTwitchLoginName.Text;
             ConfigFile.TwitchLoginOauth = TextTwitchLoginOauth.Text;
-            ConfigFile.SendTCP = CheckBoxSendTCP.Checked;
-            ConfigFile.SendTCPIP = TextSendTCPIP.Text;
-            ConfigFile.SendTCPPort = TextSendTCPPort.Text;
-            ConfigFile.ReceiveTCP = CheckBoxReceiveTCP.Checked;
-            ConfigFile.ReceiveTCPIP = TextReceiveTCPIP.Text;
-            ConfigFile.ReceiveTCPPort = TextReceiveTCPPort.Text;
             ConfigFile.saveConfigFile();
             this.Dispose(true);
         }
@@ -39,15 +27,6 @@ namespace THS.Windows
         {
             this.Dispose(true);
         }
-
-        private void CheckBoxSendTCP_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBoxReceiveTCP.Checked = false;
-        }
-
-        private void CheckBoxReceiveTCP_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBoxSendTCP.Checked = false;
-        }
+        
     }
 }

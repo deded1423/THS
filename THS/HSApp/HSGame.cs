@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using THS.HSImport;
 
 namespace THS.HSApp
@@ -31,7 +32,8 @@ namespace THS.HSApp
 
         public void Start()
         {
-            _logHandler.StartLogReader();
+            Thread _thread = new Thread(_logHandler.StartLogReader) {IsBackground = true, Name = "LogHandler"};
+            _thread.Start();
         }
 
         public void Stop()
