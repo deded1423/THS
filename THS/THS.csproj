@@ -12,7 +12,6 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <DontImportPostSharp>True</DontImportPostSharp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>C:\Users\USER\Desktop\a\</PublishUrl>
     <Install>true</Install>
@@ -62,18 +61,6 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PostSharp, Version=4.3.31.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.4.3.31\lib\net35-client\PostSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PostSharp.Patterns.Common, Version=4.3.31.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.Patterns.Common.4.3.31\lib\net45\PostSharp.Patterns.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PostSharp.Patterns.Threading, Version=4.3.31.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.Patterns.Threading.4.3.31\lib\net45\PostSharp.Patterns.Threading.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -100,18 +87,22 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>App.settings</DependentUpon>
     </Compile>
-    <Compile Include="DB\CardDefs\CardDefs.cs" />
-    <Compile Include="DB\CardDefs\Entity.cs" />
-    <Compile Include="DB\CardDefs\EntourageCard.cs" />
-    <Compile Include="DB\CardDefs\PlayRequirement.cs" />
-    <Compile Include="DB\CardDefs\Power.cs" />
-    <Compile Include="DB\CardDefs\Tag.cs" />
-    <Compile Include="DB\CardDefs\TriggeredPowerHistoryInfo.cs" />
-    <Compile Include="DB\CardIds.cs" />
-    <Compile Include="DB\Dictionaries.cs" />
-    <Compile Include="DB\Enums.cs" />
-    <Compile Include="HSGame\Card.cs" />
-    <Compile Include="HSGame\HsGame.cs" />
+    <Compile Include="HearthDb\Card.cs" />
+    <Compile Include="HearthDb\CardDefs\CardDefs.cs" />
+    <Compile Include="HearthDb\CardDefs\Entity.cs" />
+    <Compile Include="HearthDb\CardDefs\EntourageCard.cs" />
+    <Compile Include="HearthDb\CardDefs\PlayRequirement.cs" />
+    <Compile Include="HearthDb\CardDefs\Power.cs" />
+    <Compile Include="HearthDb\CardDefs\Tag.cs" />
+    <Compile Include="HearthDb\CardDefs\TriggeredPowerHistoryInfo.cs" />
+    <Compile Include="HearthDb\CardIds.cs" />
+    <Compile Include="HearthDb\Cards.cs" />
+    <Compile Include="HearthDb\Enums\Dictionaries.cs" />
+    <Compile Include="HearthDb\Enums\Enums.cs" />
+    <Compile Include="HearthDb\Info.cs" />
+    <Compile Include="HSApp\HSCard.cs" />
+    <Compile Include="HSApp\HSGame.cs" />
+    <Compile Include="HSApp\HSPlayer.cs" />
     <Compile Include="HSImport\Decoder\LoadingScreenDecoder.cs" />
     <Compile Include="HSImport\Decoder\FullScreenFXDecoder.cs" />
     <Compile Include="HSImport\LogHandler.cs" />
@@ -157,7 +148,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>App.Designer.cs</LastGenOutput>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -176,7 +166,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HSGame\Card\" />
+    <Folder Include="HSApp\Card\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -190,12 +180,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HearthDb\CardDefs.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\PostSharp.4.3.31\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.3.31\tools\PostSharp.targets')" />
-  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\packages\PostSharp.4.3.31\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\packages\PostSharp.4.3.31\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

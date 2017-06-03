@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Security.AccessControl;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using PostSharp.Patterns.Threading;
 using THS.Utils;
-using THS.Windows;
-using System.Windows.Forms;
+using THS.HSApp;
 
 namespace THS.HSImport
 {
@@ -25,6 +16,7 @@ namespace THS.HSImport
         private LogReader _fullscreenReader;
         private bool _stop;
         private bool _running;
+        private HSGame _game;
 
         //TCP SHIT
         private TcpClient _tcp;
@@ -37,13 +29,14 @@ namespace THS.HSImport
         private int _count = 0;
         private int _countTCP = 0;
 
-        public LogHandler(Windows.THS ths)
+        public LogHandler(Windows.THS ths, HSGame game)
         {
             _powerReader = new LogReader("Power");
             _rachelleReader = new LogReader("Rachelle");
             _loadingscreenReader = new LogReader("LoadingScreen");
             _fullscreenReader = new LogReader("FullScreenFX");
             _ths = ths;
+            _game = game;
         }
         [Background]
         public void StartLogReader()
@@ -128,8 +121,7 @@ namespace THS.HSImport
         }
 
         private bool _stopServer = true, _serverCreated = false;
-
-        [Background]
+        
         public void ToggleServerLogReader()
         {
             _stopServer = !_stopServer;
@@ -154,8 +146,8 @@ namespace THS.HSImport
                     //IO.LogDebug(line.ToString(),IO.DebugFile.Tcp, false);
 
                 }
-                
-                    ProcessLines(loglines);
+
+                ProcessLines(loglines);
             }
             _running = false;
         }
@@ -224,7 +216,101 @@ namespace THS.HSImport
             for (int i = 0; i < list.Count; i++)
             {
                 line = list[i];
-                line.SortLine();
+                switch (line.LogFile)
+                {
+                    case "Power":
+                        if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.CardIdRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.EntityRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.GameEntityRegex.IsMatch(line.Log)) // Hecho en BlockNull
+                        {
+
+                        }
+                        else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.TagRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.CountRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.BlockNullRegex.IsMatch(line.Log))
+                        {
+                            if (list[++i].Log == "CREATE_GAME")
+                            {
+                                _game.numGE = int.Parse(PowerTaskList.GameEntityRegex.Match(list[++i].Log).Groups["id"].Value);
+                            }
+                        }
+                        else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.CurrentTaskListRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.MetaDataRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.OptionRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.SelectedOptionRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else if (PowerTaskList.TargetRegex.IsMatch(line.Log))
+                        {
+
+                        }
+                        else
+                        {
+                            Utils.IO.LogDebug("NOT PROCESSED: " + line,IO.DebugFile.LogReader,false);
+                        }
+
+                        break;
+                    case "Rachelle":
+                        break;
+                    case "LoadingScreen":
+                        break;
+                    case "FullScreenFX":
+                        break;
+                }
             }
         }
     }

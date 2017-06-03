@@ -48,7 +48,7 @@ namespace THS.HSImport
             }
             else if (line.Log.Equals("CREATE_GAME"))
             {
-
+                
             }
             else if (line.Log.Equals("BLOCK_END"))
             {

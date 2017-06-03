@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
-using THS;
-using THS.HSGame;
-using THS.HSImport;
 using THS.Twitch_Integration;
 using THS.Utils;
 
@@ -25,13 +20,13 @@ namespace THS.Windows
         private Config _configwindow;
 
         //IMPORT SHIT
-        private HsGame _game;
+        private HSApp.HSGame _game;
         public THS()
         {
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            _game = new HsGame(this);
+            _game = new HSApp.HSGame(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
