@@ -32,7 +32,7 @@ namespace THS.HSApp
 
         public void Start()
         {
-            Thread _thread = new Thread(_logHandler.StartLogReader) {IsBackground = true, Name = "LogHandler"};
+            Thread _thread = new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "LogHandler" };
             _thread.Start();
         }
 
@@ -79,6 +79,13 @@ namespace THS.HSApp
             }
         }
 
+        public void AddTagToGame(string tag, int value)
+        {
+            if (!_tagsGE.ContainsKey(tag))
+            {
+                _tagsGE.Add(tag, value);
+            }
+        }
         //Methods that take info from the game
 
     }

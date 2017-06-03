@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using HearthDb.Enums;
+using System.Collections.Generic;
 
 namespace THS.Utils
 {
@@ -72,5 +74,14 @@ namespace THS.Utils
         public static readonly Regex TargetRegex =
             new Regex(@"target (?<target>\d*) entity=(?<entity>.*) error=(?<error>.*) errorParam=(?<errorParam>.*)");
 
+    }
+
+    public class HsConstants
+    {
+        public static Dictionary<string, System.Type> TagTypes = new Dictionary<string, System.Type>
+        {
+            {"ZONE", typeof(Zone)},
+            {"", typeof(bool)},
+        };
     }
 }

@@ -18,12 +18,11 @@ namespace THS.HSImport
         private LogReader _fullscreenReader;
         private bool _stop;
         private bool _running;
-        private HSGame _game;
+        private HSGame _hsGame;
 
         //UI SHIT
         private Windows.THS _ths;
         private int _count = 0;
-        private int _countTCP = 0;
 
         public LogHandler(Windows.THS ths, HSGame game)
         {
@@ -32,7 +31,7 @@ namespace THS.HSImport
             _loadingscreenReader = new LogReader("LoadingScreen");
             _fullscreenReader = new LogReader("FullScreenFX");
             _ths = ths;
-            _game = game;
+            _hsGame = game;
         }
         public void StartLogReader()
         {
@@ -70,6 +69,7 @@ namespace THS.HSImport
             _loadingscreenReader.CopyLog();
         }
 
+        //USELESS
         public ConcurrentQueue<LogLine> GetLogLines()
         {
             LogLine line;
@@ -152,8 +152,16 @@ namespace THS.HSImport
                         temp = GetPowerLine();
                         if (temp.Log == "CREATE_GAME")
                         {
+                            _hsGame.CreateNewGame();
                             temp = GetPowerLine();
-                            _game.numGE = int.Parse(PowerTaskList.GameEntityRegex.Match(temp.Log).Groups["id"].Value);
+                            _hsGame.numGE = int.Parse(PowerTaskList.GameEntityRegex.Match(temp.Log).Groups["id"].Value);
+                            while (PowerTaskList.TagRegex.IsMatch((PeekPowerLine()).Log))
+                            {
+                                temp = GetPowerLine();
+                                var match = PowerTaskList.TagRegex.Match(temp.Log);
+                                _hsGame.AddTagToGame(match.Groups["tag"].Value, (int)Enum.Parse(HsConstants.TagTypes[match.Groups["tag"].Value], match.Groups["value"].Value));
+
+                            }
                         }
                     }
                     else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
@@ -202,12 +210,30 @@ namespace THS.HSImport
 
         private LogLine GetPowerLine()
         {
-
-            LogLine line;
             while (true)
             {
+                LogLine line;
                 if (_powerReader.Lines.TryDequeue(out line))
                 {
+                    //    _count++;
+                    //    _ths.SetText(_ths.LabelRead, _count.ToString());
+                    Utils.IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
+                    return line;
+                }
+
+                Thread.Sleep(0);
+            }
+        }
+        private LogLine PeekPowerLine()
+        {
+            while (true)
+            {
+                LogLine line;
+                if (_powerReader.Lines.TryPeek(out line))
+                {
+                    //    _count++;
+                    //    _ths.SetText(_ths.LabelRead, _count.ToString());
+                    Utils.IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
                     return line;
                 }
 
