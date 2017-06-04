@@ -207,11 +207,11 @@ namespace THS.HSImport
                             {
                                 match = PowerTaskList.FullEntityUpdatingRegex.Match(GetPowerLine().Log);
                                 var id = int.Parse(match.Groups["id"].Value);
-                                var zone = Enum.Parse(typeof(Zone), match.Groups["zone"].Value);
+                                Zone zone = (Zone)Enum.Parse(typeof(Zone), match.Groups["zone"].Value);
                                 var player = int.Parse(match.Groups["player"].Value);
                                 string cardId = match.Groups["cardId"].Value;
                                 var tags = new Dictionary<string, int>();
-                                while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
+                                while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log) && !PowerTaskList.TagChangeRegex.IsMatch(PeekPowerLine().Log))
                                 {
                                     temp = GetPowerLine();
                                     match = PowerTaskList.TagRegex.Match(temp.Log);
@@ -230,6 +230,7 @@ namespace THS.HSImport
                                     }
                                 }
                             }
+
                         }
                     }
                     else if (PowerTaskList.SourceRegex.IsMatch(line.Log))

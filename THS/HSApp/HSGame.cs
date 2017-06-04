@@ -122,15 +122,34 @@ namespace THS.HSApp
             }
         }
 
-        public void CreateCard(int id, object zone, int player, string cardid, Dictionary<string, int> tags)
+        public void CreateCard(int id, Zone zone, int player, string cardid, Dictionary<string, int> tags)
         {
+            var card = new HSCard(id, tags);
+            if (cardid != "")
+            {
+                card.UpdateCard(cardid);
+            }
             if (player == 1)
             {
-                Card a = Cards.All["AT_105"];
+                switch (zone)
+                {
+                    case Zone.DECK:
+                        _deckPlayer.Add(card);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                }
             }
             else if (player == 2)
             {
-
+                switch (zone)
+                {
+                    case Zone.DECK:
+                        _deckOpponent.Add(card);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                }
             }
         }
         //Methods that take info from the game

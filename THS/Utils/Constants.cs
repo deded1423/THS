@@ -86,7 +86,12 @@ namespace THS.Utils
             {"ZONE", typeof(Zone)},
             {"CARDTYPE", typeof(CardType)},
             {"FACTION", typeof(Faction)},
-            {"RARITY", typeof(Rarity)}
+            {"RARITY", typeof(Rarity)},
+            {"STATE", typeof(State)},
+            {"PLAYSTATE", typeof(PlayState)},
+            {"CLASS", typeof(CardClass)},
+            {"CARDRACE", typeof(Race)},
+            {"CARDSET", typeof(CardSet)},
         };
 
         public static int TagToInt(string tag, string value)
