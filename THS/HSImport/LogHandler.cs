@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading;
+using HearthDb.Enums;
 using THS.Utils;
 using THS.HSApp;
 
@@ -99,6 +101,8 @@ namespace THS.HSImport
         public void ProcessPower()
         {
             LogLine line, temp;
+            Match match;
+            string str;
             line = GetPowerLine();
             switch (line.LogFile)
             {
@@ -158,9 +162,62 @@ namespace THS.HSImport
                             while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                             {
                                 temp = GetPowerLine();
-                                var match = PowerTaskList.TagRegex.Match(temp.Log);
-                                _hsGame.AddTagToGame(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
+                                match = PowerTaskList.TagRegex.Match(temp.Log);
+                                _hsGame.AddTagToGame(match.Groups["tag"].Value, match.Groups["value"].Value);
 
+                            }
+                            //PLAYER
+                            match = PowerTaskList.PlayerEntityRegex.Match(GetPowerLine().Log);
+                            str = match.Groups["playerId"].Value;
+                            if (int.Parse(str) == 2)
+                            {
+                                _hsGame._opponent.playerID = match.Groups["gameAccountId"].Value;
+                            }
+                            else if (int.Parse(str) == 1)
+                            {
+                                _hsGame._player.playerID = match.Groups["gameAccountId"].Value;
+                            }
+                            while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
+                            {
+                                temp = GetPowerLine();
+                                match = PowerTaskList.TagRegex.Match(temp.Log);
+                                _hsGame.AddTagToPlayer(match.Groups["tag"].Value, match.Groups["value"].Value, str);
+
+                            }
+                            //OPPONENT
+                            match = PowerTaskList.PlayerEntityRegex.Match(GetPowerLine().Log);
+                            str = match.Groups["playerId"].Value;
+                            if (int.Parse(str) == 2)
+                            {
+                                _hsGame._opponent.playerID = match.Groups["gameAccountId"].Value;
+                            }
+                            else if (int.Parse(str) == 1)
+                            {
+                                _hsGame._player.playerID = match.Groups["gameAccountId"].Value;
+                            }
+                            while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
+                            {
+                                temp = GetPowerLine();
+                                match = PowerTaskList.TagRegex.Match(temp.Log);
+                                _hsGame.AddTagToPlayer(match.Groups["tag"].Value, match.Groups["value"].Value, str);
+
+                            }
+                            //CARDS
+                            while (PowerTaskList.FullEntityUpdatingRegex.IsMatch(PeekPowerLine().Log))
+                            {
+                                match = PowerTaskList.FullEntityUpdatingRegex.Match(GetPowerLine().Log);
+                                var id = int.Parse(match.Groups["id"].Value);
+                                var zone = Enum.Parse(typeof(Zone), match.Groups["zone"].Value);
+                                var player = int.Parse(match.Groups["player"].Value);
+                                var cardId = match.Groups["cardId"].Value == "" ? 0 : int.Parse(match.Groups["cardId"].Value);
+                                var tags = new Dictionary<string, int>();
+                                while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
+                                {
+                                    temp = GetPowerLine();
+                                    match = PowerTaskList.TagRegex.Match(temp.Log);
+                                    tags.Add(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
+                                }
+                                _hsGame.UpdateCard(id, zone, player, cardId, tags);
                             }
                         }
                     }

@@ -36,7 +36,7 @@ namespace THS.Utils
         public static readonly Regex CardIdRegex =
             new Regex(@"cardId=(?<cardId>(\w+))");
         public static readonly Regex FullEntityUpdatingRegex =
-            new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*CardID=(?<cardId>(\w*))");
+            new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*player=(?<player>(\w*)).*CardID=(?<cardId>(\w*))");
         public static readonly Regex TagRegex =
             new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 

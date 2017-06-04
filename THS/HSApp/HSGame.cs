@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using HearthDb.Enums;
 using THS.HSImport;
+using THS.Utils;
 
 namespace THS.HSApp
 {
@@ -19,8 +21,8 @@ namespace THS.HSApp
         List<HSCard> _deckOpponent = new List<HSCard>();
 
         //Other
-        HSPlayer _player;
-        HSPlayer _opponent;
+        public HSPlayer _player;
+        public HSPlayer _opponent;
 
         //Game Entity
         Dictionary<string, int> _tagsGE = new Dictionary<string, int>();
@@ -29,6 +31,8 @@ namespace THS.HSApp
         public HSGame(Windows.THS ths)
         {
             _logHandler = new LogHandler(ths, this);
+            _player = new HSPlayer();
+            _opponent = new HSPlayer();
         }
 
         public void Start()
@@ -42,7 +46,7 @@ namespace THS.HSApp
             _logHandler.Stop();
         }
 
-        //Methods that do sthg to the game
+        //Methods that do something to the game
         public void CreateNewGame()
         {
             _handPlayer.Clear();
@@ -80,12 +84,42 @@ namespace THS.HSApp
             }
         }
 
-        public void AddTagToGame(string tag, int value)
+        public void AddTagToGame(string tag, string value)
         {
             if (!_tagsGE.ContainsKey(tag))
             {
-                _tagsGE.Add(tag, value);
+                _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
             }
+        }
+        public void RemoveTagFromGame(string tag)
+        {
+            if (_tagsGE.ContainsKey(tag))
+            {
+                _tagsGE.Remove(tag);
+            }
+        }
+        public void ChangeTagFromGame(string tag, string value)
+        {
+            if (_tagsGE.ContainsKey(tag))
+            {
+                _tagsGE[tag] = HsConstants.TagToInt(tag, value);
+            }
+        }
+        public void AddTagToPlayer(string value, string s, string player)
+        {
+            if (int.Parse(player) == 2)
+            {
+                _opponent.AddTag(value, s);
+            }
+            else if (int.Parse(player) == 1)
+            {
+                _player.AddTag(value, s);
+            }
+        }
+
+        public void UpdateCard(int id, object zone, int player, int cardid, Dictionary<string, int> tags)
+        {
+            
         }
         //Methods that take info from the game
 
