@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
+using HearthDb.Enums;
 using THS.Utils;
 
 namespace THS.HSApp
 {
     public class HSPlayer
     {
+        //INFO
+        public string playerID;
+        public string gameAccountId;
+        public string CardClass;
+
+        //GAME
         private List<HSCard> Hand { get; set; }
         private List<HSCard> Graveyard { get; set; }
         private List<HSCard> Deck { get; set; }
         private Dictionary<string, int> Tags = new Dictionary<string, int>();
-        public string playerID;
 
         public HSPlayer()
         {
@@ -39,5 +45,13 @@ namespace THS.HSApp
                 Tags[tag] = HsConstants.TagToInt(tag, value);
             }
         }
+
+        //TAGS RELATED
+
+        public int GetHealth()
+        {
+            return Tags["HEALTH"];
+        }
+
     }
 }

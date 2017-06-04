@@ -84,7 +84,9 @@ namespace THS.Utils
         public static Dictionary<string, System.Type> TagTypes = new Dictionary<string, System.Type>
         {
             {"ZONE", typeof(Zone)},
-            {"CARDTYPE", typeof(CardType)}
+            {"CARDTYPE", typeof(CardType)},
+            {"FACTION", typeof(Faction)},
+            {"RARITY", typeof(Rarity)}
         };
 
         public static int TagToInt(string tag, string value)
@@ -94,7 +96,7 @@ namespace THS.Utils
             {
                 return temp;
             }
-            return (int)Enum.Parse(TagTypes[tag],value);
+            return (int)Enum.Parse(TagTypes[tag], value);
         }
     }
 }

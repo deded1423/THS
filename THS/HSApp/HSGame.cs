@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using HearthDb;
+using HearthDb.CardDefs;
 using HearthDb.Enums;
+using THS.HearthDb;
 using THS.HSImport;
 using THS.Utils;
 
@@ -57,6 +60,8 @@ namespace THS.HSApp
             _deckOpponent.Clear();
             _tagsGE.Clear();
             numGE = 0;
+            _player = new HSPlayer();
+            _opponent = new HSPlayer();
 
             Utils.IO.LogDebug("Game Created", Utils.IO.DebugFile.Hs);
         }
@@ -117,9 +122,16 @@ namespace THS.HSApp
             }
         }
 
-        public void UpdateCard(int id, object zone, int player, int cardid, Dictionary<string, int> tags)
+        public void CreateCard(int id, object zone, int player, string cardid, Dictionary<string, int> tags)
         {
-            
+            if (player == 1)
+            {
+                Card a = Cards.All["AT_105"];
+            }
+            else if (player == 2)
+            {
+
+            }
         }
         //Methods that take info from the game
 

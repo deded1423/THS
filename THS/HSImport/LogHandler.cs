@@ -189,11 +189,11 @@ namespace THS.HSImport
                             str = match.Groups["playerId"].Value;
                             if (int.Parse(str) == 2)
                             {
-                                _hsGame._opponent.playerID = match.Groups["gameAccountId"].Value;
+                                _hsGame._opponent.gameAccountId = match.Groups["gameAccountId"].Value;
                             }
                             else if (int.Parse(str) == 1)
                             {
-                                _hsGame._player.playerID = match.Groups["gameAccountId"].Value;
+                                _hsGame._player.gameAccountId = match.Groups["gameAccountId"].Value;
                             }
                             while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                             {
@@ -209,7 +209,7 @@ namespace THS.HSImport
                                 var id = int.Parse(match.Groups["id"].Value);
                                 var zone = Enum.Parse(typeof(Zone), match.Groups["zone"].Value);
                                 var player = int.Parse(match.Groups["player"].Value);
-                                var cardId = match.Groups["cardId"].Value == "" ? 0 : int.Parse(match.Groups["cardId"].Value);
+                                string cardId = match.Groups["cardId"].Value;
                                 var tags = new Dictionary<string, int>();
                                 while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                                 {
@@ -217,7 +217,18 @@ namespace THS.HSImport
                                     match = PowerTaskList.TagRegex.Match(temp.Log);
                                     tags.Add(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
                                 }
-                                _hsGame.UpdateCard(id, zone, player, cardId, tags);
+                                if (cardId == "")
+                                {
+                                    _hsGame.CreateCard(id, zone, player, cardId, tags);
+                                }
+                                else
+                                {
+                                    if (player == 1)
+                                    {
+                                        _hsGame._player.playerID = id.ToString();
+                                        _hsGame._player.CardClass = cardId;
+                                    }
+                                }
                             }
                         }
                     }
