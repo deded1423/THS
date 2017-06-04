@@ -155,11 +155,11 @@ namespace THS.HSImport
                             _hsGame.CreateNewGame();
                             temp = GetPowerLine();
                             _hsGame.numGE = int.Parse(PowerTaskList.GameEntityRegex.Match(temp.Log).Groups["id"].Value);
-                            while (PowerTaskList.TagRegex.IsMatch((PeekPowerLine()).Log))
+                            while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                             {
                                 temp = GetPowerLine();
                                 var match = PowerTaskList.TagRegex.Match(temp.Log);
-                                _hsGame.AddTagToGame(match.Groups["tag"].Value, (int)Enum.Parse(HsConstants.TagTypes[match.Groups["tag"].Value], match.Groups["value"].Value));
+                                _hsGame.AddTagToGame(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
 
                             }
                         }

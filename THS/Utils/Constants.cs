@@ -1,6 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.CodeDom.Compiler;
+using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using System.Collections.Generic;
+using Type = System.Type;
 
 namespace THS.Utils
 {
@@ -81,7 +84,17 @@ namespace THS.Utils
         public static Dictionary<string, System.Type> TagTypes = new Dictionary<string, System.Type>
         {
             {"ZONE", typeof(Zone)},
-            {"", typeof(bool)},
+            {"CARDTYPE", typeof(CardType)}
         };
+
+        public static int TagToInt(string tag, string value)
+        {
+            int temp;
+            if (int.TryParse(value, out temp))
+            {
+                return temp;
+            }
+            return (int)Enum.Parse(TagTypes[tag],value);
+        }
     }
 }
