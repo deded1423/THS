@@ -7,9 +7,12 @@ namespace THS.HSApp
     public class HSPlayer
     {
         //INFO
-        public string playerID;
-        public string gameAccountId;
+        public string PlayerId;
+        public string PlayerName;
+        public string GameAccountId;
         public string CardClass;
+        public HSCard HeroPower;
+
 
         //GAME
         private List<HSCard> Hand { get; set; }
@@ -28,6 +31,7 @@ namespace THS.HSApp
         {
             if (!Tags.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Added player " + PlayerId + " tag" + tag + " " + value, IO.DebugFile.Hs);
                 Tags.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
@@ -35,6 +39,7 @@ namespace THS.HSApp
         {
             if (Tags.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Removed player " + PlayerId + " tag" + tag + " " + Tags[tag], IO.DebugFile.Hs);
                 Tags.Remove(tag);
             }
         }
@@ -42,7 +47,12 @@ namespace THS.HSApp
         {
             if (Tags.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Changed player " + PlayerId + " tag" + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs);
                 Tags[tag] = HsConstants.TagToInt(tag, value);
+            }
+            else
+            {
+                AddTag(tag, value);
             }
         }
 

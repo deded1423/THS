@@ -44,6 +44,7 @@ namespace THS.HSApp
         public void UpdateCard(string cardid)
         {
             Card = Cards.All[cardid];
+            Utils.IO.LogDebug("Updated card " + cardid, IO.DebugFile.Hs);
         }
     }
 }

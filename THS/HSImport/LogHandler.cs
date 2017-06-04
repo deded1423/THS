@@ -171,11 +171,13 @@ namespace THS.HSImport
                             str = match.Groups["playerId"].Value;
                             if (int.Parse(str) == 2)
                             {
-                                _hsGame._opponent.playerID = match.Groups["gameAccountId"].Value;
+                                _hsGame._opponent.PlayerId = match.Groups["gameAccountId"].Value;
+                                Utils.IO.LogDebug("Updated opponentId: " + match.Groups["gameAccountId"].Value);
                             }
                             else if (int.Parse(str) == 1)
                             {
-                                _hsGame._player.playerID = match.Groups["gameAccountId"].Value;
+                                _hsGame._player.PlayerId = match.Groups["gameAccountId"].Value;
+                                Utils.IO.LogDebug("Updated playerId: " + match.Groups["gameAccountId"].Value);
                             }
                             while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                             {
@@ -189,11 +191,13 @@ namespace THS.HSImport
                             str = match.Groups["playerId"].Value;
                             if (int.Parse(str) == 2)
                             {
-                                _hsGame._opponent.gameAccountId = match.Groups["gameAccountId"].Value;
+                                _hsGame._opponent.GameAccountId = match.Groups["gameAccountId"].Value;
+                                Utils.IO.LogDebug("Updated opponentId: " + match.Groups["gameAccountId"].Value);
                             }
                             else if (int.Parse(str) == 1)
                             {
-                                _hsGame._player.gameAccountId = match.Groups["gameAccountId"].Value;
+                                _hsGame._player.GameAccountId = match.Groups["gameAccountId"].Value;
+                                Utils.IO.LogDebug("Updated playerId: " + match.Groups["gameAccountId"].Value);
                             }
                             while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log))
                             {
@@ -217,19 +221,55 @@ namespace THS.HSImport
                                     match = PowerTaskList.TagRegex.Match(temp.Log);
                                     tags.Add(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
                                 }
-                                if (cardId == "")
+                                if (cardId == "" || (!cardId.Contains("HERO") && !cardId.Contains("CS2")))
                                 {
                                     _hsGame.CreateCard(id, zone, player, cardId, tags);
+                                }
+                                else if (cardId.Contains("CS2"))
+                                {
+                                    if (player == 1)
+                                    {
+                                        var hp = new HSCard(id, tags);
+                                        hp.UpdateCard(cardId);
+                                        _hsGame._player.HeroPower = hp;
+                                        Utils.IO.LogDebug("Updated HP of player: " + cardId + " Class: " + cardId);
+                                    }
+                                    else if (player == 2)
+                                    {
+                                        var hp = new HSCard(id, tags);
+                                        hp.UpdateCard(cardId);
+                                        _hsGame._opponent.HeroPower = hp;
+                                        Utils.IO.LogDebug("Updated HP of player: " + cardId + " Class: " + cardId);
+                                    }
                                 }
                                 else
                                 {
                                     if (player == 1)
                                     {
-                                        _hsGame._player.playerID = id.ToString();
+                                        _hsGame._player.PlayerId = id.ToString();
                                         _hsGame._player.CardClass = cardId;
+                                        Utils.IO.LogDebug("Updated playerId: " + id + " Class: " + cardId);
+                                    }
+                                    else if (player == 2)
+                                    {
+                                        _hsGame._opponent.PlayerId = id.ToString();
+                                        _hsGame._opponent.CardClass = cardId;
+                                        Utils.IO.LogDebug("Updated OpponentId: " + id + " Class:" + cardId);
                                     }
                                 }
                             }
+                            //TAG CHANGE
+                            match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
+                            _hsGame.ChangeTagFromGame(match.Groups["tag"].Value, match.Groups["value"].Value);
+
+                            match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
+                            _hsGame._player.PlayerName = match.Groups["entity"].Value;
+                            _hsGame._player.ChangeTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+
+                            match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
+                            _hsGame._opponent.PlayerName = match.Groups["entity"].Value;
+                            _hsGame._opponent.ChangeTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+
 
                         }
                     }
@@ -302,7 +342,6 @@ namespace THS.HSImport
                 {
                     //    _count++;
                     //    _ths.SetText(_ths.LabelRead, _count.ToString());
-                    Utils.IO.LogDebug(line.ToString(), IO.DebugFile.LogReader, false);
                     return line;
                 }
 

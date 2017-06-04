@@ -20,6 +20,8 @@ namespace THS.HSApp
         List<HSCard> _handOpponent = new List<HSCard>();
         List<HSCard> _graveyardPlayer = new List<HSCard>();
         List<HSCard> _graveyardOpponent = new List<HSCard>();
+        List<HSCard> _setasidePlayer = new List<HSCard>();
+        List<HSCard> _setasideOpponent = new List<HSCard>();
         List<HSCard> _deckPlayer = new List<HSCard>();
         List<HSCard> _deckOpponent = new List<HSCard>();
 
@@ -93,6 +95,7 @@ namespace THS.HSApp
         {
             if (!_tagsGE.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
                 _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
@@ -100,6 +103,7 @@ namespace THS.HSApp
         {
             if (_tagsGE.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Removed GameEntityTag " + tag + " " + _tagsGE[tag], IO.DebugFile.Hs);
                 _tagsGE.Remove(tag);
             }
         }
@@ -107,23 +111,31 @@ namespace THS.HSApp
         {
             if (_tagsGE.ContainsKey(tag))
             {
+                Utils.IO.LogDebug("Changed GameEntityTag " + tag + " from " + _tagsGE[tag] + " to " + value, IO.DebugFile.Hs);
                 _tagsGE[tag] = HsConstants.TagToInt(tag, value);
+            }
+            else
+            {
+                AddTagToGame(tag, value);
             }
         }
         public void AddTagToPlayer(string value, string s, string player)
         {
             if (int.Parse(player) == 2)
             {
+                Utils.IO.LogDebug("Added OpponentTag " + s + " " + value, IO.DebugFile.Hs);
                 _opponent.AddTag(value, s);
             }
             else if (int.Parse(player) == 1)
             {
+                Utils.IO.LogDebug("Added PlayerTag " + s + " " + value, IO.DebugFile.Hs);
                 _player.AddTag(value, s);
             }
         }
 
         public void CreateCard(int id, Zone zone, int player, string cardid, Dictionary<string, int> tags)
         {
+            Utils.IO.LogDebug("Creating card: " + id + " zone: " + zone + " player: " + player + " cardId: " + cardid, IO.DebugFile.Hs);
             var card = new HSCard(id, tags);
             if (cardid != "")
             {
@@ -136,6 +148,9 @@ namespace THS.HSApp
                     case Zone.DECK:
                         _deckPlayer.Add(card);
                         break;
+                    case Zone.SETASIDE:
+                        _setasidePlayer.Add(card);
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
                 }
@@ -146,6 +161,9 @@ namespace THS.HSApp
                 {
                     case Zone.DECK:
                         _deckOpponent.Add(card);
+                        break;
+                    case Zone.SETASIDE:
+                        _setasidePlayer.Add(card);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
