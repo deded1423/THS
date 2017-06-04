@@ -29,9 +29,14 @@ namespace THS.HSApp
 
         public void AddTag(string tag, string value)
         {
-            if (!Tags.ContainsKey(tag))
+            if (Tags.ContainsKey(tag))
             {
-                Utils.IO.LogDebug("Added player " + PlayerId + " tag" + tag + " " + value, IO.DebugFile.Hs);
+                Utils.IO.LogDebug("Changed player " + PlayerId + " tag " + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs);
+                Tags[tag] = HsConstants.TagToInt(tag, value);
+            }
+            else
+            {
+                Utils.IO.LogDebug("Added player " + PlayerId + " tag " + tag + " " + value, IO.DebugFile.Hs);
                 Tags.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
@@ -39,22 +44,11 @@ namespace THS.HSApp
         {
             if (Tags.ContainsKey(tag))
             {
-                Utils.IO.LogDebug("Removed player " + PlayerId + " tag" + tag + " " + Tags[tag], IO.DebugFile.Hs);
+                Utils.IO.LogDebug("Removed player " + PlayerId + " tag " + tag + " " + Tags[tag], IO.DebugFile.Hs);
                 Tags.Remove(tag);
             }
         }
-        public void ChangeTag(string tag, string value)
-        {
-            if (Tags.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Changed player " + PlayerId + " tag" + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs);
-                Tags[tag] = HsConstants.TagToInt(tag, value);
-            }
-            else
-            {
-                AddTag(tag, value);
-            }
-        }
+
 
         //TAGS RELATED
 

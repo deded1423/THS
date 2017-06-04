@@ -137,7 +137,15 @@ namespace THS.HSImport
                     }
                     else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
                     {
+                        match = PowerTaskList.TagChangeRegex.Match(line.Log);
+                        if (match.Groups["entity"].Value == "GameEntity")
+                        {
+                            _hsGame.AddTagToGame(match.Groups["tag"].Value, match.Groups["value"].Value);
+                        }
+                        else
+                        {
 
+                        }
                     }
                     else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
                     {
@@ -260,15 +268,15 @@ namespace THS.HSImport
                             }
                             //TAG CHANGE
                             match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
-                            _hsGame.ChangeTagFromGame(match.Groups["tag"].Value, match.Groups["value"].Value);
+                            _hsGame.AddTagToGame(match.Groups["tag"].Value, match.Groups["value"].Value);
 
                             match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
                             _hsGame._player.PlayerName = match.Groups["entity"].Value;
-                            _hsGame._player.ChangeTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                            _hsGame._player.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
 
                             match = PowerTaskList.TagChangeRegex.Match(GetPowerLine().Log);
                             _hsGame._opponent.PlayerName = match.Groups["entity"].Value;
-                            _hsGame._opponent.ChangeTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                            _hsGame._opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
 
 
                         }

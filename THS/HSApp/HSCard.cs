@@ -25,19 +25,16 @@ namespace THS.HSApp
             {
                 Tags.Add(tag, HsConstants.TagToInt(tag, value));
             }
+            else
+            {
+                Tags[tag] = HsConstants.TagToInt(tag, value);
+            }
         }
         public void RemoveTag(string tag)
         {
             if (Tags.ContainsKey(tag))
             {
                 Tags.Remove(tag);
-            }
-        }
-        public void ChangeTag(string tag, string value)
-        {
-            if (Tags.ContainsKey(tag))
-            {
-                Tags[tag] = HsConstants.TagToInt(tag, value);
             }
         }
 

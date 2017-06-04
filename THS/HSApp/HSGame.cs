@@ -91,14 +91,6 @@ namespace THS.HSApp
             }
         }
 
-        public void AddTagToGame(string tag, string value)
-        {
-            if (!_tagsGE.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
-                _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
-            }
-        }
         public void RemoveTagFromGame(string tag)
         {
             if (_tagsGE.ContainsKey(tag))
@@ -107,7 +99,7 @@ namespace THS.HSApp
                 _tagsGE.Remove(tag);
             }
         }
-        public void ChangeTagFromGame(string tag, string value)
+        public void AddTagToGame(string tag, string value)
         {
             if (_tagsGE.ContainsKey(tag))
             {
@@ -116,7 +108,8 @@ namespace THS.HSApp
             }
             else
             {
-                AddTagToGame(tag, value);
+                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
+                _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
         public void AddTagToPlayer(string value, string s, string player)
@@ -172,5 +165,9 @@ namespace THS.HSApp
         }
         //Methods that take info from the game
 
+        public Step GetStep()
+        {
+            return (Step) _tagsGE["STEP"];
+        }
     }
 }

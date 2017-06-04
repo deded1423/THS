@@ -61,7 +61,7 @@ namespace THS.Utils
         public static readonly Regex CountRegex =
             new Regex(@"Count=(?<id>(\d*))");
         public static readonly Regex BlockNullRegex =
-            new Regex(@"Block (Start|End)=\(null\)");
+            new Regex(@"Block Start=\(null\)");
         public static readonly Regex CurrentTaskListRegex =
             new Regex(@"m_currentTaskList=(?<id>\d*)");
         public static readonly Regex SourceRegex =
@@ -92,6 +92,8 @@ namespace THS.Utils
             {"CLASS", typeof(CardClass)},
             {"CARDRACE", typeof(Race)},
             {"CARDSET", typeof(CardSet)},
+            {"STEP", typeof(Step)},
+            {"NEXT_STEP", typeof(Step)},
         };
 
         public static int TagToInt(string tag, string value)
