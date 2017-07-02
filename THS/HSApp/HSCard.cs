@@ -18,16 +18,30 @@ namespace THS.HSApp
             Tags = tags;
         }
 
+        public override string ToString()
+        {
+            if (Card != null)
+            {
+
+                return "ID: " + id + ", Card: " + Card.Id;
+            }
+            else
+            {
+                return "ID: " + id;
+            }
+        }
 
         public void AddTag(string tag, string value)
         {
             if (!Tags.ContainsKey(tag))
             {
                 Tags.Add(tag, HsConstants.TagToInt(tag, value));
+                Utils.IO.LogDebug("Added Tag " + tag + " " + value, IO.DebugFile.Hs, false);
             }
             else
             {
                 Tags[tag] = HsConstants.TagToInt(tag, value);
+                Utils.IO.LogDebug("Changed Tag " + tag + " " + value, IO.DebugFile.Hs, false);
             }
         }
         public void RemoveTag(string tag)
@@ -35,13 +49,14 @@ namespace THS.HSApp
             if (Tags.ContainsKey(tag))
             {
                 Tags.Remove(tag);
+                Utils.IO.LogDebug("Removed Tag " + tag + " " + Tags[tag], IO.DebugFile.Hs, false);
             }
         }
 
         public void UpdateCard(string cardid)
         {
             Card = Cards.All[cardid];
-            Utils.IO.LogDebug("Updated card " + cardid, IO.DebugFile.Hs);
+            Utils.IO.LogDebug("Updated card " + id + " " + cardid, IO.DebugFile.Hs);
         }
     }
 }

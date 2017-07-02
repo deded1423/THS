@@ -31,7 +31,7 @@ namespace THS.Utils
     public static class PowerTaskList
     {
         public static readonly Regex BlockStartRegex =
-            new Regex(@"BLOCK_START.*BlockType=((?<type>(POWER|TRIGGER|DEATHS)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>[\d-]*))");
+            new Regex(@"BLOCK_START BlockType=((?<type>(POWER|TRIGGER|DEATHS|ATTACK)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>[\d-]*))");
 
         public static readonly Regex CardIdRegex =
             new Regex(@"cardId=(?<cardId>(\w+))");
@@ -79,6 +79,15 @@ namespace THS.Utils
 
     }
 
+    public static class LogRegex
+    {
+        public static readonly Regex EntityAttackRegex =
+            new Regex(@"\[name=(?<name>.*) id=(?<id>.*) zone=(?<zone>.*) zonePos=(?<zonePos>.*) cardId=(?<cardId>.*) player=(?<player>.*)\]");
+        public static readonly Regex BlockStartRegex =
+            new Regex(@"BLOCK_START.*BlockType=((?<type>(POWER|TRIGGER|DEATHS|ATTACK)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>[\d-]*))");
+    }
+
+
     public class HsConstants
     {
         public static Dictionary<string, System.Type> TagTypes = new Dictionary<string, System.Type>
@@ -94,6 +103,7 @@ namespace THS.Utils
             {"CARDSET", typeof(CardSet)},
             {"STEP", typeof(Step)},
             {"NEXT_STEP", typeof(Step)},
+            {"MULLIGAN_STATE", typeof(Mulligan)},
         };
 
         public static int TagToInt(string tag, string value)

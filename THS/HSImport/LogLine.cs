@@ -63,20 +63,6 @@ namespace THS.HSImport
             return "LF: " + LogFile + " / P: " + Process + " / L: " + Log + " / " + Line;
         }
 
-        public void SortLine()
-        {
-            switch (LogFile)
-            {
-                case "Power":
-                    PowerDecoder.Decode(this);
-                    break;
-                case "Rachelle":
-                    break;
-                case "LoadingScreen":
-                    break;
-                case "FullScreenFX":
-                    break;
-            }
-        }
     }
 }
+

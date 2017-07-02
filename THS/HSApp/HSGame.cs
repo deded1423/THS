@@ -7,6 +7,7 @@ using HearthDb.Enums;
 using THS.HearthDb;
 using THS.HSImport;
 using THS.Utils;
+using Type = HearthDb.Enums.Type;
 
 namespace THS.HSApp
 {
@@ -18,12 +19,15 @@ namespace THS.HSApp
 
         List<HSCard> _handPlayer = new List<HSCard>();
         List<HSCard> _handOpponent = new List<HSCard>();
+        List<HSCard> _playedPlayer = new List<HSCard>();
+        List<HSCard> _playedOpponent = new List<HSCard>();
         List<HSCard> _graveyardPlayer = new List<HSCard>();
         List<HSCard> _graveyardOpponent = new List<HSCard>();
         List<HSCard> _setasidePlayer = new List<HSCard>();
         List<HSCard> _setasideOpponent = new List<HSCard>();
         List<HSCard> _deckPlayer = new List<HSCard>();
         List<HSCard> _deckOpponent = new List<HSCard>();
+        List<HSCard> _enchantmentHsCards = new List<HSCard>();
 
         //Other
         public HSPlayer _player;
@@ -112,17 +116,15 @@ namespace THS.HSApp
                 _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
-        public void AddTagToPlayer(string value, string s, string player)
+        public void AddTagToPlayer(string s, string value, string player)
         {
-            if (int.Parse(player) == 2)
+            if (int.Parse(player) == 2 || player.Equals("opponent"))
             {
-                Utils.IO.LogDebug("Added OpponentTag " + s + " " + value, IO.DebugFile.Hs);
-                _opponent.AddTag(value, s);
+                _opponent.AddTag(s, value);
             }
-            else if (int.Parse(player) == 1)
+            else if (int.Parse(player) == 1 || player.Equals("player"))
             {
-                Utils.IO.LogDebug("Added PlayerTag " + s + " " + value, IO.DebugFile.Hs);
-                _player.AddTag(value, s);
+                _player.AddTag(s, value);
             }
         }
 
@@ -136,38 +138,80 @@ namespace THS.HSApp
             }
             if (player == 1)
             {
-                switch (zone)
+                if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    case Zone.DECK:
-                        _deckPlayer.Add(card);
-                        break;
-                    case Zone.SETASIDE:
-                        _setasidePlayer.Add(card);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                    _player.AddHeroPower(card);
+                }
+                else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
+                {
+                    _enchantmentHsCards.Add(card);
+                }
+                else
+                {
+                    switch (zone)
+                    {
+                        case Zone.DECK:
+                            _deckPlayer.Add(card);
+                            break;
+                        case Zone.SETASIDE:
+                            _setasidePlayer.Add(card);
+                            break;
+                        case Zone.HAND:
+                            _handPlayer.Add(card);
+                            break;
+                        case Zone.GRAVEYARD:
+                            _graveyardPlayer.Add(card);
+                            break;
+                        case Zone.PLAY:
+                            _playedPlayer.Add(card);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                    }
                 }
             }
             else if (player == 2)
             {
-                switch (zone)
+                if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    case Zone.DECK:
-                        _deckOpponent.Add(card);
-                        break;
-                    case Zone.SETASIDE:
-                        _setasidePlayer.Add(card);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                    _opponent.AddHeroPower(card);
+
+                }
+                else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
+                {
+                    _enchantmentHsCards.Add(card);
+                }
+                else
+                {
+                    switch (zone)
+                    {
+                        case Zone.DECK:
+                            _deckOpponent.Add(card);
+                            break;
+                        case Zone.SETASIDE:
+                            _setasidePlayer.Add(card);
+                            break;
+                        case Zone.HAND:
+                            _handOpponent.Add(card);
+                            break;
+                        case Zone.GRAVEYARD:
+                            _graveyardOpponent.Add(card);
+                            break;
+                        case Zone.PLAY:
+                            _playedOpponent.Add(card);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
+                    }
                 }
             }
         }
+
         //Methods that take info from the game
 
         public Step GetStep()
         {
-            return (Step) _tagsGE["STEP"];
+            return (Step)_tagsGE["STEP"];
         }
     }
 }

@@ -49,7 +49,10 @@ namespace THS.HSApp
             }
         }
 
-
+        public void AddHeroPower(HSCard hp)
+        {
+            HeroPower = hp;
+        }
         //TAGS RELATED
 
         public int GetHealth()
