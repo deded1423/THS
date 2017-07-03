@@ -19,6 +19,7 @@ namespace THS.HSApp
         private List<HSCard> Graveyard { get; set; }
         private List<HSCard> Deck { get; set; }
         private Dictionary<string, int> Tags = new Dictionary<string, int>();
+        public HSCard Hero;
 
         public HSPlayer()
         {
@@ -31,12 +32,12 @@ namespace THS.HSApp
         {
             if (Tags.ContainsKey(tag))
             {
-                Utils.IO.LogDebug("Changed player " + PlayerId + " tag " + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs);
+                Utils.IO.LogDebug("Changed player " + PlayerId + " tag " + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs, false);
                 Tags[tag] = HsConstants.TagToInt(tag, value);
             }
             else
             {
-                Utils.IO.LogDebug("Added player " + PlayerId + " tag " + tag + " " + value, IO.DebugFile.Hs);
+                Utils.IO.LogDebug("Added player " + PlayerId + " tag " + tag + " " + value, IO.DebugFile.Hs, false);
                 Tags.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
@@ -52,6 +53,7 @@ namespace THS.HSApp
         public void AddHeroPower(HSCard hp)
         {
             HeroPower = hp;
+            Utils.IO.LogDebug("Updated HP of player: " + PlayerId + " Class: " + hp.Card.Class);
         }
         //TAGS RELATED
 

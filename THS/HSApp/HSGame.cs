@@ -128,10 +128,10 @@ namespace THS.HSApp
             }
         }
 
-        public void CreateCard(int id, Zone zone, int player, string cardid, Dictionary<string, int> tags)
+        public HSCard CreateCard(int id, Zone zone, int player, string cardid)
         {
             Utils.IO.LogDebug("Creating card: " + id + " zone: " + zone + " player: " + player + " cardId: " + cardid, IO.DebugFile.Hs);
-            var card = new HSCard(id, tags);
+            var card = new HSCard(id);
             if (cardid != "")
             {
                 card.UpdateCard(cardid);
@@ -145,6 +145,11 @@ namespace THS.HSApp
                 else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
                 {
                     _enchantmentHsCards.Add(card);
+                }
+                else if (card.Card != null && card.Card.Type == CardType.HERO)
+                {
+                    _player.Hero = card;
+                    Utils.IO.LogDebug("Updated hero: " + _player.PlayerId + " Hero: " + card.Card.Name);
                 }
                 else
                 {
@@ -169,6 +174,7 @@ namespace THS.HSApp
                             throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
                     }
                 }
+
             }
             else if (player == 2)
             {
@@ -181,6 +187,11 @@ namespace THS.HSApp
                 {
                     _enchantmentHsCards.Add(card);
                 }
+                else if (card.Card != null && card.Card.Type == CardType.HERO)
+                {
+                    _opponent.Hero = card;
+                    Utils.IO.LogDebug("Updated hero: " + _opponent.PlayerId + " Hero: " + card.Card.Name);
+                }
                 else
                 {
                     switch (zone)
@@ -189,7 +200,7 @@ namespace THS.HSApp
                             _deckOpponent.Add(card);
                             break;
                         case Zone.SETASIDE:
-                            _setasidePlayer.Add(card);
+                            _setasideOpponent.Add(card);
                             break;
                         case Zone.HAND:
                             _handOpponent.Add(card);
@@ -205,6 +216,7 @@ namespace THS.HSApp
                     }
                 }
             }
+            return card;
         }
 
         //Methods that take info from the game

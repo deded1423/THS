@@ -134,54 +134,20 @@ namespace THS.HSImport
                     }
                     else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
                     {
-                        match = PowerTaskList.FullEntityUpdatingRegex.Match(GetPowerLine().Log);
+                        match = PowerTaskList.FullEntityUpdatingRegex.Match(line.Log);
                         var id = int.Parse(match.Groups["id"].Value);
                         Zone zone = (Zone)Enum.Parse(typeof(Zone), match.Groups["zone"].Value);
                         var player = int.Parse(match.Groups["player"].Value);
                         string cardId = match.Groups["cardId"].Value;
-                        var tags = new Dictionary<string, int>();
+
+                        var card = _hsGame.CreateCard(id, zone, player, cardId);
                         while (PowerTaskList.TagRegex.IsMatch(PeekPowerLine().Log) && !PowerTaskList.TagChangeRegex.IsMatch(PeekPowerLine().Log))
                         {
                             temp = GetPowerLine();
                             match = PowerTaskList.TagRegex.Match(temp.Log);
-                            tags.Add(match.Groups["tag"].Value, HsConstants.TagToInt(match.Groups["tag"].Value, match.Groups["value"].Value));
+                            card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
                         }
-                        if (cardId == "" || (!cardId.Contains("HERO") && !cardId.Contains("CS2")))
-                        {
-                            _hsGame.CreateCard(id, zone, player, cardId, tags);
-                        }
-                        else if (cardId.Contains("CS2"))
-                        {
-                            if (player == 1)
-                            {
-                                var hp = new HSCard(id, tags);
-                                hp.UpdateCard(cardId);
-                                _hsGame._player.HeroPower = hp;
-                                Utils.IO.LogDebug("Updated HP of player: " + cardId + " Class: " + cardId);
-                            }
-                            else if (player == 2)
-                            {
-                                var hp = new HSCard(id, tags);
-                                hp.UpdateCard(cardId);
-                                _hsGame._opponent.HeroPower = hp;
-                                Utils.IO.LogDebug("Updated HP of player: " + cardId + " Class: " + cardId);
-                            }
-                        }
-                        else
-                        {
-                            if (player == 1)
-                            {
-                                _hsGame._player.PlayerId = id.ToString();
-                                _hsGame._player.CardClass = cardId;
-                                Utils.IO.LogDebug("Updated playerId: " + id + " Class: " + cardId);
-                            }
-                            else if (player == 2)
-                            {
-                                _hsGame._opponent.PlayerId = id.ToString();
-                                _hsGame._opponent.CardClass = cardId;
-                                Utils.IO.LogDebug("Updated OpponentId: " + id + " Class:" + cardId);
-                            }
-                        }
+
                     }
                     else if (PowerTaskList.EntityRegex.IsMatch(line.Log))
                     {
@@ -276,13 +242,13 @@ namespace THS.HSImport
             while (true)
             {
                 LogLine line;
-                if (_powerReader.Lines.TryDequeue(out line) && line.Process.Contains("PowerTaskList"))
+                if (_powerReader.Lines.TryDequeue(out line))
                 {
                     //    _count++;
                     //    _ths.SetText(_ths.LabelRead, _count.ToString());
-                    if (line.Log.Contains("Block End="))
+                    if (line.Log.Contains("Block End=") || !line.Process.Contains("PowerTaskList"))
                     {
-                        Utils.IO.LogDebug(line.Log, IO.DebugFile.Hs);
+                        Utils.IO.LogDebug(line.Log, IO.DebugFile.Hs, false);
                     }
                     else
                     {
@@ -291,8 +257,7 @@ namespace THS.HSImport
                     }
                 }
 
-                Thread.Sleep(0);
-            }
+                Thread.Sleep(0);}
         }
         private LogLine PeekPowerLine()
         {

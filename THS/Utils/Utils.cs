@@ -3,19 +3,14 @@ using System.IO;
 
 namespace THS.Utils
 {
-    // ReSharper disable once InconsistentNaming
     public class IO
     {
-        private static StreamWriter _twitchFile;
-        private static StreamWriter _logreaderFile;
-        private static StreamWriter _outputFile;
-        private static StreamWriter _tcpFile;
-        private static StreamWriter _hsFile;
-
         public enum DebugFile
         {
-            Twitch, Output, LogReader, Tcp, Hs
+            Twitch, Output, LogReader, Tcp, Hs, LogDiscarted
         }
+        private static StreamWriter[] _writerFiles = new StreamWriter[Enum.GetNames(typeof(DebugFile)).Length];
+
 
         public static bool OpenDebugFiles()
         { //TODO: Comprobar todas las mierdas para que se habran bien los archivos y eso, tambien lo de cerrar y todo eso (los archivos)
@@ -23,86 +18,63 @@ namespace THS.Utils
             {
                 Directory.CreateDirectory(Path.Combine(GlobalConstants.LogPath, "Logs"));
             }
-            //Open Twitch.txt
-            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "Twitch.txt")))
-            {
-                _twitchFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "Twitch.txt"), FileMode.CreateNew));
-            }
-            else
-            {
-                _twitchFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Twitch.txt"));
-            }
-            //Open LogReader.txt
-            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "LogReader.txt")))
-            {
-                _logreaderFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "LogReader.txt"), FileMode.CreateNew));
-            }
-            else
-            {
-                _logreaderFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "LogReader.txt"));
-            }
 
-            //Open Output.txt
-            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "Output.txt")))
+
+            for (int i = 0; i < Enum.GetNames(typeof(DebugFile)).Length; i++)
             {
-                _outputFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "Output.txt"), FileMode.CreateNew));
+                var path = Path.Combine(GlobalConstants.LogPath, "Logs", ((DebugFile)i).ToString()+ ".txt");
+                if (!File.Exists(path))
+                {
+                    _writerFiles[i] = new StreamWriter(new FileStream(path, FileMode.CreateNew));
+                }
+                else
+                {
+                    _writerFiles[i] = new StreamWriter(path);
+                }
             }
-            else
-            {
-                _outputFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Output.txt"));
-            }
-            //Open Tcp.txt
-            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt")))
-            {
-                _tcpFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt"), FileMode.CreateNew));
-            }
-            else
-            {
-                _tcpFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Tcp.txt"));
-            }
-            //Open Hs.txt
-            if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", "Hs.txt")))
-            {
-                _hsFile = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", "Hs.txt"), FileMode.CreateNew));
-            }
-            else
-            {
-                _hsFile = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Logs", "Hs.txt"));
-            }
+            
             return true;
         }
 
         public static void CloseDebugFiles()
         {
-            _twitchFile?.Dispose();
-            _outputFile?.Dispose();
-            _logreaderFile?.Dispose();
-            _tcpFile?.Dispose();
-            _hsFile?.Dispose();
+            foreach (var file in _writerFiles)
+            {
+                file?.Dispose();
+            }
+            //_twitchFile?.Dispose();
+            //_outputFile?.Dispose();
+            //_logreaderFile?.Dispose();
+            //_tcpFile?.Dispose();
+            //_hsFile?.Dispose();
         }
         public static void LogDebug(string message, IO.DebugFile file = DebugFile.Output, bool console = true)
         {
             switch (file)
             {
                 case DebugFile.Twitch:
-                    _twitchFile.WriteLine(DateTime.Now + " " + message);
-                    _twitchFile.Flush();
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
                     break;
                 case DebugFile.Output:
-                    _outputFile.WriteLine(DateTime.Now + " " + message);
-                    _outputFile.Flush();
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
                     break;
                 case DebugFile.LogReader:
-                    _logreaderFile.WriteLine(DateTime.Now + " " + message);
-                    _logreaderFile.Flush();
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
                     break;
                 case DebugFile.Tcp:
-                    _tcpFile.WriteLine(DateTime.Now + " " + message);
-                    _tcpFile.Flush();
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
                     break;
                 case DebugFile.Hs:
-                    _hsFile.WriteLine(DateTime.Now + " " + message);
-                    _hsFile.Flush();
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
+                    break;
+                case DebugFile.LogDiscarted:
+                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+                    _writerFiles[(int)file].Flush();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(file), file, null);

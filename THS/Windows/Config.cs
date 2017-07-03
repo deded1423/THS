@@ -19,7 +19,7 @@ namespace THS.Windows
             ConfigFile.HearthstonePath = TextHearthstonePath.Text;
             ConfigFile.TwitchLoginName = TextTwitchLoginName.Text;
             ConfigFile.TwitchLoginOauth = TextTwitchLoginOauth.Text;
-            ConfigFile.saveConfigFile();
+            ConfigFile.SaveConfigFile();
             this.Dispose(true);
         }
 

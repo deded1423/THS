@@ -29,7 +29,7 @@ namespace THS.Utils
             }
         }
 
-        public static void saveConfigFile()
+        public static void SaveConfigFile()
         {
 
             try
@@ -43,7 +43,7 @@ namespace THS.Utils
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error saving app settings: " + e);
+                Console.WriteLine("Error, saving app settings: " + e);
             }
 
         }

@@ -12,10 +12,9 @@ namespace THS.HSApp
         public int id;
         public Card Card;
         public Dictionary<string, int> Tags = new Dictionary<string, int>();
-        public HSCard(int i, Dictionary<string, int> tags)
+        public HSCard(int i)
         {
             id = i;
-            Tags = tags;
         }
 
         public override string ToString()
