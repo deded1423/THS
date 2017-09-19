@@ -10,15 +10,32 @@ namespace THS.HSApp
         public string PlayerId;
         public string PlayerName;
         public string GameAccountId;
+
+        //INFO GAME
         public string CardClass;
+
+        public int Health
+        {
+            get { return Hero.Tags["HEALTH"]; }
+            set { Hero.Tags["HEALTH"] = value; }
+        }
+
+        public int DeckSize => Deck.Count;
+        public int GraveyardSize => Graveyard.Count;
+        public int PlaySize => Play.Count;
+        public int SetasideSize => Setaside.Count;
+
         public HSCard HeroPower;
 
 
         //GAME
-        private List<HSCard> Hand { get; set; }
-        private List<HSCard> Graveyard { get; set; }
-        private List<HSCard> Deck { get; set; }
-        private Dictionary<string, int> Tags = new Dictionary<string, int>();
+        public List<HSCard> Hand { get; set; }
+        public List<HSCard> Graveyard { get; set; }
+        public List<HSCard> Deck { get; set; }
+        public List<HSCard> Play { get; set; }
+        public List<HSCard> Setaside { get; set; }
+
+        public Dictionary<string, int> playerTags = new Dictionary<string, int>();
         public HSCard Hero;
 
         public HSPlayer()
@@ -26,27 +43,37 @@ namespace THS.HSApp
             Hand = new List<HSCard>();
             Graveyard = new List<HSCard>();
             Deck = new List<HSCard>();
+            Play = new List<HSCard>();
+            Setaside = new List<HSCard>();
         }
 
+        public void Clear()
+        {
+            Hand.Clear();
+            Graveyard.Clear();
+            Deck.Clear();
+            Play.Clear();
+            Setaside.Clear();
+        }
         public void AddTag(string tag, string value)
         {
-            if (Tags.ContainsKey(tag))
+            if (playerTags.ContainsKey(tag))
             {
-                Utils.IO.LogDebug("Changed player " + PlayerId + " tag " + tag + " " + Tags[tag] + " to " + value, IO.DebugFile.Hs, false);
-                Tags[tag] = HsConstants.TagToInt(tag, value);
+                Utils.IO.LogDebug("Changed player " + PlayerId + " tag " + tag + " " + playerTags[tag] + " to " + value, IO.DebugFile.Hs, false);
+                playerTags[tag] = HsConstants.TagToInt(tag, value);
             }
             else
             {
                 Utils.IO.LogDebug("Added player " + PlayerId + " tag " + tag + " " + value, IO.DebugFile.Hs, false);
-                Tags.Add(tag, HsConstants.TagToInt(tag, value));
+                playerTags.Add(tag, HsConstants.TagToInt(tag, value));
             }
         }
         public void RemoveTag(string tag)
         {
-            if (Tags.ContainsKey(tag))
+            if (playerTags.ContainsKey(tag))
             {
-                Utils.IO.LogDebug("Removed player " + PlayerId + " tag " + tag + " " + Tags[tag], IO.DebugFile.Hs);
-                Tags.Remove(tag);
+                Utils.IO.LogDebug("Removed player " + PlayerId + " tag " + tag + " " + playerTags[tag], IO.DebugFile.Hs);
+                playerTags.Remove(tag);
             }
         }
 
@@ -59,7 +86,11 @@ namespace THS.HSApp
 
         public int GetHealth()
         {
-            return Tags["HEALTH"];
+            return playerTags["HEALTH"];
+        }
+        public int GetClass()
+        {
+            return playerTags["HEALTH"];
         }
 
     }

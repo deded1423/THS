@@ -73,7 +73,7 @@ namespace THS.Twitch_Integration
                 Target = null;
             }
         }
-
+        
         public override string ToString()
         {
             if (Type == PlayType.Incorrect)

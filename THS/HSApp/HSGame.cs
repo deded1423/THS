@@ -17,31 +17,31 @@ namespace THS.HSApp
 
         // Cards
 
-        List<HSCard> _handPlayer = new List<HSCard>();
-        List<HSCard> _handOpponent = new List<HSCard>();
-        List<HSCard> _playedPlayer = new List<HSCard>();
-        List<HSCard> _playedOpponent = new List<HSCard>();
-        List<HSCard> _graveyardPlayer = new List<HSCard>();
-        List<HSCard> _graveyardOpponent = new List<HSCard>();
-        List<HSCard> _setasidePlayer = new List<HSCard>();
-        List<HSCard> _setasideOpponent = new List<HSCard>();
-        List<HSCard> _deckPlayer = new List<HSCard>();
-        List<HSCard> _deckOpponent = new List<HSCard>();
+        //List<HSCard> _handUser = new List<HSCard>();
+        //List<HSCard> _handOpponent = new List<HSCard>();
+        //List<HSCard> _playedUser = new List<HSCard>();
+        //List<HSCard> _playedOpponent = new List<HSCard>();
+        //List<HSCard> _graveyardUser = new List<HSCard>();
+        //List<HSCard> _graveyardOpponent = new List<HSCard>();
+        //List<HSCard> _setasideUser = new List<HSCard>();
+        //List<HSCard> _setasideOpponent = new List<HSCard>();
+        //List<HSCard> _deckUser = new List<HSCard>();
+        //List<HSCard> _deckOpponent = new List<HSCard>();
         List<HSCard> _enchantmentHsCards = new List<HSCard>();
 
         //Other
-        public HSPlayer _player;
-        public HSPlayer _opponent;
+        public HSPlayer User;
+        public HSPlayer Opponent;
 
         //Game Entity
-        Dictionary<string, int> _tagsGE = new Dictionary<string, int>();
-        public int numGE;
+        public Dictionary<string, int> TagsGE = new Dictionary<string, int>();
+        public int NumGe;
 
         public HSGame(Windows.THS ths)
         {
             _logHandler = new LogHandler(ths, this);
-            _player = new HSPlayer();
-            _opponent = new HSPlayer();
+            User = new HSPlayer();
+            Opponent = new HSPlayer();
         }
 
         public void Start()
@@ -54,80 +54,20 @@ namespace THS.HSApp
         {
             _logHandler.Stop();
         }
-
-        //Methods that do something to the game
+        //Non-Game methods
         public void CreateNewGame()
         {
-            _handPlayer.Clear();
-            _handOpponent.Clear();
-            _graveyardPlayer.Clear();
-            _graveyardOpponent.Clear();
-            _deckPlayer.Clear();
-            _deckOpponent.Clear();
-            _tagsGE.Clear();
-            numGE = 0;
-            _player = new HSPlayer();
-            _opponent = new HSPlayer();
+            User.Clear();
+            Opponent.Clear();
+            TagsGE.Clear();
+            NumGe = 0;
+            User = new HSPlayer();
+            Opponent = new HSPlayer();
 
             Utils.IO.LogDebug("Game Created", Utils.IO.DebugFile.Hs);
         }
 
-        public void AddCardToDeck(HSCard card, HSPlayer player)
-        {
-            if (player == _player)
-            {
-                _handPlayer.Add(card);
-            }
-            else
-            {
-                _handOpponent.Add(card);
-            }
-        }
-        public void RemoveCardToDeck(HSCard card, HSPlayer player)
-        {
-            if (player == _player)
-            {
-                _handPlayer.Remove(card);
-            }
-            else
-            {
-                _handOpponent.Remove(card);
-            }
-        }
-
-        public void RemoveTagFromGame(string tag)
-        {
-            if (_tagsGE.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Removed GameEntityTag " + tag + " " + _tagsGE[tag], IO.DebugFile.Hs);
-                _tagsGE.Remove(tag);
-            }
-        }
-        public void AddTagToGame(string tag, string value)
-        {
-            if (_tagsGE.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Changed GameEntityTag " + tag + " from " + _tagsGE[tag] + " to " + value, IO.DebugFile.Hs);
-                _tagsGE[tag] = HsConstants.TagToInt(tag, value);
-            }
-            else
-            {
-                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
-                _tagsGE.Add(tag, HsConstants.TagToInt(tag, value));
-            }
-        }
-        public void AddTagToPlayer(string s, string value, string player)
-        {
-            if (int.Parse(player) == 2 || player.Equals("opponent"))
-            {
-                _opponent.AddTag(s, value);
-            }
-            else if (int.Parse(player) == 1 || player.Equals("player"))
-            {
-                _player.AddTag(s, value);
-            }
-        }
-
+        //REDO THIS MAYBE??
         public HSCard CreateCard(int id, Zone zone, int player, string cardid)
         {
             Utils.IO.LogDebug("Creating card: " + id + " zone: " + zone + " player: " + player + " cardId: " + cardid, IO.DebugFile.Hs);
@@ -140,7 +80,7 @@ namespace THS.HSApp
             {
                 if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    _player.AddHeroPower(card);
+                    User.AddHeroPower(card);
                 }
                 else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
                 {
@@ -148,27 +88,27 @@ namespace THS.HSApp
                 }
                 else if (card.Card != null && card.Card.Type == CardType.HERO)
                 {
-                    _player.Hero = card;
-                    Utils.IO.LogDebug("Updated hero: " + _player.PlayerId + " Hero: " + card.Card.Name);
+                    User.Hero = card;
+                    Utils.IO.LogDebug("Updated hero: " + User.PlayerId + " Hero: " + card.Card.Name);
                 }
                 else
                 {
                     switch (zone)
                     {
                         case Zone.DECK:
-                            _deckPlayer.Add(card);
+                            User.Deck.Add(card);
                             break;
                         case Zone.SETASIDE:
-                            _setasidePlayer.Add(card);
+                            User.Setaside.Add(card);
                             break;
                         case Zone.HAND:
-                            _handPlayer.Add(card);
+                            User.Hand.Add(card);
                             break;
                         case Zone.GRAVEYARD:
-                            _graveyardPlayer.Add(card);
+                            User.Graveyard.Add(card);
                             break;
                         case Zone.PLAY:
-                            _playedPlayer.Add(card);
+                            User.Play.Add(card);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
@@ -180,7 +120,7 @@ namespace THS.HSApp
             {
                 if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    _opponent.AddHeroPower(card);
+                    Opponent.AddHeroPower(card);
 
                 }
                 else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
@@ -189,27 +129,27 @@ namespace THS.HSApp
                 }
                 else if (card.Card != null && card.Card.Type == CardType.HERO)
                 {
-                    _opponent.Hero = card;
-                    Utils.IO.LogDebug("Updated hero: " + _opponent.PlayerId + " Hero: " + card.Card.Name);
+                    Opponent.Hero = card;
+                    Utils.IO.LogDebug("Updated hero: " + Opponent.PlayerId + " Hero: " + card.Card.Name);
                 }
                 else
                 {
                     switch (zone)
                     {
                         case Zone.DECK:
-                            _deckOpponent.Add(card);
+                            Opponent.Deck.Add(card);
                             break;
                         case Zone.SETASIDE:
-                            _setasideOpponent.Add(card);
+                            Opponent.Setaside.Add(card);
                             break;
                         case Zone.HAND:
-                            _handOpponent.Add(card);
+                            Opponent.Hand.Add(card);
                             break;
                         case Zone.GRAVEYARD:
-                            _graveyardOpponent.Add(card);
+                            Opponent.Graveyard.Add(card);
                             break;
                         case Zone.PLAY:
-                            _playedOpponent.Add(card);
+                            Opponent.Play.Add(card);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
@@ -219,11 +159,84 @@ namespace THS.HSApp
             return card;
         }
 
+        //Methods that do something to the game
+
+        public void AddCardToDeck(HSCard card, HSPlayer player)
+        {
+            if (player == User)
+            {
+                User.Deck.Add(card);
+            }
+            else
+            {
+                Opponent.Deck.Add(card);
+            }
+        }
+
+        public void RemoveCardToDeck(HSCard card, HSPlayer player)
+        {
+            if (player == User)
+            {
+                User.Deck.Remove(card);
+            }
+            else
+            {
+                User.Deck.Remove(card);
+            }
+        }
+
+        public void AddTagToGame(string tag, string value)
+        {
+            if (TagsGE.ContainsKey(tag))
+            {
+                Utils.IO.LogDebug("Changed GameEntityTag " + tag + " from " + TagsGE[tag] + " to " + value, IO.DebugFile.Hs);
+                TagsGE[tag] = HsConstants.TagToInt(tag, value);
+            }
+            else
+            {
+                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
+                TagsGE.Add(tag, HsConstants.TagToInt(tag, value));
+            }
+        }
+
+        public void RemoveTagFromGame(string tag)
+        {
+            if (TagsGE.ContainsKey(tag))
+            {
+                Utils.IO.LogDebug("Removed GameEntityTag " + tag + " " + TagsGE[tag], IO.DebugFile.Hs);
+                TagsGE.Remove(tag);
+            }
+        }
+
+        public void AddTagToPlayer(string tag, string value, string player)
+        {
+            int i;
+            int.TryParse(player, out i);
+            if (player.Equals("opponent") || player.Equals(Opponent.PlayerName) || i == 2)
+            {
+                Opponent.AddTag(tag, value);
+            }
+            else if (player.Equals("player") || player.Equals(User.PlayerName) || i == 1)
+            {
+                User.AddTag(tag, value);
+            }
+        }
+
+        public void Attack()
+        {
+
+        }
+
         //Methods that take info from the game
 
-        public Step GetStep()
+        public Step GetGameStep()
         {
-            return (Step)_tagsGE["STEP"];
+            return (Step)TagsGE["STEP"];
+        }
+
+        public Step a()
+        {
+            return (Step)TagsGE["STEP"];
         }
     }
 }

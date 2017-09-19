@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using THS.Twitch_Integration;
 using THS.Utils;
+using THS.Input;
 
 namespace THS.Windows
 {
@@ -21,27 +22,38 @@ namespace THS.Windows
 
         //IMPORT SHIT
         private HSApp.HSGame _game;
+
+        //INPUT SHIT
+        Thread _inputThread;
         public THS()
         {
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            _game = new HSApp.HSGame(this);
+            //_game = new HSApp.HSGame(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
-            _twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
-            _twitchThread.Start("deded1423");
+            //irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
+            //_twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
+            //_twitchThread.Start("deded1423");
+
             //string str = "Play mark of nature on me";
             //str = str.ToLower();
             //Match aaa = InstructionType.InstructionPlayOnRegex.Match(str);
             //Utils.Misc.CloseApp();
 
-            //IO.OpenDebugFiles();
-            //IO.LogDebug("a");
-            //a.StartLogReader();
+            _inputThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    Methods.GetWindowInfo(this, "Friends");
+                    Methods.GetMouseInfo(this);
+                    Thread.Sleep(100);
+                }
+            }) { Name = "Test" };
+            _inputThread.Start();
         }
 
         private void ButtonConfig_Click(object sender, EventArgs e)
@@ -58,24 +70,22 @@ namespace THS.Windows
         {
             if (ButtonStart.Text.Equals("Start"))
             {
-                _game.Start();
+                //_game.Start();
                 ButtonStart.Text = "Stop";
             }
             else
             {
-                _game.Stop();
+                //_game.Stop();
                 ButtonStart.Text = "Start";
             }
         }
-
-        private void ButtonTest1_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void THS_FormClosed(object sender, FormClosedEventArgs e)
         {
-            irc.Stop();
+            _inputThread.Suspend();
+            //irc.Stop();
         }
+        
 
     }
 }

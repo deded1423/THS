@@ -32,10 +32,12 @@ namespace THS.Windows
         {
             this.ButtonConfig = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
-            this.CheckBoxTCP = new System.Windows.Forms.CheckBox();
-            this.ButtonTest1 = new System.Windows.Forms.Button();
-            this.LabelRead = new System.Windows.Forms.Label();
-            this.LabelReadText = new System.Windows.Forms.Label();
+            this.LabelScreenOrigin = new System.Windows.Forms.Label();
+            this.LabelScreenOriginText = new System.Windows.Forms.Label();
+            this.LabelScreenSizeText = new System.Windows.Forms.Label();
+            this.LabelScreenSize = new System.Windows.Forms.Label();
+            this.LabelMouseText = new System.Windows.Forms.Label();
+            this.LabelMouse = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -58,53 +60,71 @@ namespace THS.Windows
             this.ButtonStart.UseVisualStyleBackColor = true;
             this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
-            // CheckBoxTCP
+            // LabelScreenOrigin
             // 
-            this.CheckBoxTCP.AutoSize = true;
-            this.CheckBoxTCP.Location = new System.Drawing.Point(8, 12);
-            this.CheckBoxTCP.Name = "CheckBoxTCP";
-            this.CheckBoxTCP.Size = new System.Drawing.Size(133, 17);
-            this.CheckBoxTCP.TabIndex = 2;
-            this.CheckBoxTCP.Text = "Recieve Through TCP";
-            this.CheckBoxTCP.UseVisualStyleBackColor = true;
+            this.LabelScreenOrigin.AutoSize = true;
+            this.LabelScreenOrigin.Location = new System.Drawing.Point(89, 9);
+            this.LabelScreenOrigin.Name = "LabelScreenOrigin";
+            this.LabelScreenOrigin.Size = new System.Drawing.Size(13, 13);
+            this.LabelScreenOrigin.TabIndex = 4;
+            this.LabelScreenOrigin.Text = "0";
             // 
-            // ButtonTest1
+            // LabelScreenOriginText
             // 
-            this.ButtonTest1.Location = new System.Drawing.Point(34, 35);
-            this.ButtonTest1.Name = "ButtonTest1";
-            this.ButtonTest1.Size = new System.Drawing.Size(47, 23);
-            this.ButtonTest1.TabIndex = 3;
-            this.ButtonTest1.Text = "TEST";
-            this.ButtonTest1.UseVisualStyleBackColor = true;
-            this.ButtonTest1.Click += new System.EventHandler(this.ButtonTest1_Click);
+            this.LabelScreenOriginText.AutoSize = true;
+            this.LabelScreenOriginText.Location = new System.Drawing.Point(12, 9);
+            this.LabelScreenOriginText.Name = "LabelScreenOriginText";
+            this.LabelScreenOriginText.Size = new System.Drawing.Size(71, 13);
+            this.LabelScreenOriginText.TabIndex = 5;
+            this.LabelScreenOriginText.Text = "Screen Origin";
             // 
-            // LabelRead
+            // LabelScreenSizeText
             // 
-            this.LabelRead.AutoSize = true;
-            this.LabelRead.Location = new System.Drawing.Point(296, 112);
-            this.LabelRead.Name = "LabelRead";
-            this.LabelRead.Size = new System.Drawing.Size(13, 13);
-            this.LabelRead.TabIndex = 4;
-            this.LabelRead.Text = "0";
+            this.LabelScreenSizeText.AutoSize = true;
+            this.LabelScreenSizeText.Location = new System.Drawing.Point(12, 22);
+            this.LabelScreenSizeText.Name = "LabelScreenSizeText";
+            this.LabelScreenSizeText.Size = new System.Drawing.Size(64, 13);
+            this.LabelScreenSizeText.TabIndex = 7;
+            this.LabelScreenSizeText.Text = "Screen Size";
             // 
-            // LabelReadText
+            // LabelScreenSize
             // 
-            this.LabelReadText.AutoSize = true;
-            this.LabelReadText.Location = new System.Drawing.Point(255, 112);
-            this.LabelReadText.Name = "LabelReadText";
-            this.LabelReadText.Size = new System.Drawing.Size(36, 13);
-            this.LabelReadText.TabIndex = 5;
-            this.LabelReadText.Text = "Read:";
+            this.LabelScreenSize.AutoSize = true;
+            this.LabelScreenSize.Location = new System.Drawing.Point(89, 22);
+            this.LabelScreenSize.Name = "LabelScreenSize";
+            this.LabelScreenSize.Size = new System.Drawing.Size(13, 13);
+            this.LabelScreenSize.TabIndex = 6;
+            this.LabelScreenSize.Text = "0";
+            // 
+            // LabelMouseText
+            // 
+            this.LabelMouseText.AutoSize = true;
+            this.LabelMouseText.Location = new System.Drawing.Point(12, 35);
+            this.LabelMouseText.Name = "LabelMouseText";
+            this.LabelMouseText.Size = new System.Drawing.Size(39, 13);
+            this.LabelMouseText.TabIndex = 9;
+            this.LabelMouseText.Text = "Mouse";
+            // 
+            // LabelMouse
+            // 
+            this.LabelMouse.AutoSize = true;
+            this.LabelMouse.Location = new System.Drawing.Point(89, 35);
+            this.LabelMouse.Name = "LabelMouse";
+            this.LabelMouse.Size = new System.Drawing.Size(13, 13);
+            this.LabelMouse.TabIndex = 8;
+            this.LabelMouse.Text = "0";
             // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
-            this.Controls.Add(this.LabelReadText);
-            this.Controls.Add(this.LabelRead);
-            this.Controls.Add(this.ButtonTest1);
-            this.Controls.Add(this.CheckBoxTCP);
+            this.Controls.Add(this.LabelMouseText);
+            this.Controls.Add(this.LabelMouse);
+            this.Controls.Add(this.LabelScreenSizeText);
+            this.Controls.Add(this.LabelScreenSize);
+            this.Controls.Add(this.LabelScreenOriginText);
+            this.Controls.Add(this.LabelScreenOrigin);
             this.Controls.Add(this.ButtonStart);
             this.Controls.Add(this.ButtonConfig);
             this.Name = "THS";
@@ -120,10 +140,8 @@ namespace THS.Windows
 
         protected System.Windows.Forms.Button ButtonConfig;
         protected System.Windows.Forms.Button ButtonStart;
-        protected System.Windows.Forms.CheckBox CheckBoxTCP;
-        protected System.Windows.Forms.Button ButtonTest1;
-        public System.Windows.Forms.Label LabelRead;
-        private System.Windows.Forms.Label LabelReadText;
+        public System.Windows.Forms.Label LabelScreenOrigin;
+        private System.Windows.Forms.Label LabelScreenOriginText;
         delegate void SetTextCallback(Label label, string text);
         public void SetText(Label label, string text)
         {
@@ -140,6 +158,11 @@ namespace THS.Windows
                 label.Text = text;
             }
         }
+
+        private Label LabelScreenSizeText;
+        public Label LabelScreenSize;
+        private Label LabelMouseText;
+        public Label LabelMouse;
     }
 }
 
