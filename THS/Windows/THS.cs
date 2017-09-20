@@ -46,13 +46,50 @@ namespace THS.Windows
 
             _inputThread = new Thread(() =>
             {
+                int i = 1;
+                int key = 0x61;
                 while (true)
                 {
-                    Methods.GetWindowInfo(this, "Friends");
-                    Methods.GetMouseInfo(this);
-                    Thread.Sleep(100);
+                    Methods.Point mouseAbs = Methods.GetMouseInfo();
+                    SetText(LabelMouse, mouseAbs.X + "," + mouseAbs.Y);
+                    Methods.Point[] HsScreen = Methods.GetWindowCoords("Hearthstone");
+                    if (HsScreen != null)
+                    {
+                        SetText(LabelScreenOrigin, HsScreen[0].X + "," + HsScreen[0].Y);
+                        SetText(LabelScreenSize, HsScreen[1].X + "," + HsScreen[1].Y);
+                    }
+                    else
+                    {
+                        SetText(LabelScreenOrigin, "N/A");
+                        SetText(LabelScreenSize, "N/A");
+                    }
+
+                    Methods.Point mouse = Methods.GetMouseInfoFromWindow("Hearthstone");
+
+                    if (mouse.X != -1)
+                    {
+                        SetText(LabelMouseRel, mouse.X + "," + mouse.Y);
+                    }
+                    else
+                    {
+                        SetText(LabelMouseRel, "N/A");
+                    }
+
+                    if (Methods.GetKeyState(key) < 0)
+                    {
+                        Console.WriteLine(i + ") " + mouse.X + "," + mouse.Y);
+                        i++;
+                        while (Methods.GetKeyState(key) < 0) { }
+                    }
+                    if (Methods.GetKeyState(0x62) < 0)
+                    {
+                        Methods.MoveMouseRel(HSPoints.OptionsMenu, "Hearthstone");
+                        while (Methods.GetKeyState(0x62) < 0) { }
+                    }
+                    Thread.Sleep(10);
                 }
-            }) { Name = "Test" };
+            })
+            { Name = "Test" };
             _inputThread.Start();
         }
 
@@ -79,13 +116,13 @@ namespace THS.Windows
                 ButtonStart.Text = "Start";
             }
         }
-        
+
         private void THS_FormClosed(object sender, FormClosedEventArgs e)
         {
             _inputThread.Suspend();
             //irc.Stop();
         }
-        
+
 
     }
 }

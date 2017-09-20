@@ -38,6 +38,8 @@ namespace THS.Windows
             this.LabelScreenSize = new System.Windows.Forms.Label();
             this.LabelMouseText = new System.Windows.Forms.Label();
             this.LabelMouse = new System.Windows.Forms.Label();
+            this.LabelMouseRelText = new System.Windows.Forms.Label();
+            this.LabelMouseRel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -114,11 +116,31 @@ namespace THS.Windows
             this.LabelMouse.TabIndex = 8;
             this.LabelMouse.Text = "0";
             // 
+            // LabelMouseRelText
+            // 
+            this.LabelMouseRelText.AutoSize = true;
+            this.LabelMouseRelText.Location = new System.Drawing.Point(12, 48);
+            this.LabelMouseRelText.Name = "LabelMouseRelText";
+            this.LabelMouseRelText.Size = new System.Drawing.Size(58, 13);
+            this.LabelMouseRelText.TabIndex = 11;
+            this.LabelMouseRelText.Text = "Mouse Rel";
+            // 
+            // LabelMouseRel
+            // 
+            this.LabelMouseRel.AutoSize = true;
+            this.LabelMouseRel.Location = new System.Drawing.Point(89, 48);
+            this.LabelMouseRel.Name = "LabelMouseRel";
+            this.LabelMouseRel.Size = new System.Drawing.Size(13, 13);
+            this.LabelMouseRel.TabIndex = 10;
+            this.LabelMouseRel.Text = "0";
+            // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
+            this.Controls.Add(this.LabelMouseRelText);
+            this.Controls.Add(this.LabelMouseRel);
             this.Controls.Add(this.LabelMouseText);
             this.Controls.Add(this.LabelMouse);
             this.Controls.Add(this.LabelScreenSizeText);
@@ -163,6 +185,8 @@ namespace THS.Windows
         public Label LabelScreenSize;
         private Label LabelMouseText;
         public Label LabelMouse;
+        private Label LabelMouseRelText;
+        public Label LabelMouseRel;
     }
 }
 

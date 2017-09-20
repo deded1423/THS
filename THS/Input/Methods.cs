@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-
+using Point = THS.Input.Methods.Point;
 namespace THS.Input
 {
     public class Methods
@@ -45,45 +45,59 @@ namespace THS.Input
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
+        public struct Point
         {
             public int X;
             public int Y;
-
-            public static implicit operator Point(POINT point)
-            {
-                return new Point(point.X, point.Y);
-            }
+            public Point(int x, int y) { X = x; Y = y; }
         }
+
+        [Flags]
+        public enum MouseEventFlags : uint
+        {
+            LEFTDOWN = 0x00000002,
+            LEFTUP = 0x00000004,
+            MIDDLEDOWN = 0x00000020,
+            MIDDLEUP = 0x00000040,
+            MOVE = 0x00000001,
+            ABSOLUTE = 0x00008000,
+            RIGHTDOWN = 0x00000008,
+            RIGHTUP = 0x00000010,
+            WHEEL = 0x00000800,
+            XDOWN = 0x00000080,
+            XUP = 0x00000100
+        }
+        
+        private delegate bool EnumWindowsDel(IntPtr hWnd, int lParam);
 
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
 
-        private delegate bool EnumWindowsDel(IntPtr hWnd, int lParam);
 
-        [DllImport("USER32.DLL")]
+        [DllImport("user32.dll")]
         private static extern bool EnumWindows(EnumWindowsDel enumFunc, int lParam);
 
-        [DllImport("USER32.DLL")]
+        [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
-        [DllImport("USER32.DLL")]
+        [DllImport("user32.dll")]
         private static extern int GetWindowTextLength(IntPtr hWnd);
 
-        [DllImport("USER32.DLL")]
-        private static extern bool IsWindowVisible(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        public static extern short GetKeyState(int nVirtKey);
 
-        [DllImport("USER32.DLL")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out Point lpPoint);
 
-        [DllImport("USER32.DLL")]
+        [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
-        [DllImport("USER32.DLL")]
-        private static extern int GetWindowThreadProcessId(IntPtr handle, out uint processId);
+        [DllImport("user32.dll")]
+        static extern void mouse_event(uint dwFlags, int dx, int dy, uint dwData,
+        int dwExtraInfo);
 
-        public static void GetWindowInfo(THS.Windows.THS window, string screen)
+        public static Point[] GetWindowCoords(string screen)
         {
 
             WINDOWINFO info = new WINDOWINFO();
@@ -104,20 +118,57 @@ namespace THS.Input
             }), 0);
             if (chk)
             {
-                window.SetText(window.LabelScreenOrigin, info.rcClient.Left + "," + info.rcClient.Bottom);
-                window.SetText(window.LabelScreenSize, (info.rcClient.Right - info.rcClient.Left) + "," + (info.rcClient.Bottom - info.rcClient.Top));
+                return new Point[2]{
+                    new Point(info.rcClient.Left, info.rcClient.Bottom),
+                    new Point((info.rcClient.Right - info.rcClient.Left), (info.rcClient.Bottom - info.rcClient.Top))};
             }
             else
             {
-                window.SetText(window.LabelScreenOrigin, "N/A");
-                window.SetText(window.LabelScreenSize, "N/A");
+                return null;
             }
         }
-        public static void GetMouseInfo(THS.Windows.THS window)
+        public static Point GetMouseInfo()
         {
-            POINT cursor;
+            Point cursor;
             GetCursorPos(out cursor);
-            window.SetText(window.LabelMouse, cursor.X + "," + cursor.Y);
+            return cursor;
+        }
+        public static Point GetMouseInfoFromWindow(string screen)
+        {
+            Point[] screenCoords = GetWindowCoords(screen);
+            if (screenCoords == null)
+            {
+                return new Point(-1, -1);
+            }
+            Point screenOrigin = screenCoords[0];
+            Point screenSize = screenCoords[1];
+            Point mouseCoord = GetMouseInfo();
+            if (((mouseCoord.X > screenOrigin.X) && (mouseCoord.X < screenOrigin.X + screenSize.X)) &&
+                ((mouseCoord.Y < screenOrigin.Y) && (mouseCoord.Y > screenOrigin.Y - screenSize.Y)))
+            {
+                Point foo = new Point();
+                foo.X = mouseCoord.X - screenOrigin.X;
+                foo.Y = screenOrigin.Y - mouseCoord.Y;
+                return new Point(foo.X, foo.Y);
+            }
+            else
+            {
+                return new Point(-1, -1);
+            }
+        }
+        public static void MoveMouse(Point coord)
+        {
+            //Movimiento es relativo (arreglarlo)
+            Point oldMouse = GetMouseInfo();
+            mouse_event((uint)MouseEventFlags.MOVE, coord.X - oldMouse.X, coord.Y - oldMouse.Y, 0, 0);
+        }
+
+        public static void MoveMouseRel(Point coord, string screen)
+        {
+            Point oldMouse = GetMouseInfoFromWindow(screen);
+            Point[] screenInfo = GetWindowCoords(screen);
+            if (screenInfo[1].X < coord.X && screenInfo[1].Y < coord.Y && coord.X < 0 && coord.Y < 0) return;
+            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y- coord.Y));
         }
     }
 }
