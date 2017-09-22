@@ -40,6 +40,8 @@ namespace THS.Windows
             this.LabelMouse = new System.Windows.Forms.Label();
             this.LabelMouseRelText = new System.Windows.Forms.Label();
             this.LabelMouseRel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -134,11 +136,31 @@ namespace THS.Windows
             this.LabelMouseRel.TabIndex = 10;
             this.LabelMouseRel.Text = "0";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(89, 61);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(89, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(13, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "0";
+            // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.LabelMouseRelText);
             this.Controls.Add(this.LabelMouseRel);
             this.Controls.Add(this.LabelMouseText);
@@ -150,7 +172,7 @@ namespace THS.Windows
             this.Controls.Add(this.ButtonStart);
             this.Controls.Add(this.ButtonConfig);
             this.Name = "THS";
-            this.Text = "THS";
+            this.Text = "s";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.THS_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -187,6 +209,8 @@ namespace THS.Windows
         public Label LabelMouse;
         private Label LabelMouseRelText;
         public Label LabelMouseRel;
+        public Label label1;
+        public Label label2;
     }
 }
 

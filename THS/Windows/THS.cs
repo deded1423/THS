@@ -35,9 +35,9 @@ namespace THS.Windows
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
-            //_twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
-            //_twitchThread.Start("deded1423");
+            irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
+            _twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
+            _twitchThread.Start("deded1423");
 
             //string str = "Play mark of nature on me";
             //str = str.ToLower();
@@ -48,6 +48,8 @@ namespace THS.Windows
             {
                 int i = 1;
                 int key = 0x61;
+                int size = 0;
+                int select = 0;
                 while (true)
                 {
                     Methods.Point mouseAbs = Methods.GetMouseInfo();
@@ -75,16 +77,43 @@ namespace THS.Windows
                         SetText(LabelMouseRel, "N/A");
                     }
 
-                    if (Methods.GetKeyState(key) < 0)
+                    if (Methods.GetKeyState(key) < 0) //NUM1
                     {
                         Console.WriteLine(i + ") " + mouse.X + "," + mouse.Y);
                         i++;
                         while (Methods.GetKeyState(key) < 0) { }
                     }
-                    if (Methods.GetKeyState(0x62) < 0)
+                    if (Methods.GetKeyState(0x64) < 0) //NUM4
                     {
-                        Methods.MoveMouseRel(HSPoints.OptionsMenu, "Hearthstone");
+                        size--;
+                        SetText(label1, size.ToString());
+                        while (Methods.GetKeyState(0x64) < 0) { }
+                    }
+                    if (Methods.GetKeyState(0x66) < 0) //NUM6
+                    {
+                        size++;
+                        SetText(label1, size.ToString());
+                        while (Methods.GetKeyState(0x66) < 0) { }
+                    }
+                    if (Methods.GetKeyState(0x62) < 0) //NUM2
+                    {
+                        select--;
+                        SetText(label2, select.ToString());
                         while (Methods.GetKeyState(0x62) < 0) { }
+                    }
+                    if (Methods.GetKeyState(0x68) < 0) //NUM8
+                    {
+                        select++;
+                        SetText(label2, select.ToString());
+                        while (Methods.GetKeyState(0x68) < 0) { }
+                    }
+
+                    if (Methods.GetKeyState(0x63) < 0) //NUM3
+                    {
+                        //MouseMovement.AttackCard(2, 1, 0, 0, true);
+                        //MouseMovement.PlayCard(10, 3);
+                        MouseMovement.PlayCardOn(9, 2, true,1,0);
+                        while (Methods.GetKeyState(0x63) < 0) { }
                     }
                     Thread.Sleep(10);
                 }

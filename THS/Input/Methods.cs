@@ -67,7 +67,7 @@ namespace THS.Input
             XDOWN = 0x00000080,
             XUP = 0x00000100
         }
-        
+
         private delegate bool EnumWindowsDel(IntPtr hWnd, int lParam);
 
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -168,7 +168,28 @@ namespace THS.Input
             Point oldMouse = GetMouseInfoFromWindow(screen);
             Point[] screenInfo = GetWindowCoords(screen);
             if (screenInfo[1].X < coord.X && screenInfo[1].Y < coord.Y && coord.X < 0 && coord.Y < 0) return;
-            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y- coord.Y));
+            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y - coord.Y));
+        }
+        public static void MoveMouseHs(Point coord)
+        {
+            Point oldMouse = GetMouseInfoFromWindow("Hearthstone");
+            Point[] screenInfo = GetWindowCoords("Hearthstone");
+            if (oldMouse.X == -1 || (screenInfo[1].X < coord.X && screenInfo[1].Y < coord.Y && coord.X < 0 && coord.Y < 0)) return;
+            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y - coord.Y));
+        }
+        public static void ClickMouse(bool left)
+        {
+            if (left)
+            {
+                mouse_event((uint)MouseEventFlags.LEFTDOWN, 0, 0, 0, 0);
+                mouse_event((uint)MouseEventFlags.LEFTUP, 0, 0, 0, 0);
+            }
+            else
+            {
+                mouse_event((uint)MouseEventFlags.RIGHTDOWN, 0, 0, 0, 0);
+                mouse_event((uint)MouseEventFlags.RIGHTUP, 0, 0, 0, 0);
+            }
+
         }
     }
 }
