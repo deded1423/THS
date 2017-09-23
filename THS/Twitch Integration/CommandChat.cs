@@ -194,6 +194,7 @@ namespace THS.Twitch_Integration
             else
             {
                 Type = PlayType.Incorrect;
+                return;
             }
         }
 

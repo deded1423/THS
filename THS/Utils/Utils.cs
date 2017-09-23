@@ -7,7 +7,7 @@ namespace THS.Utils
     {
         public enum DebugFile
         {
-            Twitch, Output, LogReader, Tcp, Hs, LogDiscarted
+            Twitch, Output, LogReader, Tcp, Hs, LogDiscarted, Input
         }
         private static StreamWriter[] _writerFiles = new StreamWriter[Enum.GetNames(typeof(DebugFile)).Length];
 
@@ -22,7 +22,7 @@ namespace THS.Utils
 
             for (int i = 0; i < Enum.GetNames(typeof(DebugFile)).Length; i++)
             {
-                var path = Path.Combine(GlobalConstants.LogPath, "Logs", ((DebugFile)i).ToString()+ ".txt");
+                var path = Path.Combine(GlobalConstants.LogPath, "Logs", ((DebugFile)i).ToString() + ".txt");
                 if (!File.Exists(path))
                 {
                     _writerFiles[i] = new StreamWriter(new FileStream(path, FileMode.CreateNew));
@@ -32,7 +32,7 @@ namespace THS.Utils
                     _writerFiles[i] = new StreamWriter(path);
                 }
             }
-            
+
             return true;
         }
 
@@ -50,35 +50,9 @@ namespace THS.Utils
         }
         public static void LogDebug(string message, IO.DebugFile file = DebugFile.Output, bool console = true)
         {
-            switch (file)
-            {
-                case DebugFile.Twitch:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                case DebugFile.Output:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                case DebugFile.LogReader:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                case DebugFile.Tcp:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                case DebugFile.Hs:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                case DebugFile.LogDiscarted:
-                    _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
-                    _writerFiles[(int)file].Flush();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(file), file, null);
-            }
+            _writerFiles[(int)file].WriteLine(DateTime.Now + " " + message);
+            _writerFiles[(int)file].Flush();
+
             if (console)
             {
 

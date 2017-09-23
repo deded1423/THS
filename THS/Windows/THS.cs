@@ -42,7 +42,7 @@ namespace THS.Windows
             //str = str.ToLower();
             //Match aaa = InstructionType.InstructionPlayOnRegex.Match(str);
             //Utils.Misc.CloseApp();
-
+            Console.WriteLine(Math.Sqrt(Math.Pow(Math.Abs(-3), 2) + Math.Pow(Math.Abs(-4), 2)));
             _inputThread = new Thread(() =>
             {
                 int i = 1;

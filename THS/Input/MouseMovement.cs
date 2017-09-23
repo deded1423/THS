@@ -12,6 +12,7 @@ namespace THS.Input
     public class HSPoints
     {
         //1600x900
+        public static Point Rest = new Point(1228, 223);
         public static Point OptionsFriends = new Point(39, 23);
         public static Point OptionsMenu = new Point(1567, 23);
         public static Point MenuConcede_Restart = new Point(800, 571);
@@ -229,47 +230,47 @@ namespace THS.Input
             {
                 case 0:
                     Methods.MoveMouseHs(HSPoints.HandNone);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 1:
                     Methods.MoveMouseHs(HSPoints.HandOne[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 2:
                     Methods.MoveMouseHs(HSPoints.HandTwo[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 3:
                     Methods.MoveMouseHs(HSPoints.HandThree[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 4:
                     Methods.MoveMouseHs(HSPoints.HandFour[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 5:
                     Methods.MoveMouseHs(HSPoints.HandFive[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 6:
                     Methods.MoveMouseHs(HSPoints.HandSix[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 7:
                     Methods.MoveMouseHs(HSPoints.HandSeven[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 8:
                     Methods.MoveMouseHs(HSPoints.HandEight[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 9:
                     Methods.MoveMouseHs(HSPoints.HandNine[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 10:
                     Methods.MoveMouseHs(HSPoints.HandTen[numberCard]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 default:
                     break;
@@ -281,35 +282,35 @@ namespace THS.Input
             {
                 case 0:
                     Methods.MoveMouseHs(HSPoints.Board);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 1:
                     Methods.MoveMouseHs(HSPoints.BoardOne[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 2:
                     Methods.MoveMouseHs(HSPoints.BoardTwo[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 3:
                     Methods.MoveMouseHs(HSPoints.BoardThree[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 4:
                     Methods.MoveMouseHs(HSPoints.BoardFour[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 5:
                     Methods.MoveMouseHs(HSPoints.BoardFive[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 6:
                     Methods.MoveMouseHs(HSPoints.BoardSix[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 7:
                     Methods.MoveMouseHs(HSPoints.BoardSeven[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 default:
                     break;
@@ -321,35 +322,35 @@ namespace THS.Input
             {
                 case 0:
                     Methods.MoveMouseHs(HSPoints.BoardEnemy);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 1:
                     Methods.MoveMouseHs(HSPoints.BoardEnemyOne[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 2:
                     Methods.MoveMouseHs(HSPoints.BoardEnemyTwo[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 3:
                     Methods.MoveMouseHs(HSPoints.BoardEnemyThree[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 4:
                     Methods.MoveMouseHs(HSPoints.BoardEnemyFour[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 5:
                     Methods.MoveMouseHs(HSPoints.BoardEnemyFive[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 6:
                     Methods.MoveMouseHs(HSPoints.BoardEnemySix[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 case 7:
                     Methods.MoveMouseHs(HSPoints.BoardEnemySeven[boardNumber]);
-                    Methods.ClickMouse(true);
+                    Methods.ClickMouseHS(true);
                     break;
                 default:
                     break;
@@ -360,195 +361,228 @@ namespace THS.Input
         {
 
             Methods.MoveMouseHs(HSPoints.Hero);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
         }
         public static void SelectHeroEnemy()
         {
 
             Methods.MoveMouseHs(HSPoints.HeroEnemy);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
         }
 
         public static void SelectPower()
         {
             Methods.MoveMouseHs(HSPoints.Power);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
         }
         public static void SelectPowerEnemy()
         {
             Methods.MoveMouseHs(HSPoints.PowerEnemy);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
+        }
+        public static void RestMouse()
+        {
+            Random rng = new Random();
+            Methods.MoveMouseHs(new Point(HSPoints.Rest.X + rng.Next(100), HSPoints.Rest.Y + rng.Next(100)));
         }
         public static void PlayCard(int handSize, int handNumber)
         {
-            IO.LogDebug("Play Card handSize " + handSize + ", handNumber " + (handNumber + 1), IO.DebugFile.Twitch);
+            IO.LogDebug("Play Card handSize " + handSize + ", handNumber " + (handNumber + 1), IO.DebugFile.Input);
             SelectCardHand(handSize, handNumber);
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             SelectBoard(0, 0);
+            Thread.Sleep(100);
+            RestMouse();
         }
         public static void PlayCardOn(int handSize, int handNumber, bool enemy, int boardSize, int boardNumber, bool hero = false)
         {
             SelectCardHand(handSize, handNumber);
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             if (enemy)
             {
                 if (hero)
                 {
-                    IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + " Enemy Hero", IO.DebugFile.Twitch);
+                    IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + " Enemy Hero", IO.DebugFile.Input);
                     SelectHeroEnemy();
+                    Thread.Sleep(100);
+                    RestMouse();
                     return;
                 }
-                IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + ", enemy " + enemy + ", boardSize " + boardSize + ", boardNumber " + (boardNumber + 1), IO.DebugFile.Twitch);
+                IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + ", enemy " + enemy + ", boardSize " + boardSize + ", boardNumber " + (boardNumber + 1), IO.DebugFile.Input);
                 SelectBoardEnemy(boardSize, boardNumber);
             }
             else
             {
                 if (hero)
                 {
-                    IO.LogDebug("Play Card On handSize " + handSize + ", handNumber" + handNumber + 1 + " Hero", IO.DebugFile.Twitch);
+                    IO.LogDebug("Play Card On handSize " + handSize + ", handNumber" + handNumber + 1 + " Hero", IO.DebugFile.Input);
                     SelectHero();
+                    Thread.Sleep(100);
+                    RestMouse();
                     return;
                 }
-                IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + ", enemy " + enemy + ", boardSize " + boardSize + ", boardNumber " + (boardNumber + 1), IO.DebugFile.Twitch);
+                IO.LogDebug("Play Card On handSize " + handSize + ", handNumber " + (handNumber + 1) + ", enemy " + enemy + ", boardSize " + boardSize + ", boardNumber " + (boardNumber + 1), IO.DebugFile.Input);
                 SelectBoard(boardSize, boardNumber);
             }
+            Thread.Sleep(100);
+            RestMouse();
         }
         public static void AttackCard(int boardSize, int boardNumber, int boardEnemySize, int boardEnemyNumber, bool hero = false)
         {
 
             SelectBoard(boardSize, boardNumber);
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             if (hero)
             {
-                IO.LogDebug("Attack boardSize " + boardSize + ",  boardNumber" + (boardNumber + 1) + " Hero ", IO.DebugFile.Twitch);
+                IO.LogDebug("Attack boardSize " + boardSize + ",  boardNumber" + (boardNumber + 1) + " Hero ", IO.DebugFile.Input);
                 SelectHeroEnemy();
+                Thread.Sleep(100);
+                RestMouse();
                 return;
             }
-            IO.LogDebug("Attack boardSize " + boardSize + ",  boardNumber" + (boardNumber + 1) + ", boardEnemySize " + boardEnemySize + ", boardEnemyNumber " + (boardEnemyNumber + 1), IO.DebugFile.Twitch);
+            IO.LogDebug("Attack boardSize " + boardSize + ",  boardNumber" + (boardNumber + 1) + ", boardEnemySize " + boardEnemySize + ", boardEnemyNumber " + (boardEnemyNumber + 1), IO.DebugFile.Input);
             SelectBoardEnemy(boardEnemySize, boardEnemyNumber);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void Mulligan(int first, int second, int third)
         {
-            IO.LogDebug("Mulligan first " + first + ",  second" + second + ", third " + third, IO.DebugFile.Twitch);
+            IO.LogDebug("Mulligan first " + first + ",  second" + second + ", third " + third, IO.DebugFile.Input);
             if (first == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[0]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             if (second == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[1]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             if (third == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[2]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             MoveMouseHs(HSPoints.MulliganConfirm);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void MulliganCoin(int first, int second, int third, int fourth)
         {
-            IO.LogDebug("Mulligan Coin first " + first + ",  second" + second + ", third " + third + ", fourth " + fourth, IO.DebugFile.Twitch);
+            IO.LogDebug("Mulligan Coin first " + first + ",  second" + second + ", third " + third + ", fourth " + fourth, IO.DebugFile.Input);
             if (first == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[0]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             if (second == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[1]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             if (third == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[2]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             if (fourth == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[3]);
-                Methods.ClickMouse(true);
-                Thread.Sleep(500);
+                Methods.ClickMouseHS(true);
+                Thread.Sleep(200);
             }
             MoveMouseHs(HSPoints.MulliganConfirm);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void ChooseOne(int card)
         {
-            IO.LogDebug("ChooseOne card " + ++card, IO.DebugFile.Twitch);
+            IO.LogDebug("ChooseOne card " + ++card, IO.DebugFile.Input);
             if (card == 0)
             {
                 MoveMouseHs(HSPoints.ChooseOne_Left);
-                Methods.ClickMouse(true);
+                Methods.ClickMouseHS(true);
             }
             else
             {
                 MoveMouseHs(HSPoints.ChooseOne_Right);
-                Methods.ClickMouse(true);
+                Methods.ClickMouseHS(true);
             }
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void Discover(int card)
         {
-            IO.LogDebug("Discover card " + card + 1, IO.DebugFile.Twitch);
+            IO.LogDebug("Discover card " + card + 1, IO.DebugFile.Input);
             MoveMouseHs(HSPoints.DiscoverThree[card]);
-            Methods.ClickMouse(true);
+            Methods.ClickMouseHS(true);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void EndTurn()
         {
             Methods.MoveMouseHs(HSPoints.EndTurn);
-            Methods.ClickMouse(true);
-            IO.LogDebug("End Turn", IO.DebugFile.Twitch);
+            Methods.ClickMouseHS(true);
+            IO.LogDebug("End Turn", IO.DebugFile.Input);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void Power()
         {
             SelectPower();
-            IO.LogDebug("Hero Power", IO.DebugFile.Twitch);
+            IO.LogDebug("Hero Power", IO.DebugFile.Input);
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void Power(bool enemy)
         {
             SelectPower();
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             if (enemy)
             {
                 SelectHeroEnemy();
-                IO.LogDebug("Hero Power enemy " + enemy, IO.DebugFile.Twitch);
+                IO.LogDebug("Hero Power enemy " + enemy, IO.DebugFile.Input);
             }
             else
             {
                 SelectHero();
-                IO.LogDebug("Hero Power enemy " + enemy, IO.DebugFile.Twitch);
+                IO.LogDebug("Hero Power enemy " + enemy, IO.DebugFile.Input);
             }
+            Thread.Sleep(100);
+            RestMouse();
         }
 
         public static void Power(int boardSize, int boardNumber, bool enemy)
         {
             SelectPower();
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             if (enemy)
             {
                 SelectBoardEnemy(boardSize, boardNumber);
-                IO.LogDebug("Hero Power enemy " + enemy + ", boardSize " + boardSize + ", boardNumber" + (boardNumber + 1), IO.DebugFile.Twitch);
+                IO.LogDebug("Hero Power enemy " + enemy + ", boardSize " + boardSize + ", boardNumber" + (boardNumber + 1), IO.DebugFile.Input);
             }
             else
             {
                 SelectBoard(boardSize, boardNumber);
-                IO.LogDebug("Hero Power enemy " + enemy + ", boardSize " + boardSize + ", boardNumber" + (boardNumber + 1), IO.DebugFile.Twitch);
+                IO.LogDebug("Hero Power enemy " + enemy + ", boardSize " + boardSize + ", boardNumber" + (boardNumber + 1), IO.DebugFile.Input);
             }
+            Thread.Sleep(100);
+            RestMouse();
         }
     }
 }
