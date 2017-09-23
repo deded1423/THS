@@ -38,7 +38,6 @@ namespace THS.Windows
             irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
             _twitchThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
             _twitchThread.Start("deded1423");
-
             //string str = "Play mark of nature on me";
             //str = str.ToLower();
             //Match aaa = InstructionType.InstructionPlayOnRegex.Match(str);

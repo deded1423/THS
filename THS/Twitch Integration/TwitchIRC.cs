@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 using THS.Utils;
 
 //TODO: Hay que pasar todo lo de twitch a lower case para que el regex no se lie
@@ -47,8 +48,29 @@ namespace THS.Twitch_Integration
                     string msg = ReadMessage();
                     if (msg != null)
                     {
-
+                        if (msg.Equals("!help"))
+                        {
+                            //SendChatMessage(@"Play <handSize> <handNumber> // Play <handSize> <handNumber> <enemy>[ef] <boardSize> <boardNumber> // Play <handSize> <handNumber> <enemy>[ef] Hero");
+                            SendChatMessage(@"Play <handSize> <handNumber>");
+                            SendChatMessage(@"Play <handSize> <handNumber> <enemy>[e-f] <boardSize> <boardNumber>");
+                            SendChatMessage(@"Play <handSize> <handNumber> <enemy>[e-f] Hero");
+                            //SendChatMessage(@"Mulligan <first> <second> <third> {<fourth> c} // Attack <boardSize> <boardNumber> <boardEnemySize> <boardEnemyNumber> // Attack <boardSize> <boardNumber> Hero");
+                            SendChatMessage(@"Mulligan <first>[0-1] <second>[0-1] <third>[0-1] {<fourth>[0-1] c}");
+                            SendChatMessage(@"Attack <boardSize> <boardNumber> <boardEnemySize> <boardEnemyNumber>");
+                            SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
+                            SendChatMessage(@"Choose <card>");
+                            SendChatMessage(@"Discover <card>");
+                            SendChatMessage(@"End");
+                            SendChatMessage(@"Power");
+                            SendChatMessage(@"Power <enemy>[e-f] Hero");
+                            SendChatMessage(@"Power <enemy>[e-f] <boardSize> <boardNumber>");
+                        }
                         msg = msg.ToLower();
+                        if (msg.Contains("tmi.twitch.tv"))
+                        {
+                            IO.LogDebug(msg, IO.DebugFile.Twitch);
+                            continue;
+                        }
                         var cmd = new CommandChat(msg);
                         if (cmd.Type != PlayType.Incorrect)
                         {
@@ -57,6 +79,7 @@ namespace THS.Twitch_Integration
                         }
                         else
                         {
+                            SendChatMessage(@"Incorrect Message: " + msg);
                             IO.LogDebug(msg, IO.DebugFile.Twitch);
                         }
                     }
@@ -66,7 +89,7 @@ namespace THS.Twitch_Integration
 
         public void JoinRoom(string channel)
         {
-
+            Thread.Sleep(500);
             outputStream.WriteLine("JOIN #" + channel);
             outputStream.Flush();
         }
@@ -86,7 +109,7 @@ namespace THS.Twitch_Integration
         public string ReadMessage()
         {
             string message = null;
-            if (inputStream.Peek() >= 0)
+            if (!inputStream.EndOfStream)
             {
                 message = inputStream.ReadLine();
             }

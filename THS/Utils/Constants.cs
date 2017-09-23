@@ -13,15 +13,29 @@ namespace THS.Utils
     }
     public class InstructionRegexType
     { //TODO: Ver como se diferencian 2 cartas que son iguales
-        public static Regex InstructionPlayRegex = new Regex(@"play\s+(?<name>(.+))");
-        public static Regex InstructionPlayOnRegex = new Regex(@"play\s+(?<name>(.+))\s+on\s+(?<target>.+)");
-        public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
-        public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
-        public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+attacks?\s+(?<target>.+)");
+        //public static Regex InstructionPlayRegex = new Regex(@"play\s+(?<name>(.+))");
+        //public static Regex InstructionPlayOnRegex = new Regex(@"play\s+(?<name>(.+))\s+on\s+(?<target>.+)");
+        //public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
+        //public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
+        //public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+attacks?\s+(?<target>.+)");
+
+        public static Regex PlayRegex = new Regex(@"play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))$");
+        public static Regex PlayOnBoardRegex = new Regex(@"play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))\s(?<enemy>([ef]))\s(?<boardSize>(\d))\s(?<boardNumber>(\d))$");
+        public static Regex PlayOnHeroRegex = new Regex(@"play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))\s(?<enemy>([ef]))\shero$");
+        public static Regex MulliganRegex = new Regex(@"mulligan\s(?<first>(\d))\s(?<second>(\d))\s(?<third>(\d))(\s(?<fourth>(\d))(?<coin>( c)))*$");
+        public static Regex AttackBoardRegex = new Regex(@"attack\s(?<boardSize>(\d))\s(?<boardNumber>(\d))\s(?<boardEnemySize>(\d))\s(?<boardEnemyNumber>(\d))$");
+        public static Regex AttackHeroRegex = new Regex(@"attack\s(?<boardSize>(\d))\s(?<boardNumber>(\d)) hero$");
+        public static Regex ChooseRegex = new Regex(@"choose\s(?<card>(\d))$");
+        public static Regex DiscoverRegex = new Regex(@"discover\s(?<card>(\d))$");
+        public static Regex EndRegex = new Regex(@"end$");
+        public static Regex PowerRegex = new Regex(@"power$");
+        public static Regex PowerHeroRegex = new Regex(@"power\s(?<enemy>([ef]))\shero$");
+        public static Regex PowerBoardRegex = new Regex(@"power\s(?<enemy>([ef]))\s(?<boardSize>(\d))\s(?<boardNumber>(\d))$");
+        public static Regex EmoteRegex = new Regex(@"emote\s(?<emote>(\w{2}))$");
     }
     public enum PlayType
     {
-        Play, HeroPower, Attack, Incorrect
+        Play, HeroPower, Attack, Incorrect, Other, Mulligan, Discover
     }
     public enum CardZone
     {
