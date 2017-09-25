@@ -384,6 +384,7 @@ namespace THS.Input
         {
             Random rng = new Random();
             Methods.MoveMouseHs(new Point(HSPoints.Rest.X + rng.Next(100), HSPoints.Rest.Y + rng.Next(100)));
+            //Methods.MoveMouseHs(HSPoints.Rest);
         }
         public static void PlayCard(int handSize, int handNumber)
         {
@@ -429,7 +430,6 @@ namespace THS.Input
         }
         public static void AttackCard(int boardSize, int boardNumber, int boardEnemySize, int boardEnemyNumber, bool hero = false)
         {
-
             SelectBoard(boardSize, boardNumber);
             Thread.Sleep(200);
             if (hero)
@@ -445,7 +445,23 @@ namespace THS.Input
             Thread.Sleep(100);
             RestMouse();
         }
-
+        public static void AttackHero(int boardEnemySize, int boardEnemyNumber, bool hero = false)
+        {
+            SelectHero();
+            Thread.Sleep(200);
+            if (hero)
+            {
+                IO.LogDebug("Attack with hero to hero", IO.DebugFile.Input);
+                SelectHeroEnemy();
+                Thread.Sleep(100);
+                RestMouse();
+                return;
+            }
+            IO.LogDebug("Attack with hero  boardEnemySize " + boardEnemySize + ", boardEnemyNumber " + (boardEnemyNumber + 1), IO.DebugFile.Input);
+            SelectBoardEnemy(boardEnemySize, boardEnemyNumber);
+            Thread.Sleep(100);
+            RestMouse();
+        }
         public static void Mulligan(int first, int second, int third)
         {
             IO.LogDebug("Mulligan first " + first + ",  second" + second + ", third " + third, IO.DebugFile.Input);
@@ -453,20 +469,23 @@ namespace THS.Input
             {
                 MoveMouseHs(HSPoints.Mulligan[0]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
             }
+
             if (second == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[1]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
             }
+
             if (third == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[2]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
+                Thread.Sleep(1000);
             }
+
             MoveMouseHs(HSPoints.MulliganConfirm);
             Methods.ClickMouseHS(true);
             Thread.Sleep(100);
@@ -584,5 +603,7 @@ namespace THS.Input
             Thread.Sleep(100);
             RestMouse();
         }
+
+
     }
 }

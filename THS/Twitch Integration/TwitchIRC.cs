@@ -58,6 +58,9 @@ namespace THS.Twitch_Integration
                             SendChatMessage(@"Mulligan <first>[0-1] <second>[0-1] <third>[0-1] {<fourth>[0-1] c}");
                             SendChatMessage(@"Attack <boardSize> <boardNumber> <boardEnemySize> <boardEnemyNumber>");
                             SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
+                            SendChatMessage(@"Attack Hero <boardEnemySize> <boardEnemyNumber>");
+                            SendChatMessage(@"Attack Hero Hero");
+                            SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
                             SendChatMessage(@"Choose <card>");
                             SendChatMessage(@"Discover <card>");
                             SendChatMessage(@"End");
@@ -79,7 +82,6 @@ namespace THS.Twitch_Integration
                         }
                         else
                         {
-                            SendChatMessage(@"Incorrect Message: " + msg);
                             IO.LogDebug(msg, IO.DebugFile.Twitch);
                         }
                     }

@@ -25,6 +25,8 @@ namespace THS.Utils
         public static Regex MulliganRegex = new Regex(@"mulligan\s(?<first>(\d))\s(?<second>(\d))\s(?<third>(\d))(\s(?<fourth>(\d))(?<coin>( c)))*$");
         public static Regex AttackBoardRegex = new Regex(@"attack\s(?<boardSize>(\d))\s(?<boardNumber>(\d))\s(?<boardEnemySize>(\d))\s(?<boardEnemyNumber>(\d))$");
         public static Regex AttackHeroRegex = new Regex(@"attack\s(?<boardSize>(\d))\s(?<boardNumber>(\d)) hero$");
+        public static Regex AttackWithdHeroBoardRegex = new Regex(@"attack\shero\s(?<boardEnemySize>(\d))\s(?<boardEnemyNumber>(\d))$");
+        public static Regex AttackWithHeroRegex = new Regex(@"attack\shero\shero$");
         public static Regex ChooseRegex = new Regex(@"choose\s(?<card>(\d))$");
         public static Regex DiscoverRegex = new Regex(@"discover\s(?<card>(\d))$");
         public static Regex EndRegex = new Regex(@"end$");

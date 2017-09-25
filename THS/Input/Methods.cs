@@ -183,9 +183,9 @@ namespace THS.Input
         {
             double x = -1, y = -1, perc = 0, inc;
             Point oldMouse = GetMouseInfo();
-            int iterations = 500;
+            int iterations = 100;
             inc = Math.Sqrt(Math.Pow(Math.Abs(coord.X - oldMouse.X), 2) + Math.Pow(Math.Abs(coord.Y - oldMouse.Y), 2)) / speed;
-            while (Math.Abs(coord.X - x) > 2 && Math.Abs(coord.Y - y) > 2)
+            while (Math.Abs(coord.X - x) > 1 || Math.Abs(coord.Y - y) > 1)
             {
                 Point currMouse = GetMouseInfo();
                 x = oldMouse.X * (1 - perc) + coord.X * perc;
@@ -209,7 +209,7 @@ namespace THS.Input
             Point oldMouse = GetMouseInfoFromWindow("Hearthstone");
             Point[] screenInfo = GetWindowCoords("Hearthstone");
             if (oldMouse.X == -1 || (screenInfo[1].X < coord.X && screenInfo[1].Y < coord.Y && coord.X < 0 && coord.Y < 0)) return;
-            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y - coord.Y), 500f);
+            MoveMouse(new Point(coord.X + screenInfo[0].X, screenInfo[0].Y - coord.Y), 2000f);
         }
         public static void ClickMouseHS(bool left)
         {

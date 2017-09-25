@@ -41,7 +41,7 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.PlayCard(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value)-1);
+                MouseMovement.PlayCard(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value) - 1);
             }
             else if (InstructionRegexType.PlayOnBoardRegex.IsMatch(line))
             {
@@ -54,11 +54,11 @@ namespace THS.Twitch_Integration
                 }
                 if (match.Groups["enemy"].Value.Equals("e"))
                 {
-                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value)-1, true, int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1);
+                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value) - 1, true, int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1);
                 }
                 else
                 {
-                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value)-1, false, int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1);
+                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value) - 1, false, int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1);
                 }
 
             }
@@ -73,11 +73,11 @@ namespace THS.Twitch_Integration
                 }
                 if (match.Groups["enemy"].Value.Equals("e"))
                 {
-                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value)-1, true, 0, 0, true);
+                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value) - 1, true, 0, 0, true);
                 }
                 else
                 {
-                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value)-1, false, 0, 0, true);
+                    MouseMovement.PlayCardOn(int.Parse(match.Groups["handSize"].Value), int.Parse(match.Groups["handNumber"].Value) - 1, false, 0, 0, true);
                 }
             }
             else if (InstructionRegexType.MulliganRegex.IsMatch(line))
@@ -102,7 +102,7 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.AttackCard(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1, int.Parse(match.Groups["boardEnemySize"].Value), int.Parse(match.Groups["boardEnemyNumber"].Value)-1);
+                MouseMovement.AttackCard(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1, int.Parse(match.Groups["boardEnemySize"].Value), int.Parse(match.Groups["boardEnemyNumber"].Value) - 1);
             }
             else if (InstructionRegexType.AttackHeroRegex.IsMatch(line))
             {
@@ -113,7 +113,25 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.AttackCard(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1, 0, 0, true);
+                MouseMovement.AttackCard(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1, 0, 0, true);
+
+            }
+            else if (InstructionRegexType.AttackWithdHeroBoardRegex.IsMatch(line))
+            {
+                Type = PlayType.Attack;
+                Match match = InstructionRegexType.AttackWithdHeroBoardRegex.Match(line);
+                if (int.Parse(match.Groups["boardEnemySize"].Value) < int.Parse(match.Groups["boardEnemyNumber"].Value) || int.Parse(match.Groups["boardEnemySize"].Value) > 7)
+                {
+                    Type = PlayType.Incorrect;
+                    return;
+                }
+                MouseMovement.AttackHero( int.Parse(match.Groups["boardEnemySize"].Value), int.Parse(match.Groups["boardEnemyNumber"].Value) - 1);
+            }
+            else if (InstructionRegexType.AttackWithHeroRegex.IsMatch(line))
+            {
+                Type = PlayType.Attack;
+                Match match = InstructionRegexType.AttackWithHeroRegex.Match(line);
+                MouseMovement.AttackHero(0, 0, true);
 
             }
             else if (InstructionRegexType.ChooseRegex.IsMatch(line))
@@ -125,7 +143,7 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.ChooseOne(int.Parse(match.Groups["card"].Value)-1);
+                MouseMovement.ChooseOne(int.Parse(match.Groups["card"].Value) - 1);
             }
             else if (InstructionRegexType.DiscoverRegex.IsMatch(line))
             {
@@ -136,7 +154,7 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.Discover(int.Parse(match.Groups["card"].Value)-1);
+                MouseMovement.Discover(int.Parse(match.Groups["card"].Value) - 1);
             }
             else if (InstructionRegexType.EndRegex.IsMatch(line))
             {
@@ -179,11 +197,11 @@ namespace THS.Twitch_Integration
                 }
                 if (match.Groups["enemy"].Value.Equals("e"))
                 {
-                    MouseMovement.Power(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1, true);
+                    MouseMovement.Power(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1, true);
                 }
                 else
                 {
-                    MouseMovement.Power(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value)-1, false);
+                    MouseMovement.Power(int.Parse(match.Groups["boardSize"].Value), int.Parse(match.Groups["boardNumber"].Value) - 1, false);
                 }
             }
             else if (InstructionRegexType.EmoteRegex.IsMatch(line))

@@ -40,8 +40,7 @@ namespace THS.Windows
             this.LabelMouse = new System.Windows.Forms.Label();
             this.LabelMouseRelText = new System.Windows.Forms.Label();
             this.LabelMouseRel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxTCP = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -85,7 +84,7 @@ namespace THS.Windows
             // LabelScreenSizeText
             // 
             this.LabelScreenSizeText.AutoSize = true;
-            this.LabelScreenSizeText.Location = new System.Drawing.Point(12, 22);
+            this.LabelScreenSizeText.Location = new System.Drawing.Point(12, 24);
             this.LabelScreenSizeText.Name = "LabelScreenSizeText";
             this.LabelScreenSizeText.Size = new System.Drawing.Size(64, 13);
             this.LabelScreenSizeText.TabIndex = 7;
@@ -94,7 +93,7 @@ namespace THS.Windows
             // LabelScreenSize
             // 
             this.LabelScreenSize.AutoSize = true;
-            this.LabelScreenSize.Location = new System.Drawing.Point(89, 22);
+            this.LabelScreenSize.Location = new System.Drawing.Point(89, 24);
             this.LabelScreenSize.Name = "LabelScreenSize";
             this.LabelScreenSize.Size = new System.Drawing.Size(13, 13);
             this.LabelScreenSize.TabIndex = 6;
@@ -103,7 +102,7 @@ namespace THS.Windows
             // LabelMouseText
             // 
             this.LabelMouseText.AutoSize = true;
-            this.LabelMouseText.Location = new System.Drawing.Point(12, 35);
+            this.LabelMouseText.Location = new System.Drawing.Point(12, 39);
             this.LabelMouseText.Name = "LabelMouseText";
             this.LabelMouseText.Size = new System.Drawing.Size(39, 13);
             this.LabelMouseText.TabIndex = 9;
@@ -112,7 +111,7 @@ namespace THS.Windows
             // LabelMouse
             // 
             this.LabelMouse.AutoSize = true;
-            this.LabelMouse.Location = new System.Drawing.Point(89, 35);
+            this.LabelMouse.Location = new System.Drawing.Point(89, 39);
             this.LabelMouse.Name = "LabelMouse";
             this.LabelMouse.Size = new System.Drawing.Size(13, 13);
             this.LabelMouse.TabIndex = 8;
@@ -121,7 +120,7 @@ namespace THS.Windows
             // LabelMouseRelText
             // 
             this.LabelMouseRelText.AutoSize = true;
-            this.LabelMouseRelText.Location = new System.Drawing.Point(12, 48);
+            this.LabelMouseRelText.Location = new System.Drawing.Point(12, 54);
             this.LabelMouseRelText.Name = "LabelMouseRelText";
             this.LabelMouseRelText.Size = new System.Drawing.Size(58, 13);
             this.LabelMouseRelText.TabIndex = 11;
@@ -130,37 +129,28 @@ namespace THS.Windows
             // LabelMouseRel
             // 
             this.LabelMouseRel.AutoSize = true;
-            this.LabelMouseRel.Location = new System.Drawing.Point(89, 48);
+            this.LabelMouseRel.Location = new System.Drawing.Point(89, 54);
             this.LabelMouseRel.Name = "LabelMouseRel";
             this.LabelMouseRel.Size = new System.Drawing.Size(13, 13);
             this.LabelMouseRel.TabIndex = 10;
             this.LabelMouseRel.Text = "0";
             // 
-            // label1
+            // checkBoxTCP
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(89, 61);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(89, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "0";
+            this.checkBoxTCP.AutoSize = true;
+            this.checkBoxTCP.Location = new System.Drawing.Point(230, 5);
+            this.checkBoxTCP.Name = "checkBoxTCP";
+            this.checkBoxTCP.Size = new System.Drawing.Size(101, 17);
+            this.checkBoxTCP.TabIndex = 14;
+            this.checkBoxTCP.Text = "TCP(Not twitch)";
+            this.checkBoxTCP.UseVisualStyleBackColor = true;
             // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.checkBoxTCP);
             this.Controls.Add(this.LabelMouseRelText);
             this.Controls.Add(this.LabelMouseRel);
             this.Controls.Add(this.LabelMouseText);
@@ -172,7 +162,7 @@ namespace THS.Windows
             this.Controls.Add(this.ButtonStart);
             this.Controls.Add(this.ButtonConfig);
             this.Name = "THS";
-            this.Text = "s";
+            this.Text = "THS";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.THS_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -209,8 +199,7 @@ namespace THS.Windows
         public Label LabelMouse;
         private Label LabelMouseRelText;
         public Label LabelMouseRel;
-        public Label label1;
-        public Label label2;
+        private CheckBox checkBoxTCP;
     }
 }
 
