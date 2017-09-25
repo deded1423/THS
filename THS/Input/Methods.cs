@@ -240,11 +240,13 @@ namespace THS.Input
             if (left)
             {
                 mouse_event((uint)MouseEventFlags.LEFTDOWN, 0, 0, 0, 0);
+                Thread.Sleep(50);
                 mouse_event((uint)MouseEventFlags.LEFTUP, 0, 0, 0, 0);
             }
             else
             {
                 mouse_event((uint)MouseEventFlags.RIGHTDOWN, 0, 0, 0, 0);
+                Thread.Sleep(50);
                 mouse_event((uint)MouseEventFlags.RIGHTUP, 0, 0, 0, 0);
             }
 

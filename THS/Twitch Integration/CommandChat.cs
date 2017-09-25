@@ -84,7 +84,7 @@ namespace THS.Twitch_Integration
             {
                 Type = PlayType.Mulligan;
                 Match match = InstructionRegexType.MulliganRegex.Match(line);
-                if (match.Groups["coin"].Value != null)
+                if (match.Groups["coin"].Value.Equals(""))
                 {
                     MouseMovement.Mulligan(int.Parse(match.Groups["first"].Value), int.Parse(match.Groups["second"].Value), int.Parse(match.Groups["third"].Value));
                 }
@@ -125,7 +125,7 @@ namespace THS.Twitch_Integration
                     Type = PlayType.Incorrect;
                     return;
                 }
-                MouseMovement.AttackHero( int.Parse(match.Groups["boardEnemySize"].Value), int.Parse(match.Groups["boardEnemyNumber"].Value) - 1);
+                MouseMovement.AttackHero(int.Parse(match.Groups["boardEnemySize"].Value), int.Parse(match.Groups["boardEnemyNumber"].Value) - 1);
             }
             else if (InstructionRegexType.AttackWithHeroRegex.IsMatch(line))
             {
@@ -208,6 +208,72 @@ namespace THS.Twitch_Integration
             {
                 Type = PlayType.Other;
                 Match match = InstructionRegexType.EmoteRegex.Match(line);
+                switch (match.Groups["emote"].Value)
+                {
+                    case "hi":
+                        MouseMovement.Emote(HSPoints.EmoteGreetings);
+                        break;
+                    case "wp":
+                        MouseMovement.Emote(HSPoints.EmoteWellPlayed);
+                        break;
+                    case "ty":
+                        MouseMovement.Emote(HSPoints.EmoteThanks);
+                        break;
+                    case "oh":
+                        MouseMovement.Emote(HSPoints.EmoteWow);
+                        break;
+                    case "oo":
+                        MouseMovement.Emote(HSPoints.EmoteOops);
+                        break;
+                    case "th":
+                        MouseMovement.Emote(HSPoints.EmoteThreaten);
+                        break;
+                    default:
+                        Type = PlayType.Incorrect;
+                        return;
+                }
+            }
+            else if (InstructionRegexType.QueueRegex.IsMatch(line))
+            {
+                Type = PlayType.Other;
+                Match match = InstructionRegexType.QueueRegex.Match(line);
+                if (int.Parse(match.Groups["deck"].Value) < 1 || int.Parse(match.Groups["deck"].Value) > 18 || (!match.Groups["mode"].Value.Equals("r") && !match.Groups["mode"].Value.Equals("c")) || (!match.Groups["wild"].Value.Equals("w") && !match.Groups["wild"].Value.Equals("s")))
+                {
+                    Type = PlayType.Incorrect;
+                    return;
+                }
+                if (match.Groups["mode"].Value.Equals("r"))
+                {
+                    MouseMovement.Requeue(int.Parse(match.Groups["deck"].Value), true);
+                }
+                else
+                {
+                    MouseMovement.Requeue(int.Parse(match.Groups["deck"].Value), false);
+                }
+
+            }
+            else if (InstructionRegexType.SilenceRegex.IsMatch(line))
+            {
+                Type = PlayType.Other;
+                Match match = InstructionRegexType.SilenceRegex.Match(line);
+                MouseMovement.Silence();
+
+            }
+            else if (InstructionRegexType.SeeDeckRegex.IsMatch(line))
+            {
+                Type = PlayType.Other;
+                Match match = InstructionRegexType.SeeDeckRegex.Match(line);
+
+                MouseMovement.SeeDeck();
+
+            }
+            else if (InstructionRegexType.ConcedeRegex.IsMatch(line))
+            {
+                Type = PlayType.Other;
+                Match match = InstructionRegexType.ConcedeRegex.Match(line);
+
+                MouseMovement.Concede();
+
             }
             else
             {

@@ -115,6 +115,16 @@ namespace THS.Twitch_Integration
             {
                 message = inputStream.ReadLine();
             }
+            if (message == "PING :tmi.twitch.tv")
+            {
+                //foreach (var irc in Program.irc)
+                //{
+                //    irc.SendIrcMessage("PONG :tmi.twitch.tv");
+                //}
+                SendIrcMessage("PONG :tmi.twitch.tv");
+                IO.LogDebug(message, IO.DebugFile.Twitch, false);
+                return "PING :tmi.twitch.tv";
+            }
             if (message?.Contains("PRIVMSG") == true)
             {
                 string[] msg = message.Split(':');

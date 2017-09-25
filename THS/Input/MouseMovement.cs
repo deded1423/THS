@@ -12,15 +12,43 @@ namespace THS.Input
     public class HSPoints
     {
         //1600x900
-        public static Point Rest = new Point(1228, 223);
-        public static Point OptionsFriends = new Point(39, 23);
-        public static Point OptionsMenu = new Point(1567, 23);
-        public static Point MenuConcede_Restart = new Point(800, 571);
-        public static Point MenuRestart_Restart = new Point(800, 475);
-        public static Point MenuOptions_Restart = new Point(800, 379);
-        public static Point MenuQuit_Restart = new Point(800, 314);
-        public static Point MulliganConfirm = new Point(805, 182);
 
+        //GLOBAL
+        public static Point OptionsGlobalFriends = new Point(39, 23);
+        public static Point OptionsGlobalMenu = new Point(1567, 23);
+
+        //MENU PLAY
+        public static Point MenuPlayQueue = new Point(1167, 158);
+        public static Point MenuPlayRanked = new Point(1253, 766);
+        public static Point MenuPlayCasual = new Point(1086, 765);
+        public static Point MenuPlayWild = new Point(1173, 856);
+        public static Point MenuPlayCollection = new Point(596, 80);
+        public static Point MenuPlayBack = new Point(1322, 70);
+        public static Point MenuPlayNextDecks = new Point();
+        public static Point[] MenuPlayDeck = new Point[9] {
+            new Point(401,658), //1
+            new Point(600,656), //2
+            new Point(802,657), //3
+            new Point(396,468), //4
+            new Point(600,476), //5
+            new Point(798,473), //6
+            new Point(400,279), //7
+            new Point(604,278), //8
+            new Point(800,276) //9
+        };
+
+        //INGAME MENU
+        public static Point MenuGameConcede_Restart = new Point(800, 571);
+        public static Point MenuGameRestart_Restart = new Point(800, 475);
+        public static Point MenuGameOptions_Restart = new Point(800, 379);
+        public static Point MenuGameQuit_Restart = new Point(800, 314);
+        public static Point MenuGameConcede = new Point(801, 572);
+        public static Point MenuGameOptions = new Point(798, 474);
+        public static Point MenuGameQuit = new Point(799, 411);
+        public static Point MulliganConfirm = new Point(805, 182);
+        public static Point Rest = new Point(323, 138);
+
+        //GAME MISC
         public static Point HandNone = new Point(794, 64);
         public static Point HandEnemy = new Point(792, 867);
         public static Point Board = new Point(805, 402);
@@ -35,6 +63,16 @@ namespace THS.Input
         public static Point DeckEnemy = new Point(1369, 612);
         public static Point EndTurn = new Point(1294, 489);
 
+        //EMOTE
+        public static Point EmoteGreetings = new Point(642, 182);
+        public static Point EmoteWellPlayed = new Point(640, 259);
+        public static Point EmoteThanks = new Point(673, 330);
+        public static Point EmoteWow = new Point(933, 331);
+        public static Point EmoteOops = new Point(965, 253);
+        public static Point EmoteThreaten = new Point(963, 184);
+        public static Point EmoteSilence = new Point(666, 815);
+
+        //DISCOVER BOARD HAND CHOOSE ONE
         public static Point ChooseOne_Left = new Point(652, 457);
         public static Point ChooseOne_Right = new Point(953, 456);
 
@@ -224,6 +262,26 @@ namespace THS.Input
     }
     public class MouseMovement
     {
+        public static void Requeue(int deck, bool ranked = false)
+        {
+            Methods.MoveMouseHs(HSPoints.Board);
+            Methods.ClickMouseHS(true);
+            Methods.MoveMouseHs(HSPoints.MenuPlayDeck[deck - 1]);
+            Methods.ClickMouseHS(true);
+            if (ranked)
+            {
+                Methods.MoveMouseHs(HSPoints.MenuPlayRanked);
+                Methods.ClickMouseHS(true);
+            }
+            else
+            {
+                Methods.MoveMouseHs(HSPoints.MenuPlayCasual);
+                Methods.ClickMouseHS(true);
+            }
+            Methods.MoveMouseHs(HSPoints.MenuPlayQueue);
+            Methods.ClickMouseHS(true);
+        }
+
         public static void SelectCardHand(int handSize, int numberCard)
         {
             switch (handSize)
@@ -359,7 +417,6 @@ namespace THS.Input
 
         public static void SelectHero()
         {
-
             Methods.MoveMouseHs(HSPoints.Hero);
             Methods.ClickMouseHS(true);
         }
@@ -380,6 +437,7 @@ namespace THS.Input
             Methods.MoveMouseHs(HSPoints.PowerEnemy);
             Methods.ClickMouseHS(true);
         }
+
         public static void RestMouse()
         {
             Random rng = new Random();
@@ -398,6 +456,9 @@ namespace THS.Input
         public static void PlayCardOn(int handSize, int handNumber, bool enemy, int boardSize, int boardNumber, bool hero = false)
         {
             SelectCardHand(handSize, handNumber);
+            Thread.Sleep(200);
+            Methods.MoveMouseHs(HSPoints.Power);
+            Methods.ClickMouseHS(true);
             Thread.Sleep(200);
             if (enemy)
             {
@@ -469,21 +530,18 @@ namespace THS.Input
             {
                 MoveMouseHs(HSPoints.Mulligan[0]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(1000);
             }
 
             if (second == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[1]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(1000);
             }
 
             if (third == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan[2]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(1000);
             }
 
             MoveMouseHs(HSPoints.MulliganConfirm);
@@ -499,25 +557,21 @@ namespace THS.Input
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[0]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
             }
             if (second == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[1]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
             }
             if (third == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[2]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
             }
             if (fourth == 1)
             {
                 MoveMouseHs(HSPoints.Mulligan_Coin[3]);
                 Methods.ClickMouseHS(true);
-                Thread.Sleep(200);
             }
             MoveMouseHs(HSPoints.MulliganConfirm);
             Methods.ClickMouseHS(true);
@@ -528,7 +582,7 @@ namespace THS.Input
         public static void ChooseOne(int card)
         {
             IO.LogDebug("ChooseOne card " + ++card, IO.DebugFile.Input);
-            if (card == 0)
+            if (card == 1)
             {
                 MoveMouseHs(HSPoints.ChooseOne_Left);
                 Methods.ClickMouseHS(true);
@@ -604,6 +658,37 @@ namespace THS.Input
             RestMouse();
         }
 
+        public static void Emote(Point emote)
+        {
+            Methods.MoveMouseHs(HSPoints.Hero);
+            Methods.ClickMouseHS(false);
+            Thread.Sleep(200);
+            MoveMouseHs(emote);
+            Methods.ClickMouseHS(true);
+            RestMouse();
+        }
+        public static void Silence()
+        {
+            Methods.MoveMouseHs(HSPoints.HeroEnemy);
+            Methods.ClickMouseHS(false);
+            Methods.MoveMouseHs(HSPoints.EmoteSilence);
+            Methods.ClickMouseHS(true);
+        }
+
+        public static void SeeDeck()
+        {
+            Methods.MoveMouseHs(HSPoints.Deck);
+            Thread.Sleep(3000);
+            RestMouse();
+        }
+        public static void Concede()
+        {
+            Methods.MoveMouseHs(HSPoints.OptionsGlobalMenu);
+            Methods.ClickMouseHS(true);
+            Thread.Sleep(200);
+            Methods.MoveMouseHs(HSPoints.MenuGameConcede);
+            Methods.ClickMouseHS(true);
+        }
 
     }
 }
