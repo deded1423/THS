@@ -41,6 +41,7 @@ namespace THS.Windows
             this.LabelMouseRelText = new System.Windows.Forms.Label();
             this.LabelMouseRel = new System.Windows.Forms.Label();
             this.checkBoxTCP = new System.Windows.Forms.CheckBox();
+            this.checkBoxInput = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -138,18 +139,29 @@ namespace THS.Windows
             // checkBoxTCP
             // 
             this.checkBoxTCP.AutoSize = true;
-            this.checkBoxTCP.Location = new System.Drawing.Point(230, 5);
+            this.checkBoxTCP.Location = new System.Drawing.Point(230, 35);
             this.checkBoxTCP.Name = "checkBoxTCP";
             this.checkBoxTCP.Size = new System.Drawing.Size(101, 17);
             this.checkBoxTCP.TabIndex = 14;
-            this.checkBoxTCP.Text = "TCP(Not twitch)";
+            this.checkBoxTCP.Text = "IRC (Not twitch)";
             this.checkBoxTCP.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxInput
+            // 
+            this.checkBoxInput.AutoSize = true;
+            this.checkBoxInput.Location = new System.Drawing.Point(230, 12);
+            this.checkBoxInput.Name = "checkBoxInput";
+            this.checkBoxInput.Size = new System.Drawing.Size(93, 17);
+            this.checkBoxInput.TabIndex = 15;
+            this.checkBoxInput.Text = "Connect Input";
+            this.checkBoxInput.UseVisualStyleBackColor = true;
             // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
+            this.Controls.Add(this.checkBoxInput);
             this.Controls.Add(this.checkBoxTCP);
             this.Controls.Add(this.LabelMouseRelText);
             this.Controls.Add(this.LabelMouseRel);
@@ -200,6 +212,7 @@ namespace THS.Windows
         private Label LabelMouseRelText;
         public Label LabelMouseRel;
         private CheckBox checkBoxTCP;
+        private CheckBox checkBoxInput;
     }
 }
 

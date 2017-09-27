@@ -51,16 +51,12 @@ namespace THS.HSImport
                 Log = match.Groups["log"].Value;
                 Process = match.Groups["process"].Value;
                 LogFile = logFile;
-                if (LogFile.Equals("FullScreenFX"))
-                {
-
-                }
             }
         }
 
         public override string ToString()
         {
-            return "LF: " + LogFile + " / P: " + Process + " / L: " + Log + " / " + Line;
+            return "L: " + Log + " // " + Line;
         }
 
     }

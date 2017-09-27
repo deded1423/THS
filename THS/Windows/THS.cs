@@ -33,27 +33,16 @@ namespace THS.Windows
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            //_game = new HSApp.HSGame(this);
+            _game = new HSApp.HSGame(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //string str = "Play mark of nature on me";
-            //str = str.ToLower();
-            //Match aaa = InstructionType.InstructionPlayOnRegex.Match(str);
-            //Utils.Misc.CloseApp();
-
-
-
-
-
 
             _inputThread = new Thread(() =>
                 {
                     int i = 1;
                     int key = 0x61;
-                    int size = 0;
-                    int select = 0;
                     while (true)
                     {
                         Methods.Point mouseAbs = Methods.GetMouseInfo();
@@ -112,7 +101,7 @@ namespace THS.Windows
                         Thread.Sleep(10);
                     }
                 })
-            { Name = "Test" };
+            { Name = "Input" };
             _inputThread.Start();
         }
 
@@ -130,44 +119,11 @@ namespace THS.Windows
         {
             if (ButtonStart.Text.Equals("Start"))
             {
-                if (checkBoxTCP.Checked)
+                if (checkBoxInput.Checked)
                 {
-                    TcpListener list = new TcpListener(IPAddress.Parse("127.0.0.1"), 1234);
-                    list.Start(1);
-                    //list.Stop();
-                    var client = list.AcceptTcpClient();
-                    var inputStream = new StreamReader(client.GetStream());
-                    var outputStream = new StreamWriter(client.GetStream());
-
-                    while (true)
-                    {
-                        string msg = null;
-                        if (!inputStream.EndOfStream)
-                        {
-                            msg = inputStream.ReadLine();
-                        }
-                        if (msg != null)
-                        {
-                            msg = msg.ToLower();
-                            var cmd = new CommandChat(msg);
-                            if (cmd.Type != PlayType.Incorrect)
-                            {
-                                IO.LogDebug(cmd.ToString(), IO.DebugFile.Tcp, false);
-                            }
-                            else
-                            {
-                                IO.LogDebug(msg, IO.DebugFile.Tcp);
-                            }
-                        }
-                    }
+                    StartIRC();
                 }
-                else
-                {
-                    irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
-                    _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
-                    _messageThread.Start("deded1423");
-                }
-                //_game.Start();
+                _game.Start();
                 ButtonStart.Text = "Stop";
 
             }
@@ -182,9 +138,24 @@ namespace THS.Windows
         private void THS_FormClosed(object sender, FormClosedEventArgs e)
         {
             _inputThread.Suspend();
+            IO.CloseDebugFiles();
             //irc.Stop();
         }
 
-
+        private void StartIRC()
+        {
+            if (checkBoxTCP.Checked)
+            {
+                irc = new IrcClient("irc.freenode.net", 6667, "THStone", "none");
+                _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
+                _messageThread.Start("deded1423");
+            }
+            else
+            {
+                irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
+                _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
+                _messageThread.Start("deded1423");
+            }
+        }
     }
 }

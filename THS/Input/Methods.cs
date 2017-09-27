@@ -194,7 +194,6 @@ namespace THS.Input
                 perc += (1 / (float)iterations);
                 Thread.Sleep((int)Math.Ceiling(1000 * inc / iterations));
             }
-            //mouse_event((uint)MouseEventFlags.MOVE, coord.X - oldMouse.X, coord.Y - oldMouse.Y, 0, 0);
         }
 
         public static void MoveMouseRel(Point coord, string screen)

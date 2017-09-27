@@ -26,17 +26,22 @@ namespace HearthDb.Enums
         BGT_VS_AI = 4,
         BGT_TUTORIAL = 5,
         BGT_ASYNC = 6,
-        BGT_CASUAL_STANDARD = 7,
-        BGT_TEST1 = 8,
-        BGT_TEST2 = 9,
         BGT_NEWBIE = 9,
-        BGT_TEST3 = 10,
+        BGT_CASUAL_STANDARD_NEWBIE = 9,
+        BGT_CASUAL_STANDARD_NORMAL = 10,
+        BGT_CASUAL_STANDARD = 10,
+        BGT_TEST1 = 11,
+        BGT_TEST2 = 12,
+        BGT_TEST3 = 13,
         BGT_TAVERNBRAWL_PVP = 16,
         BGT_TAVERNBRAWL_1P_VERSUS_AI = 17,
         BGT_TAVERNBRAWL_2P_COOP = 18,
         BGT_RANKED_WILD = 30,
         BGT_CASUAL_WILD = 31,
-        BGT_LAST = 32,
+        BGT_FSG_BRAWL_VS_FRIEND = 40,
+        BGT_FSG_BRAWL_PVP = 41,
+        BGT_FSG_BRAWL_1P_VERSUS_AI = 42,
+        BGT_FSG_BRAWL_2P_COOP = 43,
     }
 
     public enum BnetRegion
@@ -67,6 +72,15 @@ namespace HearthDb.Enums
         SIGNUP_INCENTIVE = 18,
         MEAN_STREETS = 19,
         UNGORO = 20,
+        FROZEN_THRONE = 21,
+    }
+
+    public enum BrawlType
+    {
+        BRAWL_TYPE_UNKNOWN = 0,
+        BRAWL_TYPE_TAVERN_BRAWL = 1,
+        BRAWL_TYPE_FIRESIDE_GATHERING = 2,
+        BRAWL_TYPE_COUNT = 3,
     }
 
     public enum CardClass
@@ -122,6 +136,33 @@ namespace HearthDb.Enums
         GANGS = 25,
         GANGS_RESERVE = 26,
         UNGORO = 27,
+        ICECROWN = 1001,
+    }
+
+    public enum CardTextBuilderType
+    {
+        DEFAULT = 0,
+        JADE_GOLEM = 1,
+        JADE_GOLEM_TRIGGER = 2,
+        KAZAKUS_POTION = 3,
+        MODULAR_ENTITY = 3,
+        KAZAKUS_POTION_EFFECT = 4,
+        DEPRECATED_5 = 5,
+        DEPRECATED_6 = 6,
+        PLACE_HOLDER_7 = 7,
+        SCRIPT_DATA_NUM_1 = 7,
+        PLACE_HOLDER_8 = 8,
+        DECORATE = 9,
+        PLACE_HOLDER_10 = 10,
+        PLACE_HOLDER_11 = 11,
+        PLACE_HOLDER_12 = 12,
+        PLACE_HOLDER_13 = 13,
+        ZOMBEAST = 14,
+        ZOMBEAST_ENCHANTMENT = 15,
+        HIDDEN_CHOICE = 16,
+        PLACE_HOLDER_17 = 17,
+        REFERENCE_CREATOR_ENTITY = 18,
+        REFERENCE_SCRIPT_DATA_NUM_1_ENTITY = 19,
     }
 
     public enum CardType
@@ -149,11 +190,13 @@ namespace HearthDb.Enums
 
     public enum DeckType
     {
+        UNKNOWN_DECK_TYPE = 0,
         NORMAL_DECK = 1,
         AI_DECK = 2,
         DRAFT_DECK = 4,
         PRECON_DECK = 5,
         TAVERN_BRAWL_DECK = 6,
+        FSG_BRAWL_DECK = 7,
         HIDDEN_DECK = 1000,
     }
 
@@ -469,7 +512,9 @@ namespace HearthDb.Enums
         DEFINING_ENCHANTMENT = 469,
         FINISH_ATTACK_SPELL_ON_DAMAGE = 470,
         KAZAKUS_POTION_POWER_1 = 471,
+        MODULAR_ENTITY_PART_1 = 471,
         KAZAKUS_POTION_POWER_2 = 472,
+        MODULAR_ENTITY_PART_2 = 472,
         MODIFY_DEFINITION_ATTACK = 473,
         MODIFY_DEFINITION_HEALTH = 474,
         MODIFY_DEFINITION_COST = 475,
@@ -491,9 +536,26 @@ namespace HearthDb.Enums
         EXTRA_TURNS_TAKEN_THIS_GAME = 548,
         SHIFTING_MINION = 549,
         SHIFTING_WEAPON = 550,
+        DEATH_KNIGHT = 554,
         BOSS = 556,
         STAMPEDE = 564,
+        IS_VAMPIRE = 680,
         CORRUPTED = 681,
+        LIFESTEAL = 685,
+        OVERRIDE_EMOTE_0 = 740,
+        OVERRIDE_EMOTE_1 = 741,
+        OVERRIDE_EMOTE_2 = 742,
+        OVERRIDE_EMOTE_3 = 743,
+        OVERRIDE_EMOTE_4 = 744,
+        OVERRIDE_EMOTE_5 = 745,
+        SCORE_FOOTERID = 751,
+        HERO_POWER_DISABLED = 777,
+        VALEERASHADOW = 779,
+        OVERRIDECARDNAME = 781,
+        OVERRIDECARDTEXTBUILDER = 782,
+        HIDDEN_CHOICE = 813,
+        ZOMBEAST = 823,
+        HERO_EMOTE_SILENCED = 832,
     }
 
     public enum GameType
@@ -509,7 +571,10 @@ namespace HearthDb.Enums
         GT_TAVERNBRAWL = 16,
         GT_TB_1P_VS_AI = 17,
         GT_TB_2P_COOP = 18,
-        GT_LAST = 19,
+        GT_FSG_BRAWL_VS_FRIEND = 19,
+        GT_FSG_BRAWL = 20,
+        GT_FSG_BRAWL_1P_VS_AI = 21,
+        GT_FSG_BRAWL_2P_COOP = 22,
     }
 
     public enum GoldRewardState
@@ -559,6 +624,7 @@ namespace HearthDb.Enums
         EFFECT_TIMING = 6,
         HISTORY_TARGET = 7,
         OVERRIDE_HISTORY = 8,
+        HISTORY_TARGET_DONT_DUPLICATE_UNTIL_END = 9,
     }
 
     public enum Mulligan
@@ -657,7 +723,12 @@ namespace HearthDb.Enums
         REQ_MINION_SLOT_OR_MANA_CRYSTAL_SLOT = 63,
         REQ_MAX_QUESTS = 64,
         REQ_TARGET_IF_AVAILABE_AND_ELEMENTAL_PLAYED_LAST_TURN = 65,
-        REQ_DRAG_TO_PLAY = 66,
+        REQ_TARGET_NOT_VAMPIRE = 66,
+        REQ_TARGET_NOT_DAMAGEABLE_ONLY_BY_WEAPONS = 67,
+        REQ_NOT_DISABLED_HERO_POWER = 68,
+        REQ_MUST_PLAY_OTHER_CARD_FIRST = 69,
+        REQ_HAND_NOT_FULL = 70,
+        REQ_DRAG_TO_PLAY = 71,
     }
 
     public enum PlayState
@@ -774,9 +845,16 @@ namespace HearthDb.Enums
         STRING = 8,
     }
 
+    public enum ZodiacYear
+    {
+        INVALID = -1,
+        PRE_STANDARD = 0,
+        KRAKEN = 1,
+        MAMMOTH = 2,
+    }
+
     public enum Zone
     {
-        DISCARD = -2,
         INVALID = 0,
         PLAY = 1,
         DECK = 2,

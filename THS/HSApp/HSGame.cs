@@ -4,7 +4,6 @@ using System.Threading;
 using HearthDb;
 using HearthDb.CardDefs;
 using HearthDb.Enums;
-using THS.HearthDb;
 using THS.HSImport;
 using THS.Utils;
 using Type = HearthDb.Enums.Type;
@@ -17,24 +16,24 @@ namespace THS.HSApp
 
         // Cards
 
-        //List<HSCard> _handUser = new List<HSCard>();
-        //List<HSCard> _handOpponent = new List<HSCard>();
-        //List<HSCard> _playedUser = new List<HSCard>();
-        //List<HSCard> _playedOpponent = new List<HSCard>();
-        //List<HSCard> _graveyardUser = new List<HSCard>();
-        //List<HSCard> _graveyardOpponent = new List<HSCard>();
-        //List<HSCard> _setasideUser = new List<HSCard>();
-        //List<HSCard> _setasideOpponent = new List<HSCard>();
-        //List<HSCard> _deckUser = new List<HSCard>();
-        //List<HSCard> _deckOpponent = new List<HSCard>();
-        List<HSCard> _enchantmentHsCards = new List<HSCard>();
+        List<HSCard> HandUser = new List<HSCard>();
+        List<HSCard> HandOpponent = new List<HSCard>();
+        List<HSCard> PlayedUser = new List<HSCard>();
+        List<HSCard> PlayedOpponent = new List<HSCard>();
+        List<HSCard> GraveyardUser = new List<HSCard>();
+        List<HSCard> GraveyardOpponent = new List<HSCard>();
+        List<HSCard> SetasideUser = new List<HSCard>();
+        List<HSCard> SetasideOpponent = new List<HSCard>();
+        List<HSCard> DeckUser = new List<HSCard>();
+        List<HSCard> DeckOpponent = new List<HSCard>();
+        List<HSCard> EnchantmentHsCards = new List<HSCard>();
 
         //Other
         public HSPlayer User;
         public HSPlayer Opponent;
 
         //Game Entity
-        public Dictionary<string, int> TagsGE = new Dictionary<string, int>();
+        public Dictionary<GameTag, int> TagsGE = new Dictionary<GameTag, int>();
         public int NumGe;
 
         public HSGame(Windows.THS ths)
@@ -46,7 +45,7 @@ namespace THS.HSApp
 
         public void Start()
         {
-            Thread _thread = new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "LogHandler" };
+            Thread _thread = new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" };
             _thread.Start();
         }
 
@@ -67,24 +66,24 @@ namespace THS.HSApp
             Utils.IO.LogDebug("Game Created", Utils.IO.DebugFile.Hs);
         }
 
-        //REDO THIS MAYBE??
+        //Create Things
         public HSCard CreateCard(int id, Zone zone, int player, string cardid)
         {
             Utils.IO.LogDebug("Creating card: " + id + " zone: " + zone + " player: " + player + " cardId: " + cardid, IO.DebugFile.Hs);
             var card = new HSCard(id);
             if (cardid != "")
             {
-                card.UpdateCard(cardid);
+                //card.UpdateCard(cardid);
             }
             if (player == 1)
             {
                 if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    User.AddHeroPower(card);
+                    //User.AddHeroPower(card);
                 }
                 else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
                 {
-                    _enchantmentHsCards.Add(card);
+                    EnchantmentHsCards.Add(card);
                 }
                 else if (card.Card != null && card.Card.Type == CardType.HERO)
                 {
@@ -120,12 +119,12 @@ namespace THS.HSApp
             {
                 if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
                 {
-                    Opponent.AddHeroPower(card);
+                    //Opponent.AddHeroPower(card);
 
                 }
                 else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
                 {
-                    _enchantmentHsCards.Add(card);
+                    EnchantmentHsCards.Add(card);
                 }
                 else if (card.Card != null && card.Card.Type == CardType.HERO)
                 {
@@ -159,84 +158,13 @@ namespace THS.HSApp
             return card;
         }
 
+        public void AddTag(string tag, string value)
+        {
+
+        }
         //Methods that do something to the game
-
-        public void AddCardToDeck(HSCard card, HSPlayer player)
-        {
-            if (player == User)
-            {
-                User.Deck.Add(card);
-            }
-            else
-            {
-                Opponent.Deck.Add(card);
-            }
-        }
-
-        public void RemoveCardToDeck(HSCard card, HSPlayer player)
-        {
-            if (player == User)
-            {
-                User.Deck.Remove(card);
-            }
-            else
-            {
-                User.Deck.Remove(card);
-            }
-        }
-
-        public void AddTagToGame(string tag, string value)
-        {
-            if (TagsGE.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Changed GameEntityTag " + tag + " from " + TagsGE[tag] + " to " + value, IO.DebugFile.Hs);
-                TagsGE[tag] = HsConstants.TagToInt(tag, value);
-            }
-            else
-            {
-                Utils.IO.LogDebug("Added GameEntityTag " + tag + " " + value, IO.DebugFile.Hs);
-                TagsGE.Add(tag, HsConstants.TagToInt(tag, value));
-            }
-        }
-
-        public void RemoveTagFromGame(string tag)
-        {
-            if (TagsGE.ContainsKey(tag))
-            {
-                Utils.IO.LogDebug("Removed GameEntityTag " + tag + " " + TagsGE[tag], IO.DebugFile.Hs);
-                TagsGE.Remove(tag);
-            }
-        }
-
-        public void AddTagToPlayer(string tag, string value, string player)
-        {
-            int i;
-            int.TryParse(player, out i);
-            if (player.Equals("opponent") || player.Equals(Opponent.PlayerName) || i == 2)
-            {
-                Opponent.AddTag(tag, value);
-            }
-            else if (player.Equals("player") || player.Equals(User.PlayerName) || i == 1)
-            {
-                User.AddTag(tag, value);
-            }
-        }
-
-        public void Attack()
-        {
-
-        }
 
         //Methods that take info from the game
 
-        public Step GetGameStep()
-        {
-            return (Step)TagsGE["STEP"];
-        }
-
-        public Step a()
-        {
-            return (Step)TagsGE["STEP"];
-        }
     }
 }

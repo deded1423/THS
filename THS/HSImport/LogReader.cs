@@ -31,7 +31,7 @@ namespace THS.HSImport
             _running = true;
             _stop = false;
             _thread = new Thread(ReadLog) { IsBackground = true };
-            _thread.Name = Namespace;
+            _thread.Name = Namespace + " Reader";
             IO.LogDebug("Creating Thread " + _thread.Name);
             _thread.Start();
         }
@@ -39,7 +39,7 @@ namespace THS.HSImport
         {
             if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Logs", DateTime.Now + ".txt")))
             {
-                var sw = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", Namespace+DateTime.Now.ToString("_dd_MM_hh-mm-ss") + ".txt"), FileMode.CreateNew));
+                var sw = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Logs", Namespace + DateTime.Now.ToString("_dd_MM_hh-mm-ss") + ".txt"), FileMode.CreateNew));
                 if (File.Exists(_filepath))
                 {
                     using (var fs = new FileStream(_filepath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -73,19 +73,16 @@ namespace THS.HSImport
 
         public void ReadLog()
         {
+            var sr = new StreamReader(_fs);
+            string tmp;
             while (!_stop)
             {
-                if (File.Exists(_filepath))
+                while (!sr.EndOfStream && ((tmp = sr.ReadLine()) != null))
                 {
-
-                    var sr = new StreamReader(_fs);
-                    string tmp;
-                    while (!sr.EndOfStream && ((tmp = sr.ReadLine()) != null))
-                    {
-                        Lines.Enqueue(new LogLine(tmp, Namespace));
-                    }
+                    Lines.Enqueue(new LogLine(tmp, Namespace));
                 }
-                Thread.Sleep(100);
+
+                Thread.Sleep(1000);
             }
             CloseFiles();
         }

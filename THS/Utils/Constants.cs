@@ -43,10 +43,6 @@ namespace THS.Utils
     {
         Play, HeroPower, Attack, Incorrect, Other, Mulligan, Discover
     }
-    public enum CardZone
-    {
-        Deck, Player, Opponent, Graveyard
-    }
 
     public static class PowerTaskList
     {
@@ -110,30 +106,14 @@ namespace THS.Utils
 
     public class HsConstants
     {
-        public static Dictionary<string, System.Type> TagTypes = new Dictionary<string, System.Type>
-        {
-            {"ZONE", typeof(Zone)},
-            {"CARDTYPE", typeof(CardType)},
-            {"FACTION", typeof(Faction)},
-            {"RARITY", typeof(Rarity)},
-            {"STATE", typeof(State)},
-            {"PLAYSTATE", typeof(PlayState)},
-            {"CLASS", typeof(CardClass)},
-            {"CARDRACE", typeof(Race)},
-            {"CARDSET", typeof(CardSet)},
-            {"STEP", typeof(Step)},
-            {"NEXT_STEP", typeof(Step)},
-            {"MULLIGAN_STATE", typeof(Mulligan)},
-        };
-
-        public static int TagToInt(string tag, string value)
+        public static int TagToInt(GameTag tag, string value)
         {
             int temp;
             if (int.TryParse(value, out temp))
             {
                 return temp;
             }
-            return (int)Enum.Parse(TagTypes[tag], value);
+            return (int)Enum.Parse(tag.GetType(), value);
         }
     }
 }

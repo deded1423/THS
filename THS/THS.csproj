@@ -109,6 +109,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>App.settings</DependentUpon>
     </Compile>
+    <Compile Include="HSApp\HSCard.cs" />
+    <Compile Include="HSApp\HSGame.cs" />
+    <Compile Include="HSApp\HSPlayer.cs" />
+    <Compile Include="HSImport\LogHandler.cs" />
+    <Compile Include="HSImport\LogLine.cs" />
+    <Compile Include="HSImport\LogReader.cs" />
+    <Compile Include="Input\Methods.cs" />
+    <Compile Include="Input\MouseMovement.cs" />
     <Compile Include="HearthDb\Card.cs" />
     <Compile Include="HearthDb\CardDefs\CardDefs.cs" />
     <Compile Include="HearthDb\CardDefs\Entity.cs" />
@@ -119,17 +127,13 @@
     <Compile Include="HearthDb\CardDefs\TriggeredPowerHistoryInfo.cs" />
     <Compile Include="HearthDb\CardIds.cs" />
     <Compile Include="HearthDb\Cards.cs" />
+    <Compile Include="HearthDb\Deckstrings\Deck.cs" />
+    <Compile Include="HearthDb\Deckstrings\DeckSerializer.cs" />
+    <Compile Include="HearthDb\Deckstrings\InvalidDeckException.cs" />
+    <Compile Include="HearthDb\Deckstrings\VarInt.cs" />
     <Compile Include="HearthDb\Enums\Dictionaries.cs" />
     <Compile Include="HearthDb\Enums\Enums.cs" />
     <Compile Include="HearthDb\Info.cs" />
-    <Compile Include="HSApp\HSCard.cs" />
-    <Compile Include="HSApp\HSGame.cs" />
-    <Compile Include="HSApp\HSPlayer.cs" />
-    <Compile Include="HSImport\LogHandler.cs" />
-    <Compile Include="HSImport\LogLine.cs" />
-    <Compile Include="HSImport\LogReader.cs" />
-    <Compile Include="Input\Methods.cs" />
-    <Compile Include="Input\MouseMovement.cs" />
     <Compile Include="Twitch Integration\CommandChat.cs" />
     <Compile Include="Twitch Integration\TwitchIRC.cs" />
     <Compile Include="Windows\Config.cs">
@@ -209,9 +213,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="HearthDb\CardDefs.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service References\user32.dll" />
