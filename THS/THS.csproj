@@ -117,23 +117,6 @@
     <Compile Include="HSImport\LogReader.cs" />
     <Compile Include="Input\Methods.cs" />
     <Compile Include="Input\MouseMovement.cs" />
-    <Compile Include="HearthDb\Card.cs" />
-    <Compile Include="HearthDb\CardDefs\CardDefs.cs" />
-    <Compile Include="HearthDb\CardDefs\Entity.cs" />
-    <Compile Include="HearthDb\CardDefs\EntourageCard.cs" />
-    <Compile Include="HearthDb\CardDefs\PlayRequirement.cs" />
-    <Compile Include="HearthDb\CardDefs\Power.cs" />
-    <Compile Include="HearthDb\CardDefs\Tag.cs" />
-    <Compile Include="HearthDb\CardDefs\TriggeredPowerHistoryInfo.cs" />
-    <Compile Include="HearthDb\CardIds.cs" />
-    <Compile Include="HearthDb\Cards.cs" />
-    <Compile Include="HearthDb\Deckstrings\Deck.cs" />
-    <Compile Include="HearthDb\Deckstrings\DeckSerializer.cs" />
-    <Compile Include="HearthDb\Deckstrings\InvalidDeckException.cs" />
-    <Compile Include="HearthDb\Deckstrings\VarInt.cs" />
-    <Compile Include="HearthDb\Enums\Dictionaries.cs" />
-    <Compile Include="HearthDb\Enums\Enums.cs" />
-    <Compile Include="HearthDb\Info.cs" />
     <Compile Include="Twitch Integration\CommandChat.cs" />
     <Compile Include="Twitch Integration\TwitchIRC.cs" />
     <Compile Include="Windows\Config.cs">
@@ -215,8 +198,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HearthDb\CardDefs.xml" />
-    <Content Include="HearthDb\HearthDb.CardDefs.xml" />
     <Content Include="Service References\user32.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

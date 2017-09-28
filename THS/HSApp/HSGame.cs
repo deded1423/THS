@@ -53,7 +53,7 @@ namespace THS.HSApp
             _logHandler.Stop();
         }
         //Non-Game methods
-        public void CreateNewGame()
+        public void ClearGame()
         {
             User.Clear();
             Opponent.Clear();
@@ -62,7 +62,7 @@ namespace THS.HSApp
             User = new HSPlayer();
             Opponent = new HSPlayer();
 
-            Utils.IO.LogDebug("Game Created", Utils.IO.DebugFile.Hs);
+            Utils.IO.LogDebug("Game Cleared", Utils.IO.DebugFile.Hs);
         }
 
         //Create Things
@@ -72,10 +72,12 @@ namespace THS.HSApp
             int i = HsConstants.TagToInt(gt, value);
             if (Tags.ContainsKey(gt))
             {
+                IO.LogDebug("Changed GE Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags[gt] = i;
             }
             else
             {
+                IO.LogDebug("Added GE Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags.Add(gt, i);
             }
         }

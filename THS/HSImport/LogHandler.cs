@@ -7,9 +7,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
-using HearthDb.Enums;
 using THS.Utils;
 using THS.HSApp;
+using HearthDb.Enums;
 using HearthDb;
 
 namespace THS.HSImport
@@ -73,7 +73,11 @@ namespace THS.HSImport
             line = GetLine(PowerReader);
             if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
             {
-
+                match = PowerTaskList.BlockStartRegex.Match(line.Log);
+                if (match.Groups["type"].Value.Equals("TRIGGER"))
+                {
+                    BlockStartTrigger(line);
+                }
             }
             else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
             {
@@ -97,7 +101,7 @@ namespace THS.HSImport
             }
             else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
             {
-
+                TagChange(line);
             }
             else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
             {
@@ -113,7 +117,10 @@ namespace THS.HSImport
             }
             else if (PowerTaskList.BlockNullRegex.IsMatch(line.Log))
             {
-                BlockNull(line);
+                if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
+                {
+                    CreateGame(line);
+                }
             }
             else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
             {
@@ -150,6 +157,7 @@ namespace THS.HSImport
 
         }
 
+
         private LogLine GetLine(LogReader log)
         {
             while (!_stop)
@@ -157,7 +165,7 @@ namespace THS.HSImport
                 LogLine line;
                 if (log.Lines.TryDequeue(out line))
                 {
-                    if (line.Log.Contains("Block End=") || !line.Process.Contains("PowerTaskList"))
+                    if (!line.Process.Contains("PowerTaskList"))
                     {
                         Utils.IO.LogDebug(line.ToString(), IO.DebugFile.LogDiscarted, false);
                     }
@@ -183,56 +191,89 @@ namespace THS.HSImport
             return null;
         }
 
-        //Methods for processing
-        private void BlockNull(LogLine line)
+        //Main Methods for processing
+        private void CreateGame(LogLine line)
         {
             LogLine logline;
             Match match;
-            if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
+            IO.LogDebug("Creating game", IO.DebugFile.Hs);
+            logline = GetLine(PowerReader);
+            logline = GetLine(PowerReader);
+            while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
             {
-                IO.LogDebug("Creating game", IO.DebugFile.Hs);
-                logline = GetLine(PowerReader);
-                logline = GetLine(PowerReader);
-                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+                match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            //User
+            match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
+            Game.User.EntityId = int.Parse(match.Groups["id"].Value);
+            Game.User.PlayerId = int.Parse(match.Groups["playerId"].Value);
+            Game.User.GameAccountId = match.Groups["gameAccountId"].Value;
+            while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+            {
+                match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                Game.User.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            //Opponent
+            match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
+            Game.Opponent.EntityId = int.Parse(match.Groups["id"].Value);
+            Game.Opponent.PlayerId = int.Parse(match.Groups["playerId"].Value);
+            Game.Opponent.GameAccountId = match.Groups["gameAccountId"].Value;
+            while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+            {
+                match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                Game.Opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            while (PowerTaskList.FullEntityUpdatingRegex.IsMatch(PeekLine(PowerReader).Log))
+            {
+                match = PowerTaskList.FullEntityUpdatingRegex.Match(GetLine(PowerReader).Log);
+                CreateCard(int.Parse(match.Groups["id"].Value), match.Groups["cardId"].Value);
+            }
+            //GameEntity
+            match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
+            Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            //User
+            match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
+            Game.User.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            Game.User.PlayerName = match.Groups["entity"].Value;
+            //Opponent
+            match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
+            Game.Opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            Game.Opponent.PlayerName = match.Groups["entity"].Value;
+            if (!GetLine(PowerReader).Log.Contains("Block End="))
+            {
+                throw new NotImplementedException();
+            }
+        }
+        private void TagChange(LogLine line)
+        {
+            Match match = PowerTaskList.TagChangeRegex.Match(line.Log);
+            switch (match.Groups["entity"].Value)
+            {
+                default:
+                    throw new OverflowException();
+            }
+        }
+        private void BlockStartTrigger(LogLine line)
+        {
+            LogLine logLine;
+            while (!PeekLine(PowerReader).Log.Contains("Block End="))
+            {
+                logLine = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
                 {
-                    match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
-                    Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                }
-                //User
-                match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
-                Game.User.EntityId = int.Parse(match.Groups["id"].Value);
-                Game.User.PlayerId = int.Parse(match.Groups["playerId"].Value);
-                Game.User.GameAccountId = match.Groups["gameAccountId"].Value;
-                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
-                {
-                    match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
-                    Game.User.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                }
-                //Opponent
-                match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
-                Game.Opponent.EntityId = int.Parse(match.Groups["id"].Value);
-                Game.Opponent.PlayerId = int.Parse(match.Groups["playerId"].Value);
-                Game.Opponent.GameAccountId = match.Groups["gameAccountId"].Value;
-                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
-                {
-                    match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
-                    Game.Opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                }
-                while (PowerTaskList.FullEntityUpdatingRegex.IsMatch(PeekLine(PowerReader).Log))
-                {
-                    match = PowerTaskList.FullEntityUpdatingRegex.Match(GetLine(PowerReader).Log);
-                    CreateCard(int.Parse(match.Groups["id"].Value), match.Groups["cardId"].Value);
+                    TagChange(logLine);
                 }
             }
         }
-
         private void CreateCard(int id, string cardId)
         {
             HSCard card = new HSCard(id);
             Match match;
             while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
             {
-                match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                var a = GetLine(PowerReader).Log;
+                match = PowerTaskList.TagRegex.Match(a);
                 card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
             }
             if (cardId != "")
@@ -278,7 +319,7 @@ namespace THS.HSImport
                     case Zone.SECRET:
                         break;
                     default:
-                        break;
+                        throw new OverflowException();
                 }
 
             }
@@ -317,9 +358,10 @@ namespace THS.HSImport
                     case Zone.SECRET:
                         break;
                     default:
-                        break;
+                        throw new OverflowException();
                 }
             }
+            IO.LogDebug("Created card " + card.Id + " " + card.CardDB?.Name + " Zone: " + card.Zone + " Controller: " + card.Controller + " " + card.CardDB?.Type, IO.DebugFile.Hs);
         }
     }
 }

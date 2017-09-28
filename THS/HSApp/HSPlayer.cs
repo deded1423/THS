@@ -14,10 +14,7 @@ namespace THS.HSApp
         public string GameAccountId;
 
         //INFO GAME
-        public string CardClass;
-
         public HSCard HeroPower;
-
 
         //GAME
         public List<HSCard> Hand;
@@ -40,11 +37,19 @@ namespace THS.HSApp
 
         public void Clear()
         {
+            IO.LogDebug("Clearing Player", IO.DebugFile.Hs);
             Hand.Clear();
             Graveyard.Clear();
             Deck.Clear();
             Play.Clear();
             Setaside.Clear();
+            Tags.Clear();
+            Hero = null;
+
+            PlayerId = 0;
+            EntityId = 0;
+            PlayerName = null;
+            GameAccountId = null;
         }
 
 
@@ -55,10 +60,12 @@ namespace THS.HSApp
             int i = HsConstants.TagToInt(gt, value);
             if (Tags.ContainsKey(gt))
             {
+                IO.LogDebug("Changed Player" + PlayerId + " Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags[gt] = i;
             }
             else
             {
+                IO.LogDebug("Added Player" + PlayerId + " Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags.Add(gt, i);
             }
         }

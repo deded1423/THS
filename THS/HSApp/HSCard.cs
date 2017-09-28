@@ -25,10 +25,12 @@ namespace THS.HSApp
             int i = HsConstants.TagToInt(gt, value);
             if (Tags.ContainsKey(gt))
             {
+                IO.LogDebug("Changed " + Id + " " + CardDB?.Name + " Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags[gt] = i;
             }
             else
             {
+                IO.LogDebug("Added " + Id + " " + CardDB?.Name + " Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags.Add(gt, i);
             }
         }

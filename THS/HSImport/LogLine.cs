@@ -56,7 +56,7 @@ namespace THS.HSImport
 
         public override string ToString()
         {
-            return "L: " + Log + " // " + Line;
+            return Line + " L: " + Log;
         }
 
     }
