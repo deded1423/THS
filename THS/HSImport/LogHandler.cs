@@ -10,6 +10,7 @@ using System.Threading;
 using HearthDb.Enums;
 using THS.Utils;
 using THS.HSApp;
+using HearthDb;
 
 namespace THS.HSImport
 {
@@ -196,6 +197,127 @@ namespace THS.HSImport
                 {
                     match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
                     Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                }
+                //User
+                match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
+                Game.User.EntityId = int.Parse(match.Groups["id"].Value);
+                Game.User.PlayerId = int.Parse(match.Groups["playerId"].Value);
+                Game.User.GameAccountId = match.Groups["gameAccountId"].Value;
+                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+                {
+                    match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                    Game.User.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                }
+                //Opponent
+                match = PowerTaskList.PlayerEntityRegex.Match(GetLine(PowerReader).Log);
+                Game.Opponent.EntityId = int.Parse(match.Groups["id"].Value);
+                Game.Opponent.PlayerId = int.Parse(match.Groups["playerId"].Value);
+                Game.Opponent.GameAccountId = match.Groups["gameAccountId"].Value;
+                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+                {
+                    match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                    Game.Opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                }
+                while (PowerTaskList.FullEntityUpdatingRegex.IsMatch(PeekLine(PowerReader).Log))
+                {
+                    match = PowerTaskList.FullEntityUpdatingRegex.Match(GetLine(PowerReader).Log);
+                    CreateCard(int.Parse(match.Groups["id"].Value), match.Groups["cardId"].Value);
+                }
+            }
+        }
+
+        private void CreateCard(int id, string cardId)
+        {
+            HSCard card = new HSCard(id);
+            Match match;
+            while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+            {
+                match = PowerTaskList.TagRegex.Match(GetLine(PowerReader).Log);
+                card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            if (cardId != "")
+            {
+                card.CardDB = Cards.All[cardId];
+            }
+            else
+            {
+                card.CardDB = null;
+            }
+            if (card.Controller == 1)
+            {
+                if (card.CardDB != null && card.CardType == CardType.HERO)
+                {
+                    Game.User.Hero = card;
+                    return;
+                }
+                else if (card.CardDB != null && card.CardType == CardType.HERO_POWER)
+                {
+                    Game.User.HeroPower = card;
+                    return;
+                }
+                switch (card.Zone)
+                {
+                    case Zone.INVALID:
+                        break;
+                    case Zone.PLAY:
+                        break;
+                    case Zone.DECK:
+                        Game.User.Deck.Add(card);
+                        break;
+                    case Zone.HAND:
+                        Game.User.Hand.Add(card);
+                        break;
+                    case Zone.GRAVEYARD:
+                        Game.User.Graveyard.Add(card);
+                        break;
+                    case Zone.REMOVEDFROMGAME:
+                        break;
+                    case Zone.SETASIDE:
+                        Game.User.Setaside.Add(card);
+                        break;
+                    case Zone.SECRET:
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            else
+            {
+                if (card.CardDB != null && card.CardType == CardType.HERO)
+                {
+                    Game.Opponent.Hero = card;
+                    return;
+                }
+                else if (card.CardDB != null && card.CardType == CardType.HERO_POWER)
+                {
+                    Game.Opponent.HeroPower = card;
+                    return;
+                }
+                switch (card.Zone)
+                {
+                    case Zone.INVALID:
+                        break;
+                    case Zone.PLAY:
+                        break;
+                    case Zone.DECK:
+                        Game.Opponent.Deck.Add(card);
+                        break;
+                    case Zone.HAND:
+                        Game.Opponent.Hand.Add(card);
+                        break;
+                    case Zone.GRAVEYARD:
+                        Game.Opponent.Graveyard.Add(card);
+                        break;
+                    case Zone.REMOVEDFROMGAME:
+                        break;
+                    case Zone.SETASIDE:
+                        Game.Opponent.Setaside.Add(card);
+                        break;
+                    case Zone.SECRET:
+                        break;
+                    default:
+                        break;
                 }
             }
         }

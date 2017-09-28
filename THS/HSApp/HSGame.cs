@@ -14,26 +14,25 @@ namespace THS.HSApp
     {
         LogHandler _logHandler;
 
-        // Cards
-
-        List<HSCard> HandUser = new List<HSCard>();
-        List<HSCard> HandOpponent = new List<HSCard>();
-        List<HSCard> PlayedUser = new List<HSCard>();
-        List<HSCard> PlayedOpponent = new List<HSCard>();
-        List<HSCard> GraveyardUser = new List<HSCard>();
-        List<HSCard> GraveyardOpponent = new List<HSCard>();
-        List<HSCard> SetasideUser = new List<HSCard>();
-        List<HSCard> SetasideOpponent = new List<HSCard>();
-        List<HSCard> DeckUser = new List<HSCard>();
-        List<HSCard> DeckOpponent = new List<HSCard>();
-        List<HSCard> EnchantmentHsCards = new List<HSCard>();
+        //// Cards
+        //public List<HSCard> HandUser = new List<HSCard>();
+        //public List<HSCard> HandOpponent = new List<HSCard>();
+        //public List<HSCard> PlayedUser = new List<HSCard>();
+        //public List<HSCard> PlayedOpponent = new List<HSCard>();
+        //public List<HSCard> GraveyardUser = new List<HSCard>();
+        //public List<HSCard> GraveyardOpponent = new List<HSCard>();
+        //public List<HSCard> SetasideUser = new List<HSCard>();
+        //public List<HSCard> SetasideOpponent = new List<HSCard>();
+        //public List<HSCard> DeckUser = new List<HSCard>();
+        //public List<HSCard> DeckOpponent = new List<HSCard>();
+        public List<HSCard> EnchantmentHsCards = new List<HSCard>();
 
         //Other
         public HSPlayer User;
         public HSPlayer Opponent;
 
         //Game Entity
-        public Dictionary<GameTag, int> TagsGE = new Dictionary<GameTag, int>();
+        public Dictionary<GameTag, int> Tags = new Dictionary<GameTag, int>();
         public int NumGe;
 
         public HSGame(Windows.THS ths)
@@ -58,7 +57,7 @@ namespace THS.HSApp
         {
             User.Clear();
             Opponent.Clear();
-            TagsGE.Clear();
+            Tags.Clear();
             NumGe = 0;
             User = new HSPlayer();
             Opponent = new HSPlayer();
@@ -67,100 +66,18 @@ namespace THS.HSApp
         }
 
         //Create Things
-        public HSCard CreateCard(int id, Zone zone, int player, string cardid)
-        {
-            Utils.IO.LogDebug("Creating card: " + id + " zone: " + zone + " player: " + player + " cardId: " + cardid, IO.DebugFile.Hs);
-            var card = new HSCard(id);
-            if (cardid != "")
-            {
-                //card.UpdateCard(cardid);
-            }
-            if (player == 1)
-            {
-                if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
-                {
-                    //User.AddHeroPower(card);
-                }
-                else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
-                {
-                    EnchantmentHsCards.Add(card);
-                }
-                else if (card.Card != null && card.Card.Type == CardType.HERO)
-                {
-                    User.Hero = card;
-                    Utils.IO.LogDebug("Updated hero: " + User.PlayerId + " Hero: " + card.Card.Name);
-                }
-                else
-                {
-                    switch (zone)
-                    {
-                        case Zone.DECK:
-                            User.Deck.Add(card);
-                            break;
-                        case Zone.SETASIDE:
-                            User.Setaside.Add(card);
-                            break;
-                        case Zone.HAND:
-                            User.Hand.Add(card);
-                            break;
-                        case Zone.GRAVEYARD:
-                            User.Graveyard.Add(card);
-                            break;
-                        case Zone.PLAY:
-                            User.Play.Add(card);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
-                    }
-                }
-
-            }
-            else if (player == 2)
-            {
-                if (card.Card != null && card.Card.Type == CardType.HERO_POWER)
-                {
-                    //Opponent.AddHeroPower(card);
-
-                }
-                else if (card.Card != null && card.Card.Type == CardType.ENCHANTMENT)
-                {
-                    EnchantmentHsCards.Add(card);
-                }
-                else if (card.Card != null && card.Card.Type == CardType.HERO)
-                {
-                    Opponent.Hero = card;
-                    Utils.IO.LogDebug("Updated hero: " + Opponent.PlayerId + " Hero: " + card.Card.Name);
-                }
-                else
-                {
-                    switch (zone)
-                    {
-                        case Zone.DECK:
-                            Opponent.Deck.Add(card);
-                            break;
-                        case Zone.SETASIDE:
-                            Opponent.Setaside.Add(card);
-                            break;
-                        case Zone.HAND:
-                            Opponent.Hand.Add(card);
-                            break;
-                        case Zone.GRAVEYARD:
-                            Opponent.Graveyard.Add(card);
-                            break;
-                        case Zone.PLAY:
-                            Opponent.Play.Add(card);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(zone), zone, null);
-                    }
-                }
-            }
-            return card;
-        }
-
         public void AddTag(string tag, string value)
         {
-
+            GameTag gt = HsConstants.StringToTag(tag);
+            int i = HsConstants.TagToInt(gt, value);
+            if (Tags.ContainsKey(gt))
+            {
+                Tags[gt] = i;
+            }
+            else
+            {
+                Tags.Add(gt, i);
+            }
         }
         //Methods that do something to the game
 

@@ -215,6 +215,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HearthDb\CardDefs.xml" />
+    <Content Include="HearthDb\HearthDb.CardDefs.xml" />
     <Content Include="Service References\user32.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

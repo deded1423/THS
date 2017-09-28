@@ -90,8 +90,9 @@ namespace HearthDb.Enums
 		public static Dictionary<GameTag, System.Type> TagTypes = new Dictionary<GameTag, System.Type>
 		{
 			{GameTag.TRIGGER_VISUAL, typeof(bool)},
-			{GameTag.ELITE, typeof(bool)},
-			{GameTag.CARD_SET, typeof(CardSet)},
+            {GameTag.ELITE, typeof(bool)},
+            {GameTag.ZONE, typeof(Zone)},
+            {GameTag.CARD_SET, typeof(CardSet)},
 			{GameTag.CARDTEXT_INHAND, typeof(string)},
 			{GameTag.CARDNAME, typeof(string)},
 			{GameTag.WINDFURY, typeof(bool)},

@@ -148,7 +148,7 @@ namespace THS.Windows
             {
                 irc = new IrcClient("irc.freenode.net", 6667, "THStone", "none");
                 _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
-                _messageThread.Start("deded1423");
+                _messageThread.Start("THS");
             }
             else
             {

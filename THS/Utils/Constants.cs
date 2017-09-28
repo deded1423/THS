@@ -113,7 +113,11 @@ namespace THS.Utils
             {
                 return temp;
             }
-            return (int)Enum.Parse(tag.GetType(), value);
+            return (int)Enum.Parse(Dictionaries.TagTypes[tag], value);
+        }
+        public static GameTag StringToTag(string tag)
+        {
+            return (GameTag)Enum.Parse(typeof(GameTag), tag);
         }
     }
 }
