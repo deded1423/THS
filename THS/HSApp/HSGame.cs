@@ -15,16 +15,6 @@ namespace THS.HSApp
         LogHandler _logHandler;
 
         //// Cards
-        //public List<HSCard> HandUser = new List<HSCard>();
-        //public List<HSCard> HandOpponent = new List<HSCard>();
-        //public List<HSCard> PlayedUser = new List<HSCard>();
-        //public List<HSCard> PlayedOpponent = new List<HSCard>();
-        //public List<HSCard> GraveyardUser = new List<HSCard>();
-        //public List<HSCard> GraveyardOpponent = new List<HSCard>();
-        //public List<HSCard> SetasideUser = new List<HSCard>();
-        //public List<HSCard> SetasideOpponent = new List<HSCard>();
-        //public List<HSCard> DeckUser = new List<HSCard>();
-        //public List<HSCard> DeckOpponent = new List<HSCard>();
         public List<HSCard> EnchantmentHsCards = new List<HSCard>();
 
         //Other
@@ -34,6 +24,7 @@ namespace THS.HSApp
         //Game Entity
         public Dictionary<GameTag, int> Tags = new Dictionary<GameTag, int>();
         public int NumGe;
+        public bool PlayersOrdered = false;
 
         public HSGame(Windows.THS ths)
         {
@@ -42,16 +33,10 @@ namespace THS.HSApp
             Opponent = new HSPlayer();
         }
 
-        public void Start()
-        {
-            Thread _thread = new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" };
-            _thread.Start();
-        }
+        public void Start() => (new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" }).Start();
 
-        public void Stop()
-        {
-            _logHandler.Stop();
-        }
+        public void Stop() => _logHandler.Stop();
+
         //Non-Game methods
         public void ClearGame()
         {
@@ -61,6 +46,7 @@ namespace THS.HSApp
             NumGe = 0;
             User = new HSPlayer();
             Opponent = new HSPlayer();
+            PlayersOrdered = false;
 
             Utils.IO.LogDebug("Game Cleared", Utils.IO.DebugFile.Hs);
         }
@@ -81,9 +67,63 @@ namespace THS.HSApp
                 Tags.Add(gt, i);
             }
         }
+
         //Methods that do something to the game
 
         //Methods that take info from the game
+        public bool IsMulliganDone() =>((Mulligan)Tags[GameTag.MULLIGAN_STATE]).Equals(Mulligan.DONE);
 
+        public HSCard GetCard(int player, Zone zone, int id)
+        {
+            if (player == User.PlayerId)
+            {
+                switch (zone)
+                {
+                    case Zone.INVALID:
+                        break;
+                    case Zone.PLAY:
+                        return User.GetPlayId(id);
+                    case Zone.DECK:
+                        return User.GetDeckId(id);
+                    case Zone.HAND:
+                        return User.GetHandId(id);
+                    case Zone.GRAVEYARD:
+                        return User.GetGraveyardId(id);
+                    case Zone.REMOVEDFROMGAME:
+                        break;
+                    case Zone.SETASIDE:
+                        return User.GetSetasideId(id);
+                    case Zone.SECRET:
+                        break;
+                    default:
+                        throw new OverflowException();
+                }
+            }
+            else if (player == Opponent.PlayerId)
+            {
+                switch (zone)
+                {
+                    case Zone.INVALID:
+                        break;
+                    case Zone.PLAY:
+                        return Opponent.GetPlayId(id);
+                    case Zone.DECK:
+                        return Opponent.GetDeckId(id);
+                    case Zone.HAND:
+                        return Opponent.GetHandId(id);
+                    case Zone.GRAVEYARD:
+                        return Opponent.GetGraveyardId(id);
+                    case Zone.REMOVEDFROMGAME:
+                        break;
+                    case Zone.SETASIDE:
+                        return Opponent.GetSetasideId(id);
+                    case Zone.SECRET:
+                        break;
+                    default:
+                        throw new OverflowException();
+                }
+            }
+            return null;
+        }
     }
 }

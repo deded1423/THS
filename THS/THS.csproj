@@ -200,6 +200,12 @@
   <ItemGroup>
     <Content Include="Service References\user32.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HearthDb\HearthDb.csproj">
+      <Project>{7ED14243-E02B-4B94-AF00-A67A62C282F0}</Project>
+      <Name>HearthDb</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

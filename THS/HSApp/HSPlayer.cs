@@ -70,5 +70,66 @@ namespace THS.HSApp
             }
         }
 
+        //GETTERS
+        public HSCard GetHandId(int id)
+        {
+            foreach (var card in Hand)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetDeckId(int id)
+        {
+            foreach (var card in Deck)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetPlayId(int id)
+        {
+            foreach (var card in Play)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetSetasideId(int id)
+        {
+            foreach (var card in Setaside)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetGraveyardId(int id)
+        {
+            foreach (var card in Graveyard)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
     }
 }

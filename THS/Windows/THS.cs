@@ -110,15 +110,15 @@ namespace THS.Windows
         private void buttonStartTCP_Click(object sender, EventArgs e)
         {
 
-            if (ButtonStart.Text.Equals("Start Tcp"))
+            if (buttonStartTCP.Text.Equals("Start Tcp"))
             {
                 StartIRC();
-                ButtonStart.Text = "Stop Tcp";
+                buttonStartTCP.Text = "Stop Tcp";
 
             }
             else
             {
-                ButtonStart.Text = "Start Tcp";
+                buttonStartTCP.Text = "Start Tcp";
             }
         }
 

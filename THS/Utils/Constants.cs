@@ -54,7 +54,7 @@ namespace THS.Utils
         public static readonly Regex FullEntityUpdatingRegex =
             new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*player=(?<player>(\w*)).*CardID=(?<cardId>(\w*))");
         public static readonly Regex TagRegex =
-            new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+            new Regex(@"(?<!(\w ))tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 
         public static readonly Regex EntityRegex =
             new Regex(@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");

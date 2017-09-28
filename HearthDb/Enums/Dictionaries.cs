@@ -138,6 +138,9 @@ namespace HearthDb.Enums
             {GameTag.ZONE, typeof(Zone)},
             {GameTag.STATE, typeof(State)},
             {GameTag.PLAYSTATE, typeof(PlayState)},
+            {GameTag.NEXT_STEP, typeof(Step)},
+            {GameTag.STEP, typeof(Step)},
+            {GameTag.MULLIGAN_STATE, typeof(Mulligan)},
         };
     }
 }

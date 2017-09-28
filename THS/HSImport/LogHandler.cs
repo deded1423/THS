@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using THS.Utils;
 using THS.HSApp;
-using HearthDb.Enums;
 using HearthDb;
+using HearthDb.Enums;
 
 namespace THS.HSImport
 {
@@ -120,7 +120,9 @@ namespace THS.HSImport
                 if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
                 {
                     CreateGame(line);
+                    return;
                 }
+                BlockNull(line);
             }
             else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
             {
@@ -248,25 +250,211 @@ namespace THS.HSImport
         private void TagChange(LogLine line)
         {
             Match match = PowerTaskList.TagChangeRegex.Match(line.Log);
-            switch (match.Groups["entity"].Value)
+            if (match.Groups["entity"].Value.Equals("GameEntity"))
             {
-                default:
-                    throw new OverflowException();
+                Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
             }
+            else if (match.Groups["entity"].Value.Equals(Game.User.PlayerName))
+            {
+                Game.User.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            else if (match.Groups["entity"].Value.Equals(Game.Opponent.PlayerName))
+            {
+                Game.Opponent.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            else if (LogRegex.EntityRegex.IsMatch(match.Groups["entity"].Value))
+            {
+                Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
+                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+                if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
+                {
+                    switch ((Zone)card.Tags[GameTag.ZONE])
+                    {
+                        case Zone.INVALID:
+                            break;
+                        case Zone.PLAY:
+                            if (card.Controller == Game.User.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            else if (card.Controller == Game.Opponent.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            break;
+                        case Zone.DECK:
+                            if (card.Controller == Game.User.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            else if (card.Controller == Game.Opponent.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            break;
+                        case Zone.HAND:
+                            if (card.Controller == Game.User.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            else if (card.Controller == Game.Opponent.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            break;
+                        case Zone.GRAVEYARD:
+                            if (card.Controller == Game.User.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            else if (card.Controller == Game.Opponent.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            break;
+                        case Zone.REMOVEDFROMGAME:
+                            break;
+                        case Zone.SETASIDE:
+                            if (card.Controller == Game.User.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            else if (card.Controller == Game.Opponent.PlayerId)
+                            {
+                                Game.User.Play.Remove(card);
+                            }
+                            break;
+                        case Zone.SECRET:
+                            break;
+                        default:
+                            throw new OverflowException();
+                    }
+                    switch ((Zone)HsConstants.TagToInt(GameTag.ZONE, match.Groups["value"].Value))
+                    {
+                        case Zone.INVALID:
+                            break;
+                        case Zone.PLAY:
+                            break;
+                        case Zone.DECK:
+                            Game.User.Deck.Add(card);
+                            break;
+                        case Zone.HAND:
+                            Game.User.Hand.Add(card);
+                            break;
+                        case Zone.GRAVEYARD:
+                            Game.User.Graveyard.Add(card);
+                            break;
+                        case Zone.REMOVEDFROMGAME:
+                            break;
+                        case Zone.SETASIDE:
+                            Game.User.Setaside.Add(card);
+                            break;
+                        case Zone.SECRET:
+                            break;
+                        default:
+                            throw new OverflowException();
+                    }
+                }
+                card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+        private void UpdatingEntity(LogLine line)
+        {
+            Match match = PowerTaskList.UpdatingEntityRegex.Match(line.Log);
+            Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
+
+            HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+            if (card.CardDB == null)
+            {
+                card.CardDB = Cards.All[match.Groups["cardId"].Value];
+            }
+            while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+            {
+                var a = GetLine(PowerReader).Log;
+                match = PowerTaskList.TagRegex.Match(a);
+                card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+            }
+            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs);
+        }
+        private void FullEntityUpdating(LogLine line)
+        {
+            Match match = PowerTaskList.FullEntityUpdatingRegex.Match(line.Log);
+            if (!Game.PlayersOrdered)
+            {
+                if (match.Groups["player"].Value.Equals("2"))
+                {
+                    HSPlayer tmp = Game.User;
+                    Game.User = Game.Opponent;
+                    Game.Opponent = tmp;
+                }
+                Game.PlayersOrdered = true;
+            }
+            HSCard card = Game.GetCard(int.Parse(match.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, match.Groups["zone"].Value), int.Parse(match.Groups["id"].Value));
+            if (card == null)
+            {
+                card = CreateCard(int.Parse(match.Groups["id"].Value), match.Groups["cardId"].Value);
+            }
+            else
+            {
+                if (card.CardDB == null)
+                {
+                    card.CardDB = Cards.All[match.Groups["cardId"].Value];
+                }
+                while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))
+                {
+                    var a = GetLine(PowerReader).Log;
+                    match = PowerTaskList.TagRegex.Match(a);
+                    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                }
+            }
+            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs);
         }
         private void BlockStartTrigger(LogLine line)
         {
             LogLine logLine;
-            while (!PeekLine(PowerReader).Log.Contains("Block End="))
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
             {
                 logLine = GetLine(PowerReader);
-                if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
+                if (PowerTaskList.TagChangeRegex.IsMatch(logLine.Log))
                 {
                     TagChange(logLine);
                 }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(logLine.Log))
+                {
+                    UpdatingEntity(logLine);
+                }
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(logLine.Log))
+                {
+                    FullEntityUpdating(logLine);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
+            line = GetLine(PowerReader);
         }
-        private void CreateCard(int id, string cardId)
+        private void BlockNull(LogLine line)
+        {
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
+            {
+                line = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
+                {
+                    TagChange(line);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            line = GetLine(PowerReader);
+        }
+        private HSCard CreateCard(int id, string cardId)
         {
             HSCard card = new HSCard(id);
             Match match;
@@ -284,17 +472,17 @@ namespace THS.HSImport
             {
                 card.CardDB = null;
             }
-            if (card.Controller == 1)
+            if (card.Controller == Game.User.PlayerId)
             {
                 if (card.CardDB != null && card.CardType == CardType.HERO)
                 {
                     Game.User.Hero = card;
-                    return;
+                    return card;
                 }
                 else if (card.CardDB != null && card.CardType == CardType.HERO_POWER)
                 {
                     Game.User.HeroPower = card;
-                    return;
+                    return card;
                 }
                 switch (card.Zone)
                 {
@@ -323,17 +511,17 @@ namespace THS.HSImport
                 }
 
             }
-            else
+            else if (card.Controller == Game.User.PlayerId)
             {
                 if (card.CardDB != null && card.CardType == CardType.HERO)
                 {
                     Game.Opponent.Hero = card;
-                    return;
+                    return card;
                 }
                 else if (card.CardDB != null && card.CardType == CardType.HERO_POWER)
                 {
                     Game.Opponent.HeroPower = card;
-                    return;
+                    return card;
                 }
                 switch (card.Zone)
                 {
@@ -362,6 +550,7 @@ namespace THS.HSImport
                 }
             }
             IO.LogDebug("Created card " + card.Id + " " + card.CardDB?.Name + " Zone: " + card.Zone + " Controller: " + card.Controller + " " + card.CardDB?.Type, IO.DebugFile.Hs);
+            return card;
         }
     }
 }

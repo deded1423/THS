@@ -71,5 +71,7 @@ namespace THS.HSApp
                 Tags[GameTag.CARDTYPE] = (int)value;
             }
         }
+
+        public override string ToString() => "ID: " + Id + " " + CardDB?.Name + " Zone: " + Zone;
     }
 }
