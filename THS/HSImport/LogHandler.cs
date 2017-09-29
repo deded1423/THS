@@ -70,7 +70,7 @@ namespace THS.HSImport
 
         public void ProcessPower()
         {
-            while (_stop)
+            while (!_stop)
             {
                 LogLine line, temp;
                 Match match;
@@ -167,7 +167,7 @@ namespace THS.HSImport
 
         public void ProcessLoadingScreen()
         {
-            while (_stop)
+            while (!_stop)
             {
                 LogLine line = GetLine(LoadingScreenReader);
                 if (true)
