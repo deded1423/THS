@@ -71,12 +71,20 @@ namespace THS.HSApp
         //Methods that do something to the game
 
         //Methods that take info from the game
-        public bool IsMulliganDone() =>((Mulligan)Tags[GameTag.MULLIGAN_STATE]).Equals(Mulligan.DONE);
+        public bool IsMulliganDone() => ((Mulligan)Tags[GameTag.MULLIGAN_STATE]).Equals(Mulligan.DONE);
 
         public HSCard GetCard(int player, Zone zone, int id)
         {
             if (player == User.PlayerId)
             {
+                if (User.Hero.Id == id)
+                {
+                    return User.Hero;
+                }
+                else if (User.HeroPower.Id == id)
+                {
+                    return User.HeroPower;
+                }
                 switch (zone)
                 {
                     case Zone.INVALID:
@@ -101,6 +109,14 @@ namespace THS.HSApp
             }
             else if (player == Opponent.PlayerId)
             {
+                if (Opponent.Hero.Id == id)
+                {
+                    return Opponent.Hero;
+                }
+                else if (Opponent.HeroPower.Id == id)
+                {
+                    return Opponent.HeroPower;
+                }
                 switch (zone)
                 {
                     case Zone.INVALID:

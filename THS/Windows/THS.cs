@@ -130,6 +130,10 @@ namespace THS.Windows
         {
             stopinput = true;
             IO.CloseDebugFiles();
+            if (Directory.Exists(Path.Combine(@"C: \Users\USER\Documents\Visual Studio 2015\Projects\THS\HearthDb", "hsdata")))
+            {
+                Directory.Delete(Path.Combine(@"C: \Users\USER\Documents\Visual Studio 2015\Projects\THS\HearthDb", "hsdata"));
+            }
             //irc.Stop();
         }
 
