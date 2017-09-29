@@ -46,6 +46,18 @@ namespace THS.HSApp
                 Tags[GameTag.ZONE] = (int)value;
             }
         }
+        public int ZonePos
+        {
+            get
+            {
+                return Tags[GameTag.ZONE_POSITION];
+            }
+
+            set
+            {
+                Tags[GameTag.ZONE_POSITION] = value;
+            }
+        }
         public int Controller
         {
             get

@@ -53,6 +53,19 @@ namespace THS.Windows
                             i++;
                             while (Methods.GetKeyState(key) < 0) { }
                         }
+                        if (Methods.GetKeyState(0x62) < 0) //NUM2
+                        {
+                            var t = _game.User.GetMulliganCards();
+                            foreach (var item in t)
+                            {
+                                Console.WriteLine(item);
+                            }
+                            while (Methods.GetKeyState(0x62) < 0) { }
+                        }
+                        if (Methods.GetKeyState(0x63) < 0) //NUM3
+                        {
+                            while (Methods.GetKeyState(0x63) < 0) { }
+                        }
                         if (Methods.GetKeyState(0x64) < 0) //NUM4
                         {
                             while (Methods.GetKeyState(0x64) < 0) { }
@@ -61,20 +74,11 @@ namespace THS.Windows
                         {
                             while (Methods.GetKeyState(0x66) < 0) { }
                         }
-                        if (Methods.GetKeyState(0x62) < 0) //NUM2
-                        {
-                            while (Methods.GetKeyState(0x62) < 0) { }
-                        }
                         if (Methods.GetKeyState(0x68) < 0) //NUM8
                         {
                             while (Methods.GetKeyState(0x68) < 0) { }
                         }
 
-                        if (Methods.GetKeyState(0x63) < 0) //NUM3
-                        {
-                            MouseMovement.AttackHero(0, 0, true);
-                            while (Methods.GetKeyState(0x63) < 0) { }
-                        }
                         Thread.Sleep(10);
                     }
                 })

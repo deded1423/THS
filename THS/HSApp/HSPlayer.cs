@@ -131,5 +131,27 @@ namespace THS.HSApp
             return null;
         }
 
+        public HSCard[] GetMulliganCards()
+        {
+            HSCard[] array = new HSCard[3];
+            foreach (var card in Deck)
+            {
+                if (card.CardDB != null && card.ZonePos < 4)
+                {
+                    array[card.ZonePos-1] = card;
+                }
+                else if(card.CardDB != null && card.ZonePos == 4)
+                {
+                    HSCard[] tmp = array;
+                    array = new HSCard[4];
+                    array[0] = tmp[0];
+                    array[1] = tmp[1];
+                    array[2] = tmp[2];
+                    array[3] = card;
+                }
+            }
+            return array;
+        }
+
     }
 }
