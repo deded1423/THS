@@ -73,6 +73,18 @@ namespace THS.HSImport
 
         public void ReadLog()
         {
+            if (_fs == null)
+            {
+                while (_fs == null)
+                {
+                    OpenFiles();
+                    Thread.Sleep(100);
+                    if (_stop)
+                    {
+                        return;
+                    }
+                }
+            }
             var sr = new StreamReader(_fs);
             string tmp;
             while (!_stop)
@@ -85,6 +97,7 @@ namespace THS.HSImport
                 Thread.Sleep(1000);
             }
             CloseFiles();
+
         }
 
         public void Stop()

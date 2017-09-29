@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using HearthMirror;
+using System.Diagnostics;
 
 namespace THS.Windows
 {
@@ -25,7 +26,7 @@ namespace THS.Windows
         private Config _configwindow;
 
         //IMPORT SHIT
-        private HSApp.HSGame _game;
+        private HSApp.HSCore GameCore;
 
         //INPUT SHIT
         Thread _inputThread;
@@ -35,7 +36,6 @@ namespace THS.Windows
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
-            _game = new HSApp.HSGame(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -60,11 +60,6 @@ namespace THS.Windows
                         }
                         if (Methods.GetKeyState(0x62) < 0) //NUM2
                         {
-                            var t = _game.User.GetMulliganCards();
-                            foreach (var item in t)
-                            {
-                                Console.WriteLine(item);
-                            }
                             while (Methods.GetKeyState(0x62) < 0) { }
                         }
                         if (Methods.GetKeyState(0x63) < 0) //NUM3
@@ -105,13 +100,21 @@ namespace THS.Windows
         {
             if (ButtonStart.Text.Equals("Start"))
             {
-                _game.Start();
-                ButtonStart.Text = "Stop";
-
+                if (Process.GetProcessesByName("Hearthstone").Length != 0)
+                {
+                    GameCore = new HSApp.HSCore(this);
+                    GameCore.Start();
+                    ButtonStart.Text = "Stop";
+                    Text = "THS";
+                }
+                else
+                {
+                    Text = "THS - No Hearthstone";
+                }
             }
             else
             {
-                _game.Stop();
+                GameCore.Stop();
                 ButtonStart.Text = "Start";
             }
         }

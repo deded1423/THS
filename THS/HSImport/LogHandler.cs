@@ -16,11 +16,14 @@ namespace THS.HSImport
 {
     class LogHandler
     {
-        //TODO: Arreglar eso para manejar los errores que pueden ocurrir al abrir el archivo
         public LogReader PowerReader;
         public LogReader RachelleReader;
         public LogReader LoadingScreenReader;
         public LogReader FullscreenReader;
+        Thread PowerHandler;
+        Thread RachelleHandler;
+        Thread LoadingScreenHandler;
+        Thread FullscreenHandler;
         private bool _stop;
         private bool _running;
         public HSGame Game;
@@ -49,11 +52,10 @@ namespace THS.HSImport
 
             _stop = false;
             _running = true;
-            while (!_stop)
-            {
-                ProcessPower();
-                ProcessLoadingScreen();
-            }
+            PowerHandler = new Thread(ProcessPower) { Name = "Power Handler" };
+            LoadingScreenHandler = new Thread(ProcessLoadingScreen) { Name = "LoadingScreen Handler" };
+            PowerHandler.Start();
+            LoadingScreenHandler.Start();
 
             _running = false;
         }
@@ -68,104 +70,110 @@ namespace THS.HSImport
 
         public void ProcessPower()
         {
-            LogLine line, temp;
-            Match match;
-            string str;
-            line = GetLine(PowerReader);
-            if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
+            while (_stop)
             {
-                match = PowerTaskList.BlockStartRegex.Match(line.Log);
-                if (match.Groups["type"].Value.Equals("TRIGGER"))
+                LogLine line, temp;
+                Match match;
+                string str;
+                line = GetLine(PowerReader);
+                if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
                 {
-                    BlockStartTrigger(line);
+                    match = PowerTaskList.BlockStartRegex.Match(line.Log);
+                    if (match.Groups["type"].Value.Equals("TRIGGER"))
+                    {
+                        BlockStartTrigger(line);
+                    }
                 }
-            }
-            else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.EntityRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.GameEntityRegex.IsMatch(line.Log)) // Hecho en BlockNull
-            {
-
-            }
-            else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
-            {
-                TagChange(line);
-            }
-            else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.TagRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.CountRegex.IsMatch(line.Log))
-            {
-
-            }
-            else if (PowerTaskList.BlockNullRegex.IsMatch(line.Log))
-            {
-                if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
+                else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
                 {
-                    CreateGame(line);
-                    return;
+
                 }
-                BlockNull(line);
-            }
-            else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
-            {
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
+                {
 
-            }
-            else if (PowerTaskList.CurrentTaskListRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.EntityRegex.IsMatch(line.Log))
+                {
 
-            }
-            else if (PowerTaskList.MetaDataRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.GameEntityRegex.IsMatch(line.Log)) // Hecho en BlockNull
+                {
 
-            }
-            else if (PowerTaskList.OptionRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.PlayerEntityRegex.IsMatch(line.Log))
+                {
 
-            }
-            else if (PowerTaskList.SelectedOptionRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
+                {
+                    TagChange(line);
+                }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
+                {
 
-            }
-            else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.TagRegex.IsMatch(line.Log))
+                {
 
-            }
-            else if (PowerTaskList.TargetRegex.IsMatch(line.Log))
-            {
+                }
+                else if (PowerTaskList.CountRegex.IsMatch(line.Log))
+                {
 
-            }
-            else
-            {
-                Utils.IO.LogDebug("NOT PROCESSED: " + line, IO.DebugFile.LogReader);
+                }
+                else if (PowerTaskList.BlockNullRegex.IsMatch(line.Log))
+                {
+                    if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
+                    {
+                        CreateGame(line);
+                        return;
+                    }
+                    BlockNull(line);
+                }
+                else if (PowerTaskList.SourceRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.CurrentTaskListRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.MetaDataRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.OptionRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.SelectedOptionRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
+                {
+
+                }
+                else if (PowerTaskList.TargetRegex.IsMatch(line.Log))
+                {
+
+                }
+                else
+                {
+                    Utils.IO.LogDebug("NOT PROCESSED: " + line, IO.DebugFile.LogReader);
+                }
             }
 
         }
 
         public void ProcessLoadingScreen()
         {
-            LogLine line = GetLine(LoadingScreenReader);
-            if (true)
+            while (_stop)
             {
+                LogLine line = GetLine(LoadingScreenReader);
+                if (true)
+                {
 
+                }
             }
         }
 
@@ -207,6 +215,7 @@ namespace THS.HSImport
         {
             LogLine logline;
             Match match;
+            Game.ClearGame();
             IO.LogDebug("Creating game", IO.DebugFile.Hs);
             logline = GetLine(PowerReader);
             logline = GetLine(PowerReader);

@@ -12,7 +12,6 @@ namespace THS.HSApp
 {
     public class HSGame
     {
-        LogHandler _logHandler;
 
         //// Cards
         public List<HSCard> EnchantmentHsCards = new List<HSCard>();
@@ -26,16 +25,12 @@ namespace THS.HSApp
         public int NumGe;
         public bool PlayersOrdered = false;
 
-        public HSGame(Windows.THS ths)
+        public HSGame()
         {
-            _logHandler = new LogHandler(ths, this);
             User = new HSPlayer();
             Opponent = new HSPlayer();
         }
 
-        public void Start() => (new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" }).Start();
-
-        public void Stop() => _logHandler.Stop();
 
         //Non-Game methods
         public void ClearGame()
