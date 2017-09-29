@@ -109,9 +109,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>App.settings</DependentUpon>
     </Compile>
-    <Compile Include="HSApp\HSCard.cs" />
-    <Compile Include="HSApp\HSGame.cs" />
-    <Compile Include="HSApp\HSPlayer.cs" />
+    <Compile Include="HSApp\Entities\HSCard.cs" />
+    <Compile Include="HSApp\Entities\HSGame.cs" />
+    <Compile Include="HSApp\Entities\HSPlayer.cs" />
     <Compile Include="HSImport\LogHandler.cs" />
     <Compile Include="HSImport\LogLine.cs" />
     <Compile Include="HSImport\LogReader.cs" />
@@ -182,9 +182,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HSApp\Card\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
@@ -204,6 +202,10 @@
     <ProjectReference Include="..\HearthDb\HearthDb.csproj">
       <Project>{7ED14243-E02B-4B94-AF00-A67A62C282F0}</Project>
       <Name>HearthDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HearthMirror\HearthMirror.csproj">
+      <Project>{1694A2F8-645A-4263-A6AB-FC26323FD675}</Project>
+      <Name>HearthMirror</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

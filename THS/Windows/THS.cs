@@ -8,6 +8,7 @@ using THS.Input;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
+using HearthMirror;
 
 namespace THS.Windows
 {
@@ -39,6 +40,10 @@ namespace THS.Windows
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var decks = Reflection.GetDecks();
+
+
+
 
             _inputThread = new Thread(() =>
                 {

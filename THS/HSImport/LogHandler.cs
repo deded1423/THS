@@ -52,6 +52,7 @@ namespace THS.HSImport
             while (!_stop)
             {
                 ProcessPower();
+                ProcessLoadingScreen();
             }
 
             _running = false;
@@ -159,6 +160,14 @@ namespace THS.HSImport
 
         }
 
+        public void ProcessLoadingScreen()
+        {
+            LogLine line = GetLine(LoadingScreenReader);
+            if (true)
+            {
+
+            }
+        }
 
         private LogLine GetLine(LogReader log)
         {
