@@ -190,7 +190,6 @@ namespace THS.HSImport
 
         }
 
-
         public void ProcessLoadingScreen()
         {
             while (!_stop)
@@ -223,6 +222,7 @@ namespace THS.HSImport
             }
             return null;
         }
+
         private LogLine PeekLine(LogReader log)
         {
             while (!_stop)
@@ -438,6 +438,14 @@ namespace THS.HSImport
                 {
                     HideEntity(logLine);
                 }
+                else if (PowerTaskList.MetaDataRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
+                }
+                else if (PowerTaskList.InfoRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
+                }
                 else
                 {
                     throw new IndexOutOfRangeException();
@@ -475,9 +483,10 @@ namespace THS.HSImport
             }
             line = GetLine(PowerReader);
         }
+
         private void BlockStartAttack(LogLine line)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             LogLine logLine;
             while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
             {
@@ -497,6 +506,14 @@ namespace THS.HSImport
                 else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
                 {
                     HideEntity(logLine);
+                }
+                else if (PowerTaskList.MetaDataRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
+                }
+                else if (PowerTaskList.InfoRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
                 }
                 else
                 {
@@ -508,7 +525,7 @@ namespace THS.HSImport
 
         private void BlockStartPower(LogLine line)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             LogLine logLine;
             while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
             {
@@ -529,6 +546,14 @@ namespace THS.HSImport
                 {
                     HideEntity(logLine);
                 }
+                else if (PowerTaskList.MetaDataRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
+                }
+                else if (PowerTaskList.InfoRegex.IsMatch(logLine.Log))
+                {
+                    //TODO:COMPLETAR
+                }
                 else
                 {
                     throw new IndexOutOfRangeException();
@@ -539,7 +564,7 @@ namespace THS.HSImport
 
         private void BlockStartDeaths(LogLine line)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             LogLine logLine;
             while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
             {
