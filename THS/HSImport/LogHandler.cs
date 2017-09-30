@@ -79,6 +79,7 @@ namespace THS.HSImport
                 Match match;
                 string str;
                 line = GetLine(PowerReader);
+                //TODO: Mirar a ver si se utilizan todas las REGEX para quitarlas
                 if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
                 {
                     match = PowerTaskList.BlockStartRegex.Match(line.Log);
@@ -90,6 +91,22 @@ namespace THS.HSImport
                     else if (match.Groups["type"].Value.Equals("PLAY"))
                     {
                         BlockStartPlay(line);
+                    }
+                    else if (match.Groups["type"].Value.Equals("ATTACK"))
+                    {
+                        BlockStartAttack(line);
+                    }
+                    else if (match.Groups["type"].Value.Equals("POWER"))
+                    {
+                        BlockStartPower(line);
+                    }
+                    else if (match.Groups["type"].Value.Equals("DEATHS"))
+                    {
+                        BlockStartDeaths(line);
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
                     }
                 }
                 else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
@@ -294,7 +311,6 @@ namespace THS.HSImport
             {
                 Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
                 HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
-                Match matchPeek = PowerTaskList.TagChangeRegex.Match(PeekLine(PowerReader).Log);
                 if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
                 {
                     //Cambiar la zona de la carta en las variables
@@ -459,6 +475,99 @@ namespace THS.HSImport
             }
             line = GetLine(PowerReader);
         }
+        private void BlockStartAttack(LogLine line)
+        {
+            throw new NotImplementedException();
+            LogLine logLine;
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
+            {
+                logLine = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(logLine.Log))
+                {
+                    TagChange(logLine);
+                }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(logLine.Log))
+                {
+                    UpdatingEntity(logLine);
+                }
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(logLine.Log))
+                {
+                    FullEntityUpdating(logLine);
+                }
+                else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
+                {
+                    HideEntity(logLine);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            line = GetLine(PowerReader);
+        }
+
+        private void BlockStartPower(LogLine line)
+        {
+            throw new NotImplementedException();
+            LogLine logLine;
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
+            {
+                logLine = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(logLine.Log))
+                {
+                    TagChange(logLine);
+                }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(logLine.Log))
+                {
+                    UpdatingEntity(logLine);
+                }
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(logLine.Log))
+                {
+                    FullEntityUpdating(logLine);
+                }
+                else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
+                {
+                    HideEntity(logLine);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            line = GetLine(PowerReader);
+        }
+
+        private void BlockStartDeaths(LogLine line)
+        {
+            throw new NotImplementedException();
+            LogLine logLine;
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
+            {
+                logLine = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(logLine.Log))
+                {
+                    TagChange(logLine);
+                }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(logLine.Log))
+                {
+                    UpdatingEntity(logLine);
+                }
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(logLine.Log))
+                {
+                    FullEntityUpdating(logLine);
+                }
+                else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
+                {
+                    HideEntity(logLine);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            line = GetLine(PowerReader);
+        }
+
         private void BlockNull(LogLine line)
         {
             while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
