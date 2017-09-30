@@ -60,6 +60,7 @@ namespace THS.Windows
                         }
                         if (Methods.GetKeyState(0x62) < 0) //NUM2
                         {
+                            GameCore.Game.Debug();
                             while (Methods.GetKeyState(0x62) < 0) { }
                         }
                         if (Methods.GetKeyState(0x63) < 0) //NUM3
@@ -100,7 +101,7 @@ namespace THS.Windows
         {
             if (ButtonStart.Text.Equals("Start"))
             {
-                if (Process.GetProcessesByName("Hearthstone").Length != 0)
+                if (Process.GetProcessesByName("Hearthstone").Length != 0 || checkBoxHs.Checked)
                 {
                     GameCore = new HSApp.HSCore(this);
                     GameCore.Start();

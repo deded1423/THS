@@ -34,6 +34,7 @@ namespace THS.Windows
             this.ButtonStart = new System.Windows.Forms.Button();
             this.checkBoxTCP = new System.Windows.Forms.CheckBox();
             this.buttonStartTCP = new System.Windows.Forms.Button();
+            this.checkBoxHs = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -76,11 +77,22 @@ namespace THS.Windows
             this.buttonStartTCP.UseVisualStyleBackColor = true;
             this.buttonStartTCP.Click += new System.EventHandler(this.buttonStartTCP_Click);
             // 
+            // checkBoxHs
+            // 
+            this.checkBoxHs.AutoSize = true;
+            this.checkBoxHs.Location = new System.Drawing.Point(12, 115);
+            this.checkBoxHs.Name = "checkBoxHs";
+            this.checkBoxHs.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxHs.TabIndex = 17;
+            this.checkBoxHs.Text = "HS off";
+            this.checkBoxHs.UseVisualStyleBackColor = true;
+            // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(343, 243);
+            this.Controls.Add(this.checkBoxHs);
             this.Controls.Add(this.buttonStartTCP);
             this.Controls.Add(this.checkBoxTCP);
             this.Controls.Add(this.ButtonStart);
@@ -116,6 +128,7 @@ namespace THS.Windows
         }
         private CheckBox checkBoxTCP;
         protected Button buttonStartTCP;
+        private CheckBox checkBoxHs;
     }
 }
 

@@ -55,7 +55,9 @@ namespace THS.HSImport
             PowerHandler = new Thread(ProcessPower) { Name = "Power Handler" };
             LoadingScreenHandler = new Thread(ProcessLoadingScreen) { Name = "LoadingScreen Handler" };
             PowerHandler.Start();
-            LoadingScreenHandler.Start();
+
+            //TODO: Arreglar porque no sale bien las listas(Tags) si esta PowerHandler y LoadingScreenHandler a la vez
+            //LoadingScreenHandler.Start();
 
             _running = false;
         }
@@ -79,9 +81,14 @@ namespace THS.HSImport
                 if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
                 {
                     match = PowerTaskList.BlockStartRegex.Match(line.Log);
+                    //Igual hay que cambiar estos metodos para que hgan algo con el bloque completo porque solo miran las lineas por separado
                     if (match.Groups["type"].Value.Equals("TRIGGER"))
                     {
                         BlockStartTrigger(line);
+                    }
+                    else if (match.Groups["type"].Value.Equals("PLAY"))
+                    {
+                        BlockStartPlay(line);
                     }
                 }
                 else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
@@ -125,7 +132,7 @@ namespace THS.HSImport
                     if (PeekLine(PowerReader).Log.Equals("CREATE_GAME"))
                     {
                         CreateGame(line);
-                        return;
+                        continue;
                     }
                     BlockNull(line);
                 }
@@ -164,6 +171,7 @@ namespace THS.HSImport
             }
 
         }
+
 
         public void ProcessLoadingScreen()
         {
@@ -290,18 +298,18 @@ namespace THS.HSImport
                 {
                     Zone oldzone = card.Zone;
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                    match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
-                    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                    //match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
+                    //card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
                     MoveCard(card, oldzone);
                 }
-                else if ((HsConstants.StringToTag(matchPeek.Groups["tag"].Value).Equals(GameTag.ZONE) && HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE_POSITION) && PeekLine(PowerReader).Log.Contains(match.Groups["entity"].Value)))
-                {
-                    Zone oldzone = card.Zone;
-                    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                    match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
-                    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                    MoveCard(card, oldzone);
-                }
+                //else if ((HsConstants.StringToTag(matchPeek.Groups["tag"].Value).Equals(GameTag.ZONE) && HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE_POSITION) && PeekLine(PowerReader).Log.Contains(match.Groups["entity"].Value)))
+                //{
+                //    Zone oldzone = card.Zone;
+                //    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                //    match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
+                //    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                //    MoveCard(card, oldzone);
+                //}
                 else
                 {
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
@@ -374,6 +382,32 @@ namespace THS.HSImport
             IO.LogDebug("Updated card " + card, IO.DebugFile.Hs);
         }
 
+        private void HideEntity(LogLine line)
+        {
+            Match match = PowerTaskList.HideEntityRegex.Match(line.Log);
+            if (LogRegex.EntityRegex.IsMatch(match.Groups["entity"].Value))
+            {
+                Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
+                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+                Match matchPeek = PowerTaskList.TagChangeRegex.Match(PeekLine(PowerReader).Log);
+                if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
+                {
+                    Zone oldzone = card.Zone;
+                    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                    MoveCard(card, oldzone);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+        }
+
         private void BlockStartTrigger(LogLine line)
         {
             LogLine logLine;
@@ -392,6 +426,10 @@ namespace THS.HSImport
                 {
                     FullEntityUpdating(logLine);
                 }
+                else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
+                {
+                    HideEntity(logLine);
+                }
                 else
                 {
                     throw new IndexOutOfRangeException();
@@ -400,6 +438,35 @@ namespace THS.HSImport
             line = GetLine(PowerReader);
         }
 
+        private void BlockStartPlay(LogLine line)
+        {
+            LogLine logLine;
+            while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
+            {
+                logLine = GetLine(PowerReader);
+                if (PowerTaskList.TagChangeRegex.IsMatch(logLine.Log))
+                {
+                    TagChange(logLine);
+                }
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(logLine.Log))
+                {
+                    UpdatingEntity(logLine);
+                }
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(logLine.Log))
+                {
+                    FullEntityUpdating(logLine);
+                }
+                else if (PowerTaskList.HideEntityRegex.IsMatch(logLine.Log))
+                {
+                    HideEntity(logLine);
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
+            }
+            line = GetLine(PowerReader);
+        }
         private void BlockNull(LogLine line)
         {
             while (!PeekLine(PowerReader).Log.Contains("Block End=") && !PeekLine(PowerReader).Log.Contains("BLOCK_END"))
@@ -518,6 +585,7 @@ namespace THS.HSImport
 
         private void MoveCard(HSCard card, Zone oldzone)
         {
+            if (card.Equals(oldzone)) return;
             switch (oldzone)
             {
                 case Zone.INVALID:
@@ -526,48 +594,48 @@ namespace THS.HSImport
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Play.Remove(card);
-                        IO.LogDebug("Removed User " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Play.Remove(card);
-                        IO.LogDebug("Removed Opponent " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     break;
                 case Zone.DECK:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Deck.Remove(card);
-                        IO.LogDebug("Removed User " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Deck.Remove(card);
-                        IO.LogDebug("Removed Opponent " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     break;
                 case Zone.HAND:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Hand.Remove(card);
-                        IO.LogDebug("Removed User " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Hand.Remove(card);
-                        IO.LogDebug("Removed Opponent " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     break;
                 case Zone.GRAVEYARD:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Graveyard.Remove(card);
-                        IO.LogDebug("Removed User " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Graveyard.Remove(card);
-                        IO.LogDebug("Removed Opponent " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     break;
                 case Zone.REMOVEDFROMGAME:
@@ -576,12 +644,12 @@ namespace THS.HSImport
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Setaside.Remove(card);
-                        IO.LogDebug("Removed User " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Setaside.Remove(card);
-                        IO.LogDebug("Removed Opponent " + (Zone)card.Tags[GameTag.ZONE] + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
                     }
                     break;
                 case Zone.SECRET:

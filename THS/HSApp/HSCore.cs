@@ -10,8 +10,8 @@ namespace THS.HSApp
 {
     class HSCore
     {
-        LogHandler _logHandler;
-        HSGame Game;
+        public LogHandler _logHandler;
+        public HSGame Game;
         public HSCore(Windows.THS ths)
         {
             Game = new HSApp.HSGame();

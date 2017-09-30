@@ -54,7 +54,7 @@ namespace THS.Utils
         public static readonly Regex FullEntityUpdatingRegex =
             new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*player=(?<player>(\w*)).*CardID=(?<cardId>(\w*))");
         public static readonly Regex TagRegex =
-            new Regex(@"(?<!(\w ))tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+            new Regex(@"^tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 
         public static readonly Regex EntityRegex =
             new Regex(@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
@@ -72,6 +72,8 @@ namespace THS.Utils
             new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 
         //NUEVO
+        public static readonly Regex HideEntityRegex =
+            new Regex(@"HIDE_ENTITY\ -\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
         public static readonly Regex FullEntityCreatingRegex =
             new Regex(@"FULL_ENTITY - Creating.*ID=(?<id>(\d+)).*CardID=(?<cardId>([\w.]*))");
         public static readonly Regex CountRegex =

@@ -58,18 +58,127 @@ namespace THS.HSApp
             }
             else
             {
+
                 IO.LogDebug("Added GE Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags.Add(gt, i);
+            }
+
+            //TRIGGERS TAGS GAME
+
+            if (gt.Equals(GameTag.STEP) && i == (int)Step.BEGIN_MULLIGAN)
+            {
+                foreach (var item in GetMulliganCards())
+                {
+                    IO.LogDebug("Mulligan " + item, IO.DebugFile.Hs);
+                }
             }
         }
 
         //Methods that do something to the game
 
-        //Methods that take info from the game
+        //Methods of info
+        public void Debug()
+        {
+            IO.LogDebug("-----------DEBUGGING GAME-----------");
+            IO.LogDebug("NumGE = " + NumGe);
+            IO.LogDebug("Ordered = " + PlayersOrdered);
+            IO.LogDebug("Tags = " + Tags.Count);
+            foreach (var item in Tags)
+            {
+                IO.LogDebug("\t\t" + item.Key + " = " + item.Value);
+            }
+            IO.LogDebug("\t\t-----User-----");
+            IO.LogDebug("\t\t\tName = " + User.PlayerName);
+            IO.LogDebug("\t\t\tPlayerId = " + User.PlayerId);
+            IO.LogDebug("\t\t\tEntityId = " + User.EntityId);
+            IO.LogDebug("\t\t\tGameAccount = " + User.GameAccountId);
+            IO.LogDebug("\t\t\tTags = " + User.Tags.Count);
+            foreach (var item in User.Tags)
+            {
+                IO.LogDebug("\t\t\t\t" + item.Key + " = " + item.Value);
+            }
+            IO.LogDebug("\t\t\tHero = " + User.Hero);
+            IO.LogDebug("\t\t\tHero Power = " + User.HeroPower);
+            IO.LogDebug("\t\t\tHand = " + User.Hand.Count);
+            foreach (var item in User.Hand)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tDeck = " + User.Deck.Count);
+            foreach (var item in User.Deck)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tPlay = " + User.Play.Count);
+            foreach (var item in User.Play)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tGraveyard = " + User.Graveyard.Count);
+            foreach (var item in User.Graveyard)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tSetaside = " + User.Setaside.Count);
+            foreach (var item in User.Setaside)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+
+            IO.LogDebug("\t\t-----Opponent-----");
+            IO.LogDebug("\t\t\tName = " + Opponent.PlayerName);
+            IO.LogDebug("\t\t\tPlayerId = " + Opponent.PlayerId);
+            IO.LogDebug("\t\t\tEntityId = " + Opponent.EntityId);
+            IO.LogDebug("\t\t\tGameAccount = " + Opponent.GameAccountId);
+            IO.LogDebug("\t\t\tTags = " + Opponent.Tags.Count);
+            foreach (var item in Opponent.Tags)
+            {
+                IO.LogDebug("\t\t\t\t" + item.Key + " = " + item.Value);
+            }
+            IO.LogDebug("\t\t\tHero = " + Opponent.Hero);
+            IO.LogDebug("\t\t\tHero Power = " + Opponent.HeroPower);
+            IO.LogDebug("\t\t\tHand = " + Opponent.Hand.Count);
+            foreach (var item in Opponent.Hand)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tDeck = " + Opponent.Deck.Count);
+            foreach (var item in Opponent.Deck)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tPlay = " + Opponent.Play.Count);
+            foreach (var item in Opponent.Play)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tGraveyard = " + Opponent.Graveyard.Count);
+            foreach (var item in Opponent.Graveyard)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+            IO.LogDebug("\t\t\tSetaside = " + Opponent.Setaside.Count);
+            foreach (var item in Opponent.Setaside)
+            {
+                IO.LogDebug("\t\t\t\t" + item);
+            }
+        }
+
         public bool IsMulliganDone() => ((Mulligan)Tags[GameTag.MULLIGAN_STATE]).Equals(Mulligan.DONE);
 
+        public HSCard[] GetMulliganCards()
+        {
+            if (!((Step)Tags[GameTag.STEP]).Equals(Step.BEGIN_MULLIGAN))
+            {
+                return null;
+            }
+            return User.Hand.ToArray();
+        }
+
+        //Methods that take info from the game
         public HSCard GetCard(int player, Zone zone, int id)
         {
+            HSCard card;
             if (player == User.PlayerId)
             {
                 if (User.Hero.Id == id)
@@ -80,27 +189,12 @@ namespace THS.HSApp
                 {
                     return User.HeroPower;
                 }
-                switch (zone)
-                {
-                    case Zone.INVALID:
-                        break;
-                    case Zone.PLAY:
-                        return User.GetPlayId(id);
-                    case Zone.DECK:
-                        return User.GetDeckId(id);
-                    case Zone.HAND:
-                        return User.GetHandId(id);
-                    case Zone.GRAVEYARD:
-                        return User.GetGraveyardId(id);
-                    case Zone.REMOVEDFROMGAME:
-                        break;
-                    case Zone.SETASIDE:
-                        return User.GetSetasideId(id);
-                    case Zone.SECRET:
-                        break;
-                    default:
-                        throw new OverflowException();
-                }
+                if ((card = User.GetPlayId(id)) != null) return card;
+                if ((card = User.GetDeckId(id)) != null) return card;
+                if ((card = User.GetHandId(id)) != null) return card;
+                if ((card = User.GetGraveyardId(id)) != null) return card;
+                if ((card = User.GetSetasideId(id)) != null) return card;
+
             }
             else if (player == Opponent.PlayerId)
             {
@@ -112,27 +206,11 @@ namespace THS.HSApp
                 {
                     return Opponent.HeroPower;
                 }
-                switch (zone)
-                {
-                    case Zone.INVALID:
-                        break;
-                    case Zone.PLAY:
-                        return Opponent.GetPlayId(id);
-                    case Zone.DECK:
-                        return Opponent.GetDeckId(id);
-                    case Zone.HAND:
-                        return Opponent.GetHandId(id);
-                    case Zone.GRAVEYARD:
-                        return Opponent.GetGraveyardId(id);
-                    case Zone.REMOVEDFROMGAME:
-                        break;
-                    case Zone.SETASIDE:
-                        return Opponent.GetSetasideId(id);
-                    case Zone.SECRET:
-                        break;
-                    default:
-                        throw new OverflowException();
-                }
+                if ((card = Opponent.GetPlayId(id)) != null) return card;
+                if ((card = Opponent.GetDeckId(id)) != null) return card;
+                if ((card = Opponent.GetHandId(id)) != null) return card;
+                if ((card = Opponent.GetGraveyardId(id)) != null) return card;
+                if ((card = Opponent.GetSetasideId(id)) != null) return card;
             }
             return null;
         }
