@@ -22,8 +22,7 @@ namespace THS.HSImport
         }
 
         public void Start()
-        {   //TODO: Comprobar que pasa cuando no esta abierto el hs y se inicia y luego se inicia el hs, de momento lo voy a hacer como si se iniciara antes que el hs
-            //TODO: hacer que se lea cuando se haga "update" del log, creo que ya esta hecho pero hay que hacer comprobaciones
+        {
 
             if (_running)
                 return;

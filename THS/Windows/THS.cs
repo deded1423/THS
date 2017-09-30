@@ -16,7 +16,8 @@ namespace THS.Windows
 
     public partial class THS : Form
     {
-        //TODO: CAMBIAR TODA ESTA MIERDA PARA QUE ESTE EN OTRA CLASE
+        //TODO: Cambiar todo esto para que este en otra clase??
+        //TODO: Mirar que el programa cierra bien (Procesos y Files)
         //TWITCH SHIT
         Queue<string> chat = new Queue<string>();
         static IrcClient irc;

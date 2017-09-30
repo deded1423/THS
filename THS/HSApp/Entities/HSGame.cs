@@ -178,6 +178,7 @@ namespace THS.HSApp
         //Methods that take info from the game
         public HSCard GetCard(int player, Zone zone, int id)
         {
+            //Mira todas las cartas porque sino da fallo al cambiar de posicion de deck a hand 
             HSCard card;
             if (player == User.PlayerId)
             {

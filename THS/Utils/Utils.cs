@@ -13,7 +13,7 @@ namespace THS.Utils
 
 
         public static bool OpenDebugFiles()
-        { //TODO: Comprobar todas las mierdas para que se habran bien los archivos y eso, tambien lo de cerrar y todo eso (los archivos)
+        {
             if (!Directory.Exists(Path.Combine(GlobalConstants.LogPath, "Logs")))
             {
                 Directory.CreateDirectory(Path.Combine(GlobalConstants.LogPath, "Logs"));

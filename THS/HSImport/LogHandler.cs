@@ -16,6 +16,7 @@ namespace THS.HSImport
 {
     class LogHandler
     {
+        //TODO: La lectura del log no se si esta preparada para meterse  en un juego reconectado
         public LogReader PowerReader;
         public LogReader RachelleReader;
         public LogReader LoadingScreenReader;
@@ -296,20 +297,11 @@ namespace THS.HSImport
                 Match matchPeek = PowerTaskList.TagChangeRegex.Match(PeekLine(PowerReader).Log);
                 if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
                 {
+                    //Cambiar la zona de la carta en las variables
                     Zone oldzone = card.Zone;
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                    //match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
-                    //card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
                     MoveCard(card, oldzone);
                 }
-                //else if ((HsConstants.StringToTag(matchPeek.Groups["tag"].Value).Equals(GameTag.ZONE) && HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE_POSITION) && PeekLine(PowerReader).Log.Contains(match.Groups["entity"].Value)))
-                //{
-                //    Zone oldzone = card.Zone;
-                //    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                //    match = PowerTaskList.TagChangeRegex.Match(GetLine(PowerReader).Log);
-                //    card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
-                //    MoveCard(card, oldzone);
-                //}
                 else
                 {
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
