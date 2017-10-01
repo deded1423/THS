@@ -195,6 +195,7 @@ namespace THS.HSApp
                 if ((card = User.GetHandId(id)) != null) return card;
                 if ((card = User.GetGraveyardId(id)) != null) return card;
                 if ((card = User.GetSetasideId(id)) != null) return card;
+                if ((card = User.GetRemovedId(id)) != null) return card;
 
             }
             else if (player == Opponent.PlayerId)
@@ -212,6 +213,7 @@ namespace THS.HSApp
                 if ((card = Opponent.GetHandId(id)) != null) return card;
                 if ((card = Opponent.GetGraveyardId(id)) != null) return card;
                 if ((card = Opponent.GetSetasideId(id)) != null) return card;
+                if ((card = Opponent.GetRemovedId(id)) != null) return card;
             }
             return null;
         }

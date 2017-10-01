@@ -40,22 +40,12 @@ namespace THS.HSApp
             {
                 return (Zone)Tags[GameTag.ZONE];
             }
-
-            set
-            {
-                Tags[GameTag.ZONE] = (int)value;
-            }
         }
         public int ZonePos
         {
             get
             {
                 return Tags[GameTag.ZONE_POSITION];
-            }
-
-            set
-            {
-                Tags[GameTag.ZONE_POSITION] = value;
             }
         }
         public int Controller
@@ -64,13 +54,7 @@ namespace THS.HSApp
             {
                 return Tags[GameTag.CONTROLLER];
             }
-
-            set
-            {
-                Tags[GameTag.CONTROLLER] = value;
-            }
         }
-
         public CardType CardType
         {
             get
@@ -78,9 +62,33 @@ namespace THS.HSApp
                 return (CardType)Tags[GameTag.CARDTYPE];
             }
 
-            set
+        }
+        public int Attack
+        {
+            get
             {
-                Tags[GameTag.CARDTYPE] = (int)value;
+                return Tags[GameTag.ATK];
+            }
+        }
+        public int Health
+        {
+            get
+            {
+                return Tags[GameTag.HEALTH];
+            }
+        }
+        public int Damage
+        {
+            get
+            {
+                return Tags[GameTag.DAMAGE];
+            }
+        }
+        public CardType TrueHealth
+        {
+            get
+            {
+                return (CardType)Tags[GameTag.CARDTYPE];
             }
         }
 

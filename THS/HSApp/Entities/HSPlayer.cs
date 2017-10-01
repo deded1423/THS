@@ -19,9 +19,11 @@ namespace THS.HSApp
         //GAME
         public List<HSCard> Hand;
         public List<HSCard> Graveyard;
+        public List<HSCard> Removed;
         public List<HSCard> Deck;
         public List<HSCard> Play;
         public List<HSCard> Setaside;
+        public List<HSCard> Secret;
 
         public Dictionary<GameTag, int> Tags = new Dictionary<GameTag, int>();
         public HSCard Hero;
@@ -30,9 +32,11 @@ namespace THS.HSApp
         {
             Hand = new List<HSCard>();
             Graveyard = new List<HSCard>();
+            Removed = new List<HSCard>();
             Deck = new List<HSCard>();
             Play = new List<HSCard>();
             Setaside = new List<HSCard>();
+            Secret = new List<HSCard>();
         }
 
         public void Clear()
@@ -43,6 +47,8 @@ namespace THS.HSApp
             Deck.Clear();
             Play.Clear();
             Setaside.Clear();
+            Secret.Clear();
+            Removed.Clear();
             Tags.Clear();
             Hero = null;
 
@@ -130,6 +136,29 @@ namespace THS.HSApp
             }
             return null;
         }
-        
+
+        public HSCard GetRemovedId(int id)
+        {
+            foreach (var card in Removed)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+        public HSCard GetSecretId(int id)
+        {
+            foreach (var card in Secret)
+            {
+                if (card.Id == id)
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
     }
 }

@@ -645,6 +645,7 @@ namespace THS.HSImport
                     case Zone.INVALID:
                         break;
                     case Zone.PLAY:
+                        Game.User.Play.Add(card);
                         break;
                     case Zone.DECK:
                         Game.User.Deck.Add(card);
@@ -684,6 +685,7 @@ namespace THS.HSImport
                     case Zone.INVALID:
                         break;
                     case Zone.PLAY:
+                        Game.Opponent.Play.Add(card);
                         break;
                     case Zone.DECK:
                         Game.Opponent.Deck.Add(card);
