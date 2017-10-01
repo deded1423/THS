@@ -108,6 +108,14 @@ namespace THS.HSImport
                     {
                         BlockStartDeaths(line);
                     }
+                    else if (match.Groups["type"].Value.Equals("RITUAL"))
+                    {
+                        BlockStartTrigger(line);
+                    }
+                    else if (match.Groups["type"].Value.Equals("FATIGUE"))
+                    {
+                        BlockStartTrigger(line);
+                    }
                     else
                     {
                         throw new IndexOutOfRangeException();
@@ -612,6 +620,24 @@ namespace THS.HSImport
                 if (PowerTaskList.TagChangeRegex.IsMatch(line.Log))
                 {
                     TagChange(line);
+                }
+                //Añadido esto para los adapts
+                else if (PowerTaskList.UpdatingEntityRegex.IsMatch(line.Log))
+                {
+                    UpdatingEntity(line);
+                }
+                //Añadido esto para los adapts
+                else if (PowerTaskList.FullEntityUpdatingRegex.IsMatch(line.Log))
+                {
+                    FullEntityUpdating(line);
+                }
+                //Añadido esto para los adapts
+                else if (PowerTaskList.MetaDataRegex.IsMatch(line.Log))
+                {
+                }
+                //Añadido esto para los adapts
+                else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
+                {
                 }
                 else
                 {

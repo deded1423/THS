@@ -47,7 +47,7 @@ namespace THS.Utils
     public static class PowerTaskList
     {
         public static readonly Regex BlockStartRegex =
-            new Regex(@"BLOCK_START BlockType=((?<type>(POWER|TRIGGER|DEATHS|ATTACK|PLAY)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>.*))");
+            new Regex(@"BLOCK_START BlockType=((?<type>(POWER|TRIGGER|DEATHS|ATTACK|PLAY|RITUAL|FATIGUE)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>.*))");
 
         public static readonly Regex CardIdRegex =
             new Regex(@"cardId=(?<cardId>(\w+))");

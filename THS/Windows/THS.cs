@@ -145,7 +145,7 @@ namespace THS.Windows
             }
             else if (((Button)sender).Equals(buttonTest5))
             {
-                IO.LogDebug("USER HAND" + GameCore.Game.User.Hand.Count);
+                IO.LogDebug("USER HAND " + GameCore.Game.User.Hand.Count);
                 foreach (var card in GameCore.Game.User.Hand)
                 {
                     IO.LogDebug(card.ToString());
@@ -153,7 +153,7 @@ namespace THS.Windows
             }
             else if (((Button)sender).Equals(buttonTest6))
             {
-                IO.LogDebug("OPPONENT HAND" + GameCore.Game.Opponent.Hand.Count);
+                IO.LogDebug("OPPONENT HAND " + GameCore.Game.Opponent.Hand.Count);
                 foreach (var card in GameCore.Game.Opponent.Hand)
                 {
                     IO.LogDebug(card.ToString());
