@@ -662,6 +662,7 @@ namespace THS.HSImport
                         Game.User.Setaside.Add(card);
                         break;
                     case Zone.SECRET:
+                        Game.User.Secret.Add(card);
                         break;
                     default:
                         throw new OverflowException();
@@ -702,6 +703,7 @@ namespace THS.HSImport
                         Game.Opponent.Setaside.Add(card);
                         break;
                     case Zone.SECRET:
+                        Game.Opponent.Secret.Add(card);
                         break;
                     default:
                         throw new OverflowException();
@@ -713,7 +715,8 @@ namespace THS.HSImport
 
         private void MoveCard(HSCard card, Zone oldzone)
         {
-            if (card.Equals(oldzone)) return;
+            //Desactivado porque hay a veces que al crear la carta no funciona bien
+            //if (card.Equals(oldzone)) return;
             switch (oldzone)
             {
                 case Zone.INVALID:
@@ -722,65 +725,85 @@ namespace THS.HSImport
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Play.Remove(card);
-                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Play.Remove(card);
-                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.DECK:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Deck.Remove(card);
-                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Deck.Remove(card);
-                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.HAND:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Hand.Remove(card);
-                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Hand.Remove(card);
-                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.GRAVEYARD:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Graveyard.Remove(card);
-                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Graveyard.Remove(card);
-                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.REMOVEDFROMGAME:
+                    if (card.Controller == Game.User.PlayerId)
+                    {
+                        Game.User.Removed.Remove(card);
+                        IO.LogDebug("Removed User " + Zone.REMOVEDFROMGAME + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
+                    else if (card.Controller == Game.Opponent.PlayerId)
+                    {
+                        Game.Opponent.Removed.Remove(card);
+                        IO.LogDebug("Removed Opponent " + Zone.REMOVEDFROMGAME + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
                     break;
                 case Zone.SETASIDE:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Setaside.Remove(card);
-                        IO.LogDebug("Removed User " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed User " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Setaside.Remove(card);
-                        IO.LogDebug("Removed Opponent " + oldzone + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Removed Opponent " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.SECRET:
+                    if (card.Controller == Game.User.PlayerId)
+                    {
+                        Game.User.Secret.Remove(card);
+                        IO.LogDebug("Removed User " + Zone.SECRET + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
+                    else if (card.Controller == Game.Opponent.PlayerId)
+                    {
+                        Game.Opponent.Secret.Remove(card);
+                        IO.LogDebug("Removed Opponent " + Zone.SECRET + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
                     break;
                 default:
                     throw new OverflowException();
@@ -793,65 +816,85 @@ namespace THS.HSImport
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Play.Add(card);
-                        IO.LogDebug("Added User " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added User " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Play.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added Opponent " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.DECK:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Deck.Add(card);
-                        IO.LogDebug("Added User " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added User " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Deck.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added Opponent " + Zone.DECK + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.HAND:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Hand.Add(card);
-                        IO.LogDebug("Added User " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added User " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Hand.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added Opponent " + Zone.HAND + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.GRAVEYARD:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Graveyard.Add(card);
-                        IO.LogDebug("Added User " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added User " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Graveyard.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added Opponent " + Zone.GRAVEYARD + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.REMOVEDFROMGAME:
+                    if (card.Controller == Game.User.PlayerId)
+                    {
+                        Game.User.Removed.Add(card);
+                        IO.LogDebug("Added User " + Zone.REMOVEDFROMGAME + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
+                    else if (card.Controller == Game.Opponent.PlayerId)
+                    {
+                        Game.Opponent.Removed.Add(card);
+                        IO.LogDebug("Added Opponent " + Zone.REMOVEDFROMGAME + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
                     break;
                 case Zone.SETASIDE:
                     if (card.Controller == Game.User.PlayerId)
                     {
                         Game.User.Setaside.Add(card);
-                        IO.LogDebug("Added User " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added User " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
                         Game.Opponent.Setaside.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs);
+                        IO.LogDebug("Added Opponent " + Zone.SETASIDE + " card id: " + card.Id, IO.DebugFile.Hs, false);
                     }
                     break;
                 case Zone.SECRET:
+                    if (card.Controller == Game.User.PlayerId)
+                    {
+                        Game.User.Secret.Add(card);
+                        IO.LogDebug("Added User " + Zone.SECRET + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
+                    else if (card.Controller == Game.Opponent.PlayerId)
+                    {
+                        Game.Opponent.Secret.Add(card);
+                        IO.LogDebug("Added Opponent " + Zone.SECRET + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                    }
                     break;
                 default:
                     throw new OverflowException();

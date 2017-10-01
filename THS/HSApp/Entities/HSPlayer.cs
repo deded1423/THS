@@ -148,6 +148,7 @@ namespace THS.HSApp
             }
             return null;
         }
+
         public HSCard GetSecretId(int id)
         {
             foreach (var card in Secret)

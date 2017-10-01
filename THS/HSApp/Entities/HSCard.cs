@@ -84,14 +84,18 @@ namespace THS.HSApp
                 return Tags[GameTag.DAMAGE];
             }
         }
-        public CardType TrueHealth
+        public int TrueHealth
         {
             get
             {
-                return (CardType)Tags[GameTag.CARDTYPE];
+                if (Tags.ContainsKey(GameTag.DAMAGE))
+                {
+                    return Tags[GameTag.HEALTH] - Tags[GameTag.HEALTH];
+                }
+                return Tags[GameTag.HEALTH];
             }
         }
 
-        public override string ToString() => "ID: " + Id + " " + CardDB?.Name + " Zone: " + Zone;
+        public override string ToString() => "ID: " + Id + " " + CardDB?.Name + " Zone: " + Zone + " Attack: " + (Tags.ContainsKey(GameTag.ATK) ? Attack.ToString() : "N/A") + " Health: " + (Tags.ContainsKey(GameTag.HEALTH) ? TrueHealth.ToString() : "N/A");
     }
 }
