@@ -112,7 +112,7 @@ namespace THS.HSImport
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(50);
             }
             CloseFiles();
 
