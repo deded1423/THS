@@ -86,11 +86,35 @@ namespace THS.Windows
                         }
                         if (Methods.GetKeyState(0x66) < 0) //NUM6
                         {
+                            foreach (var card in GameCore.Game.GetUserDeadMinion())
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
                             while (Methods.GetKeyState(0x66) < 0) { }
+                        }
+                        if (Methods.GetKeyState(0x67) < 0) //NUM7
+                        {
+                            foreach (var card in GameCore.Game.User.Hand)
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
+                            while (Methods.GetKeyState(0x67) < 0) { }
                         }
                         if (Methods.GetKeyState(0x68) < 0) //NUM8
                         {
+                            foreach (var card in GameCore.Game.Opponent.Hand)
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
                             while (Methods.GetKeyState(0x68) < 0) { }
+                        }
+                        if (Methods.GetKeyState(0x69) < 0) //NUM9
+                        {
+                            foreach (var card in GameCore.Game.GetOpponentDeadMinion())
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
+                            while (Methods.GetKeyState(0x69) < 0) { }
                         }
 
                         Thread.Sleep(10);

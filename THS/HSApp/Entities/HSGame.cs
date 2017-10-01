@@ -245,5 +245,29 @@ namespace THS.HSApp
             }
             return tmp.ToArray();
         }
+        public HSCard[] GetUserDeadMinion()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in User.Graveyard)
+            {
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                {
+                    tmp.Add(card);
+                }
+            }
+            return tmp.ToArray();
+        }
+        public HSCard[] GetOpponentDeadMinion()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in Opponent.Graveyard)
+            {
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                {
+                    tmp.Add(card);
+                }
+            }
+            return tmp.ToArray();
+        }
     }
 }
