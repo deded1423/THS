@@ -11,6 +11,7 @@ using THS.Utils;
 using THS.HSApp;
 using HearthDb;
 using HearthDb.Enums;
+using System.Threading.Tasks;
 
 namespace THS.HSImport
 {
@@ -21,6 +22,10 @@ namespace THS.HSImport
         public LogReader RachelleReader;
         public LogReader LoadingScreenReader;
         public LogReader FullscreenReader;
+        public AutoResetEvent PowerWait = new AutoResetEvent(false);
+        public AutoResetEvent RachelleWait = new AutoResetEvent(false);
+        public AutoResetEvent LoadingScreenWait = new AutoResetEvent(false);
+        public AutoResetEvent FullscreenWait = new AutoResetEvent(false);
         Thread PowerHandler;
         Thread RachelleHandler;
         Thread LoadingScreenHandler;
@@ -35,10 +40,10 @@ namespace THS.HSImport
         //PROCESSING SHIT   
         public LogHandler(Windows.THS ths, HSGame game)
         {
-            PowerReader = new LogReader("Power");
-            RachelleReader = new LogReader("Rachelle");
-            LoadingScreenReader = new LogReader("LoadingScreen");
-            FullscreenReader = new LogReader("FullScreenFX");
+            PowerReader = new LogReader("Power", this);
+            RachelleReader = new LogReader("Rachelle", this);
+            LoadingScreenReader = new LogReader("LoadingScreen", this);
+            FullscreenReader = new LogReader("FullScreenFX", this);
             _ths = ths;
             Game = game;
         }
@@ -75,9 +80,8 @@ namespace THS.HSImport
         {
             while (!_stop)
             {
-                LogLine line, temp;
+                LogLine line;
                 Match match;
-                string str;
                 line = GetLine(PowerReader);
                 //TODO: Mirar a ver si se utilizan todas las REGEX para quitarlas
                 if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
@@ -207,6 +211,13 @@ namespace THS.HSImport
             while (!_stop)
             {
                 LogLine line;
+                if (log.Lines.Count == 0)
+                {
+                    if (log.Equals(PowerReader))
+                    {
+                        PowerWait.WaitOne();
+                    }
+                }
                 if (log.Lines.TryDequeue(out line))
                 {
                     if (!line.Process.Contains("PowerTaskList"))

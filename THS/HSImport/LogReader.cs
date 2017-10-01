@@ -14,10 +14,12 @@ namespace THS.HSImport
         private bool _stop;
         private bool _running;
         private Thread _thread;
+        private LogHandler handler;
         public ConcurrentQueue<LogLine> Lines = new ConcurrentQueue<LogLine>();
-        public LogReader(string name)
+        public LogReader(string name, LogHandler h)
         {
             Namespace = name;
+            handler = h;
             _filepath = Path.Combine(ConfigFile.HearthstonePath, "Logs", Namespace + ".log");
         }
 
@@ -91,6 +93,23 @@ namespace THS.HSImport
                 while (!sr.EndOfStream && ((tmp = sr.ReadLine()) != null))
                 {
                     Lines.Enqueue(new LogLine(tmp, Namespace));
+                    switch (Namespace)
+                    {
+                        case "Power":
+                            handler.PowerWait.Set();
+                            break;
+                        case "Rachelle":
+                            handler.RachelleWait.Set();
+                            break;
+                        case "LoadingScreen":
+                            handler.LoadingScreenWait.Set();
+                            break;
+                        case "FullScreenFX":
+                            handler.FullscreenWait.Set();
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 Thread.Sleep(1000);

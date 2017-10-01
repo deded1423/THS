@@ -29,9 +29,6 @@ namespace THS.Windows
         //IMPORT SHIT
         private HSApp.HSCore GameCore;
 
-        //INPUT SHIT
-        Thread _inputThread;
-        bool stopinput = false;
         public THS()
         {
             InitializeComponent();
@@ -41,87 +38,8 @@ namespace THS.Windows
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var decks = Reflection.GetDecks();
-
-
-
-
-            _inputThread = new Thread(() =>
-                {
-                    int i = 1;
-                    int key = 0x61;
-                    while (!stopinput)
-                    {
-                        Methods.Point mouse = Methods.GetMouseInfoFromWindow("Hearthstone");
-                        if (Methods.GetKeyState(key) < 0) //NUM1
-                        {
-                            Console.WriteLine(i + ") " + mouse.X + "," + mouse.Y);
-                            i++;
-                            while (Methods.GetKeyState(key) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x62) < 0) //NUM2
-                        {
-                            GameCore.Game.Debug();
-                            while (Methods.GetKeyState(0x62) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x63) < 0) //NUM3
-                        {
-                            while (Methods.GetKeyState(0x63) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x64) < 0) //NUM4
-                        {
-                            foreach (var card in GameCore.Game.GetUserBoard())
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x64) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x65) < 0) //NUM5
-                        {
-                            foreach (var card in GameCore.Game.GetOpponentBoard())
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x65) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x66) < 0) //NUM6
-                        {
-                            foreach (var card in GameCore.Game.GetUserDeadMinion())
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x66) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x67) < 0) //NUM7
-                        {
-                            foreach (var card in GameCore.Game.User.Hand)
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x67) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x68) < 0) //NUM8
-                        {
-                            foreach (var card in GameCore.Game.Opponent.Hand)
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x68) < 0) { }
-                        }
-                        if (Methods.GetKeyState(0x69) < 0) //NUM9
-                        {
-                            foreach (var card in GameCore.Game.GetOpponentDeadMinion())
-                            {
-                                IO.LogDebug(card.ToString());
-                            }
-                            while (Methods.GetKeyState(0x69) < 0) { }
-                        }
-
-                        Thread.Sleep(10);
-                    }
-                })
-            { Name = "Input" };
-            _inputThread.Start();
+            //var decks = Reflection.GetDecks();
+            SetupTestButtons();
         }
 
         private void ButtonConfig_Click(object sender, EventArgs e)
@@ -174,7 +92,6 @@ namespace THS.Windows
 
         private void THS_FormClosed(object sender, FormClosedEventArgs e)
         {
-            stopinput = true;
             IO.CloseDebugFiles();
             if (Directory.Exists(Path.Combine(@"C: \Users\USER\Documents\Visual Studio 2015\Projects\THS\HearthDb", "hsdata")))
             {
@@ -199,5 +116,77 @@ namespace THS.Windows
             }
         }
 
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            if (((Button)sender).Equals(buttonTest1))
+            {
+                Methods.Point mouse = Methods.GetMouseInfoFromWindow("Hearthstone");
+                Console.WriteLine(mouse.X + "," + mouse.Y);
+            }
+            else if (((Button)sender).Equals(buttonTest2))
+            {
+                GameCore.Game.Debug();
+            }
+            else if (((Button)sender).Equals(buttonTest3))
+            {
+                IO.LogDebug("USER BOARD");
+                foreach (var card in GameCore.Game.GetUserBoard())
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+            else if (((Button)sender).Equals(buttonTest4))
+            {
+                IO.LogDebug("OPPONENT BOARD");
+                foreach (var card in GameCore.Game.GetOpponentBoard())
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+            else if (((Button)sender).Equals(buttonTest5))
+            {
+                IO.LogDebug("USER HAND" + GameCore.Game.User.Hand.Count);
+                foreach (var card in GameCore.Game.User.Hand)
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+            else if (((Button)sender).Equals(buttonTest6))
+            {
+                IO.LogDebug("OPPONENT HAND" + GameCore.Game.Opponent.Hand.Count);
+                foreach (var card in GameCore.Game.Opponent.Hand)
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+            else if (((Button)sender).Equals(buttonTest7))
+            {
+                IO.LogDebug("USER DEAD MINIONS");
+                foreach (var card in GameCore.Game.GetUserDeadMinion())
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+            else if (((Button)sender).Equals(buttonTest8))
+            {
+                IO.LogDebug("OPPONENT DEAD MINIONS");
+                foreach (var card in GameCore.Game.GetOpponentDeadMinion())
+                {
+                    IO.LogDebug(card.ToString());
+                }
+            }
+        }
+
+        private void SetupTestButtons()
+        {
+            buttonTest1.Text = "Mouse";
+            buttonTest2.Text = "Debug";
+            buttonTest3.Text = "U Board";
+            buttonTest4.Text = "O Board";
+            buttonTest5.Text = "U Hand";
+            buttonTest6.Text = "O Hand";
+            buttonTest7.Text = "U Dead";
+            buttonTest8.Text = "O Dead";
+        }
     }
 }

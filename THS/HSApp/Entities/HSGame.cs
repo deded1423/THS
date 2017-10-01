@@ -250,7 +250,7 @@ namespace THS.HSApp
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in User.Graveyard)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                if (card.CardType == CardType.MINION)
                 {
                     tmp.Add(card);
                 }
@@ -262,7 +262,7 @@ namespace THS.HSApp
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in Opponent.Graveyard)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                if (card.CardType == CardType.MINION)
                 {
                     tmp.Add(card);
                 }
