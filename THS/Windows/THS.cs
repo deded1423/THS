@@ -70,7 +70,19 @@ namespace THS.Windows
                         }
                         if (Methods.GetKeyState(0x64) < 0) //NUM4
                         {
+                            foreach (var card in GameCore.Game.GetUserBoard())
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
                             while (Methods.GetKeyState(0x64) < 0) { }
+                        }
+                        if (Methods.GetKeyState(0x65) < 0) //NUM5
+                        {
+                            foreach (var card in GameCore.Game.GetOpponentBoard())
+                            {
+                                IO.LogDebug(card.ToString());
+                            }
+                            while (Methods.GetKeyState(0x65) < 0) { }
                         }
                         if (Methods.GetKeyState(0x66) < 0) //NUM6
                         {

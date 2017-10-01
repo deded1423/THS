@@ -90,7 +90,7 @@ namespace THS.HSApp
             {
                 if (Tags.ContainsKey(GameTag.DAMAGE))
                 {
-                    return Tags[GameTag.HEALTH] - Tags[GameTag.HEALTH];
+                    return Tags[GameTag.HEALTH] - Tags[GameTag.DAMAGE];
                 }
                 return Tags[GameTag.HEALTH];
             }

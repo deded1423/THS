@@ -166,14 +166,6 @@ namespace THS.HSApp
 
         public bool IsMulliganDone() => ((Mulligan)Tags[GameTag.MULLIGAN_STATE]).Equals(Mulligan.DONE);
 
-        public HSCard[] GetMulliganCards()
-        {
-            if (!((Step)Tags[GameTag.STEP]).Equals(Step.BEGIN_MULLIGAN))
-            {
-                return null;
-            }
-            return User.Hand.ToArray();
-        }
 
         //Methods that take info from the game
         public HSCard GetCard(int player, Zone zone, int id)
@@ -218,6 +210,40 @@ namespace THS.HSApp
                 if ((card = Opponent.GetSecretId(id)) != null) return card;
             }
             return null;
+        }
+
+        public HSCard[] GetMulliganCards()
+        {
+            if (!((Step)Tags[GameTag.STEP]).Equals(Step.BEGIN_MULLIGAN))
+            {
+                return null;
+            }
+            return User.Hand.ToArray();
+        }
+
+        public HSCard[] GetUserBoard()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in User.Play)
+            {
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                {
+                    tmp.Add(card);
+                }
+            }
+            return tmp.ToArray();
+        }
+        public HSCard[] GetOpponentBoard()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in Opponent.Play)
+            {
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                {
+                    tmp.Add(card);
+                }
+            }
+            return tmp.ToArray();
         }
     }
 }

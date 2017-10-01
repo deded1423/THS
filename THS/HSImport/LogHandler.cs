@@ -363,7 +363,7 @@ namespace THS.HSImport
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
                 }
             }
-            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs);
+            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs, false);
         }
 
         private void FullEntityUpdating(LogLine line)
@@ -387,7 +387,7 @@ namespace THS.HSImport
                     card.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
                 }
             }
-            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs);
+            IO.LogDebug("Updated card " + card, IO.DebugFile.Hs, false);
         }
 
         private void HideEntity(LogLine line)
@@ -709,7 +709,7 @@ namespace THS.HSImport
                         throw new OverflowException();
                 }
             }
-            IO.LogDebug("Created card " + card.Id + " " + card.CardDB?.Name + " Zone: " + card.Zone + " Controller: " + card.Controller + " " + card.CardDB?.Type, IO.DebugFile.Hs);
+            IO.LogDebug("Created card " + card.Id + " " + card.CardDB?.Name + " Zone: " + card.Zone + " Controller: " + card.Controller + " " + card.CardDB?.Type, IO.DebugFile.Hs, false);
             return card;
         }
 
