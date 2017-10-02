@@ -38,7 +38,11 @@ namespace THS.HSApp
         {
             get
             {
-                return CardDB?.Name;
+                if (CardDB != null)
+                {
+                    return CardDB.Name;
+                }
+                return "";
             }
         }
         public Zone Zone

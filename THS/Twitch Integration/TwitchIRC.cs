@@ -14,6 +14,8 @@ namespace THS.Twitch_Integration
         private string userName;
         private string _channel;
         private bool _stop = false;
+        public string ip;
+        public int port;
 
         private TcpClient tcpClient;
         private StreamReader inputStream;
@@ -21,21 +23,24 @@ namespace THS.Twitch_Integration
 
         private ConcurrentQueue<CommandChat> _queue = new ConcurrentQueue<CommandChat>();
 
-        public IrcClient(string ip, int port, string userName, string password)
+        public IrcClient()
         {
-            this.userName = userName;
+        }
 
+        public void StartConnection(string _ip, int _port, string name, string auth)
+        {
+            userName = name;
+            ip = _ip;
+            port = _port;
             tcpClient = new TcpClient(ip, port);
             inputStream = new StreamReader(tcpClient.GetStream());
             outputStream = new StreamWriter(tcpClient.GetStream());
 
-            outputStream.WriteLine("PASS " + password);
+            outputStream.WriteLine("PASS " + auth);
             outputStream.WriteLine("NICK " + userName);
             outputStream.WriteLine("USER " + userName + " 8 * :" + userName);
             outputStream.Flush();
         }
-
-
         public void StartTwitchChat(object channel)
         {
             if (channel is string)
@@ -104,8 +109,14 @@ namespace THS.Twitch_Integration
 
         public void SendChatMessage(string message)
         {
-            SendIrcMessage(":" + userName + "!" + userName + "@" + userName + ".tmi.twitch.tv PRIVMSG #" + _channel +
-                           " :" + message);
+            if (ip == null)
+            {
+                IO.LogDebug(message, IO.DebugFile.Output, false);
+            }
+            else
+            {
+                SendIrcMessage(":" + userName + "!" + userName + "@" + userName + ".tmi.twitch.tv PRIVMSG #" + _channel + " :" + message);
+            }
         }
 
         public string ReadMessage()
@@ -115,9 +126,13 @@ namespace THS.Twitch_Integration
             {
                 message = inputStream.ReadLine();
             }
+            if (message == null)
+            {
+                return "";
+            }
             if (message.StartsWith("PING"))
             {
-                 var ip = message.Substring(4);
+                var ip = message.Substring(4);
                 SendIrcMessage("PONG" + ip);
                 IO.LogDebug(message, IO.DebugFile.Twitch, false);
                 return message;

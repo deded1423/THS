@@ -34,6 +34,7 @@ namespace THS.Windows
             InitializeComponent();
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
+            irc = new IrcClient();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -104,13 +105,13 @@ namespace THS.Windows
         {
             if (checkBoxTCP.Checked)
             {
-                irc = new IrcClient("irc.freenode.net", 6667, "THStone", "none");
+                irc.StartConnection("irc.freenode.net", 6667, "THStone", "none");
                 _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
                 _messageThread.Start("THS");
             }
             else
             {
-                irc = new IrcClient("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
+                irc.StartConnection("irc.twitch.tv", 6667, ConfigFile.TwitchLoginName, ConfigFile.TwitchLoginOauth);
                 _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
                 _messageThread.Start("deded1423");
             }
