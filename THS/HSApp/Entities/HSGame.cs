@@ -133,7 +133,7 @@ namespace THS.HSApp
                 send = "Hand " + Hand.Count;
                 foreach (var c in Hand)
                 {
-                    send = send + " [";
+                    send = send + "_[";
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
@@ -162,7 +162,7 @@ namespace THS.HSApp
                         send = "Hand " + Hand.Count;
                         foreach (var c in Hand)
                         {
-                            send = send + " [";
+                            send = send + "_[";
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
@@ -187,7 +187,7 @@ namespace THS.HSApp
                 send = "Board " + Board.Count;
                 foreach (var c in Board)
                 {
-                    send = send + " [";
+                    send = send + "_[";
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
@@ -225,7 +225,7 @@ namespace THS.HSApp
                         send = "Board " + Board.Count;
                         foreach (var c in Board)
                         {
-                            send = send + " [";
+                            send = send + "_[";
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
@@ -250,7 +250,7 @@ namespace THS.HSApp
                 send = "EnemyHand " + EnemyHand.Count;
                 foreach (var c in EnemyHand)
                 {
-                    send = send + " [";
+                    send = send + "_[";
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
@@ -275,7 +275,7 @@ namespace THS.HSApp
                         send = "EnemyHand " + EnemyHand.Count;
                         foreach (var c in EnemyHand)
                         {
-                            send = send + " [";
+                            send = send + "_[";
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
@@ -299,7 +299,7 @@ namespace THS.HSApp
                 send = "EnemyBoard " + EnemyBoard.Count;
                 foreach (var c in EnemyBoard)
                 {
-                    send = send + " [";
+                    send = send + "_[";
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
@@ -337,7 +337,7 @@ namespace THS.HSApp
                         send = "EnemyBoard " + EnemyBoard.Count;
                         foreach (var c in EnemyBoard)
                         {
-                            send = send + " [";
+                            send = send + "_[";
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
