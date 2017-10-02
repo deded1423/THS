@@ -4,7 +4,7 @@ using THS.Utils;
 
 namespace THS.Twitch_Integration
 {
-    class CommandChat
+    public class CommandChat
     {
         public PlayType Type;
         public string Name;

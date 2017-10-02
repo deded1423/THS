@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using THS.HSImport;
+using THS.Twitch_Integration;
 
 namespace THS.HSApp
 {
@@ -12,10 +13,10 @@ namespace THS.HSApp
     {
         public LogHandler _logHandler;
         public HSGame Game;
-        public HSCore(Windows.THS ths)
+        public HSCore(IrcClient irc)
         {
-            Game = new HSApp.HSGame();
-            _logHandler = new LogHandler(ths, Game);
+            Game = new HSApp.HSGame(irc);
+            _logHandler = new LogHandler(Game);
         }
 
         public void Start() => (new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" }).Start();

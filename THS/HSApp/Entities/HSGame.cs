@@ -7,6 +7,7 @@ using HearthDb.Enums;
 using THS.HSImport;
 using THS.Utils;
 using Type = HearthDb.Enums.Type;
+using THS.Twitch_Integration;
 
 namespace THS.HSApp
 {
@@ -25,10 +26,18 @@ namespace THS.HSApp
         public int NumGe;
         public bool PlayersOrdered = false;
 
-        public HSGame()
+        //USER
+        private List<HSCard> OldHand;
+        private List<HSCard> OldBoard;
+        private List<HSCard> OldEnemyHand;
+        private List<HSCard> OldEnemyBoard;
+        public IrcClient irc;
+
+        public HSGame(IrcClient i)
         {
             User = new HSPlayer();
             Opponent = new HSPlayer();
+            irc = i;
         }
 
 
@@ -75,7 +84,166 @@ namespace THS.HSApp
         }
 
         //Methods that do something to the game
+        public void SendLogs()
+        {
+            if (User.Tags.ContainsKey(GameTag.MULLIGAN_STATE) && User.Tags[GameTag.MULLIGAN_STATE] != (int)Mulligan.DONE)
+            {
+                return;
+            }
+            if (OldHand == null)
+            {
+                OldHand = new List<HSCard>();
+                foreach (var card in GetUserHand())
+                {
+                    OldHand.Add(card);
+                }
+            }
+            if (OldBoard == null)
+            {
+                OldBoard = new List<HSCard>();
+                foreach (var card in GetUserBoard())
+                {
+                    OldBoard.Add(card);
+                }
+            }
+            if (OldEnemyHand == null)
+            {
+                OldEnemyHand = new List<HSCard>();
+                foreach (var card in GetOpponentHand())
+                {
+                    OldEnemyHand.Add(card);
+                }
+            }
+            if (OldEnemyBoard == null)
+            {
+                OldEnemyBoard = new List<HSCard>();
+                foreach (var card in GetOpponentBoard())
+                {
+                    OldEnemyBoard.Add(card);
+                }
+            }
+            List<HSCard> Hand = GetUserHand();
+            List<HSCard> Board = GetUserBoard();
+            List<HSCard> EnemyHand = GetOpponentHand();
+            List<HSCard> EnemyBoard = GetOpponentBoard();
 
+            foreach (var card in Hand)
+            {
+                if (Hand.Count != OldHand.Count || !card.Name.Equals(OldHand[card.ZonePos - 1].Name) || !card.TrueHealth.Equals(OldHand[card.ZonePos - 1].TrueHealth) ||
+                    !card.Attack.Equals(OldHand[card.ZonePos - 1].Attack) || !card.DivineShield.Equals(OldHand[card.ZonePos - 1].DivineShield) ||
+                    !card.Taunt.Equals(OldHand[card.ZonePos - 1].Taunt) || !card.Lifesteal.Equals(OldHand[card.ZonePos - 1].Lifesteal) ||
+                    !card.Charge.Equals(OldHand[card.ZonePos - 1].Charge) || !card.Windfury.Equals(OldHand[card.ZonePos - 1].Windfury) ||
+                    !card.Exhausted.Equals(OldHand[card.ZonePos - 1].Exhausted) || !card.Stealth.Equals(OldHand[card.ZonePos - 1].Stealth))
+                {
+
+                    string send;
+                    send = "Hand " + Hand.Count;
+                    foreach (var c in Hand)
+                    {
+                        send = send + " [";
+                        send = send + c.Name + ",";
+                        send = send + c.Attack + ",";
+                        send = send + c.TrueHealth + ",";
+                        send = send + (c.DivineShield ? 1 : 0) + ",";
+                        send = send + (c.Taunt ? 1 : 0) + ",";
+                        send = send + (c.Lifesteal ? 1 : 0) + ",";
+                        send = send + (c.Charge ? 1 : 0) + ",";
+                        send = send + (c.Windfury ? 1 : 0) + ",";
+                        send = send + (c.Exhausted ? 1 : 0) + ",";
+                        send = send + (c.Stealth ? 1 : 0) + "]";
+                    }
+                    irc.SendChatMessage(send);
+                    OldHand = Hand;
+                    break;
+                }
+            }
+
+            foreach (var card in Board)
+            {
+                if (Board.Count != OldBoard.Count || !card.Name.Equals(OldBoard[card.ZonePos - 1].Name) || !card.TrueHealth.Equals(OldBoard[card.ZonePos - 1].TrueHealth) ||
+                    !card.Attack.Equals(OldBoard[card.ZonePos - 1].Attack) || !card.DivineShield.Equals(OldBoard[card.ZonePos - 1].DivineShield) ||
+                    !card.Taunt.Equals(OldBoard[card.ZonePos - 1].Taunt) || !card.Lifesteal.Equals(OldBoard[card.ZonePos - 1].Lifesteal) ||
+                    !card.Charge.Equals(OldBoard[card.ZonePos - 1].Charge) || !card.Windfury.Equals(OldBoard[card.ZonePos - 1].Windfury) ||
+                    !card.Exhausted.Equals(OldBoard[card.ZonePos - 1].Exhausted) || !card.Stealth.Equals(OldBoard[card.ZonePos - 1].Stealth))
+                {
+
+                    string send;
+                    send = "Board " + Board.Count;
+                    foreach (var c in Board)
+                    {
+                        send = send + " [";
+                        send = send + c.Name + ",";
+                        send = send + c.Attack + ",";
+                        send = send + c.TrueHealth + ",";
+                        send = send + (c.DivineShield ? 1 : 0) + ",";
+                        send = send + (c.Taunt ? 1 : 0) + ",";
+                        send = send + (c.Lifesteal ? 1 : 0) + ",";
+                        send = send + (c.Charge ? 1 : 0) + ",";
+                        send = send + (c.Windfury ? 1 : 0) + ",";
+                        send = send + (c.Exhausted ? 1 : 0) + ",";
+                        send = send + (c.Stealth ? 1 : 0) + "]";
+                    }
+                    irc.SendChatMessage(send);
+                    OldBoard = Board;
+                    break;
+                }
+            }
+
+            foreach (var card in EnemyHand)
+            {
+                if (EnemyHand.Count != OldEnemyHand.Count || !card.Name.Equals(OldEnemyHand[card.ZonePos - 1].Name) || !card.TrueHealth.Equals(OldEnemyHand[card.ZonePos - 1].TrueHealth) || !card.Attack.Equals(OldEnemyHand[card.ZonePos - 1].Attack) || !card.DivineShield.Equals(OldEnemyHand[card.ZonePos - 1].DivineShield) || !card.Taunt.Equals(OldEnemyHand[card.ZonePos - 1].Taunt) || !card.Lifesteal.Equals(OldEnemyHand[card.ZonePos - 1].Lifesteal) || !card.Charge.Equals(OldEnemyHand[card.ZonePos - 1].Charge) || !card.Windfury.Equals(OldEnemyHand[card.ZonePos - 1].Windfury) || !card.Exhausted.Equals(OldEnemyHand[card.ZonePos - 1].Exhausted) || !card.Stealth.Equals(OldEnemyHand[card.ZonePos - 1].Stealth))
+                {
+
+                    string send;
+                    send = "EnemyHand " + EnemyHand.Count;
+                    foreach (var c in EnemyHand)
+                    {
+                        send = send + " [";
+                        send = send + c.Name + ",";
+                        send = send + c.Attack + ",";
+                        send = send + c.TrueHealth + ",";
+                        send = send + (c.DivineShield ? 1 : 0) + ",";
+                        send = send + (c.Taunt ? 1 : 0) + ",";
+                        send = send + (c.Lifesteal ? 1 : 0) + ",";
+                        send = send + (c.Charge ? 1 : 0) + ",";
+                        send = send + (c.Windfury ? 1 : 0) + ",";
+                        send = send + (c.Exhausted ? 1 : 0) + ",";
+                        send = send + (c.Stealth ? 1 : 0) + "]";
+                    }
+                    irc.SendChatMessage(send);
+                    OldEnemyHand = EnemyHand;
+                    break;
+                }
+            }
+
+            foreach (var card in EnemyBoard)
+            {
+                if (EnemyBoard.Count != OldEnemyBoard.Count || !card.Name.Equals(OldEnemyBoard[card.ZonePos - 1].Name) || !card.TrueHealth.Equals(OldEnemyBoard[card.ZonePos - 1].TrueHealth) || !card.Attack.Equals(OldEnemyBoard[card.ZonePos - 1].Attack) || !card.DivineShield.Equals(OldEnemyBoard[card.ZonePos - 1].DivineShield) || !card.Taunt.Equals(OldEnemyBoard[card.ZonePos - 1].Taunt) || !card.Lifesteal.Equals(OldEnemyBoard[card.ZonePos - 1].Lifesteal) || !card.Charge.Equals(OldEnemyBoard[card.ZonePos - 1].Charge) || !card.Windfury.Equals(OldEnemyBoard[card.ZonePos - 1].Windfury) || !card.Exhausted.Equals(OldEnemyBoard[card.ZonePos - 1].Exhausted) || !card.Stealth.Equals(OldEnemyBoard[card.ZonePos - 1].Stealth))
+                {
+
+                    string send;
+                    send = "EnemyBoard " + EnemyBoard.Count;
+                    foreach (var c in EnemyBoard)
+                    {
+                        send = send + " [";
+                        send = send + c.Name + ",";
+                        send = send + c.Attack + ",";
+                        send = send + c.TrueHealth + ",";
+                        send = send + (c.DivineShield ? 1 : 0) + ",";
+                        send = send + (c.Taunt ? 1 : 0) + ",";
+                        send = send + (c.Lifesteal ? 1 : 0) + ",";
+                        send = send + (c.Charge ? 1 : 0) + ",";
+                        send = send + (c.Windfury ? 1 : 0) + ",";
+                        send = send + (c.Exhausted ? 1 : 0) + ",";
+                        send = send + (c.Stealth ? 1 : 0) + "]";
+                    }
+                    irc.SendChatMessage(send);
+                    OldEnemyBoard = EnemyBoard;
+                    break;
+                }
+            }
+
+        }
         //Methods of info
         public void Debug()
         {
@@ -212,16 +380,36 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard[] GetMulliganCards()
+        public List<HSCard> GetMulliganCards()
         {
             if (!((Step)Tags[GameTag.STEP]).Equals(Step.BEGIN_MULLIGAN))
             {
                 return null;
             }
-            return User.Hand.ToArray();
+            return User.Hand;
         }
 
-        public HSCard[] GetUserBoard()
+        public List<HSCard> GetUserHand()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in User.Hand)
+            {
+                tmp.Add(card);
+            }
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
+        }
+        public List<HSCard> GetOpponentHand()
+        {
+            List<HSCard> tmp = new List<HSCard>();
+            foreach (var card in Opponent.Hand)
+            {
+                tmp.Add(card);
+            }
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
+        }
+        public List<HSCard> GetUserBoard()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in User.Play)
@@ -231,9 +419,10 @@ namespace THS.HSApp
                     tmp.Add(card);
                 }
             }
-            return tmp.ToArray();
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
         }
-        public HSCard[] GetOpponentBoard()
+        public List<HSCard> GetOpponentBoard()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in Opponent.Play)
@@ -243,9 +432,10 @@ namespace THS.HSApp
                     tmp.Add(card);
                 }
             }
-            return tmp.ToArray();
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
         }
-        public HSCard[] GetUserDeadMinion()
+        public List<HSCard> GetUserDeadMinion()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in User.Graveyard)
@@ -255,9 +445,10 @@ namespace THS.HSApp
                     tmp.Add(card);
                 }
             }
-            return tmp.ToArray();
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
         }
-        public HSCard[] GetOpponentDeadMinion()
+        public List<HSCard> GetOpponentDeadMinion()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in Opponent.Graveyard)
@@ -267,7 +458,8 @@ namespace THS.HSApp
                     tmp.Add(card);
                 }
             }
-            return tmp.ToArray();
+            tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
+            return tmp;
         }
     }
 }

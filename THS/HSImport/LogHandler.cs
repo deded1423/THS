@@ -34,17 +34,13 @@ namespace THS.HSImport
         private bool _running;
         public HSGame Game;
 
-        //UI SHIT
-        private Windows.THS _ths;
-
         //PROCESSING SHIT   
-        public LogHandler(Windows.THS ths, HSGame game)
+        public LogHandler(HSGame game)
         {
             PowerReader = new LogReader("Power", this);
             RachelleReader = new LogReader("Rachelle", this);
             LoadingScreenReader = new LogReader("LoadingScreen", this);
             FullscreenReader = new LogReader("FullScreenFX", this);
-            _ths = ths;
             Game = game;
         }
         public void StartLogReader()
@@ -120,6 +116,7 @@ namespace THS.HSImport
                     {
                         throw new IndexOutOfRangeException();
                     }
+                    Game.SendLogs();
                 }
                 else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
                 {

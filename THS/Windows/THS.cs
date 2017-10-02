@@ -58,7 +58,7 @@ namespace THS.Windows
             {
                 if (Process.GetProcessesByName("Hearthstone").Length != 0 || checkBoxHs.Checked)
                 {
-                    GameCore = new HSApp.HSCore(this);
+                    GameCore = new HSApp.HSCore(irc);
                     GameCore.Start();
                     ButtonStart.Text = "Stop";
                     Text = "THS";

@@ -34,6 +34,13 @@ namespace THS.HSApp
                 Tags.Add(gt, i);
             }
         }
+        public string Name
+        {
+            get
+            {
+                return CardDB?.Name;
+            }
+        }
         public Zone Zone
         {
             get
@@ -45,21 +52,33 @@ namespace THS.HSApp
         {
             get
             {
-                return Tags[GameTag.ZONE_POSITION];
+                if (Tags.ContainsKey(GameTag.ZONE_POSITION))
+                {
+                    return Tags[GameTag.ZONE_POSITION];
+                }
+                return -1;
             }
         }
         public int Controller
         {
             get
             {
-                return Tags[GameTag.CONTROLLER];
+                if (Tags.ContainsKey(GameTag.CONTROLLER))
+                {
+                    return Tags[GameTag.CONTROLLER];
+                }
+                return -1;
             }
         }
         public CardType CardType
         {
             get
             {
-                return (CardType)Tags[GameTag.CARDTYPE];
+                if (Tags.ContainsKey(GameTag.CARDTYPE))
+                {
+                    return (CardType)Tags[GameTag.CARDTYPE];
+                }
+                return CardType.INVALID;
             }
 
         }
@@ -67,14 +86,22 @@ namespace THS.HSApp
         {
             get
             {
-                return Tags[GameTag.ATK];
+                if (Tags.ContainsKey(GameTag.ATK))
+                {
+                    return Tags[GameTag.ATK];
+                }
+                return -1;
             }
         }
         public int Health
         {
             get
             {
-                return Tags[GameTag.HEALTH];
+                if (Tags.ContainsKey(GameTag.HEALTH))
+                {
+                    return Tags[GameTag.HEALTH];
+                }
+                return -1;
             }
         }
         public int Damage
@@ -90,9 +117,86 @@ namespace THS.HSApp
             {
                 if (Tags.ContainsKey(GameTag.DAMAGE))
                 {
-                    return Tags[GameTag.HEALTH] - Tags[GameTag.DAMAGE];
+                    return Health - Tags[GameTag.DAMAGE];
                 }
-                return Tags[GameTag.HEALTH];
+                return Health;
+            }
+        }
+        public bool DivineShield
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.DIVINE_SHIELD))
+                {
+                    return Tags[GameTag.DIVINE_SHIELD] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Charge
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.CHARGE))
+                {
+                    return (Tags[GameTag.CHARGE] == 1 ? true : false);
+                }
+                return false;
+            }
+        }
+        public bool Lifesteal
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.LIFESTEAL))
+                {
+                    return Tags[GameTag.LIFESTEAL] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Taunt
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.TAUNT))
+                {
+                    return Tags[GameTag.TAUNT] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Stealth
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.STEALTH))
+                {
+                    return Tags[GameTag.STEALTH] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Windfury
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.WINDFURY))
+                {
+                    return Tags[GameTag.WINDFURY] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Exhausted
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.EXHAUSTED))
+                {
+                    return Tags[GameTag.EXHAUSTED] == 1 ? true : false;
+                }
+                return false;
             }
         }
 

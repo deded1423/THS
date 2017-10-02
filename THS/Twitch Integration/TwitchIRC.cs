@@ -8,7 +8,7 @@ using THS.Utils;
 //TODO: Hay que pasar todo lo de twitch a lower case para que el regex no se lie
 namespace THS.Twitch_Integration
 {
-    class IrcClient
+    public class IrcClient
     {
 
         private string userName;
