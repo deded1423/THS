@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace THS.Utils
 {
@@ -62,9 +63,18 @@ namespace THS.Utils
 
     }
 
-    public class Misc
+    public static class Misc
     {
-
+        public static T DeepClone<T>(this T a)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, a);
+                stream.Position = 0;
+                return (T)formatter.Deserialize(stream);
+            }
+        }
         public static void CloseApp()
         {
             IO.CloseDebugFiles();

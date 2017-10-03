@@ -1,12 +1,14 @@
 #region
 
+using System;
 using System.Xml.Serialization;
 
 #endregion
 
 namespace HearthDb.CardDefs
 {
-	public class Tag
+    [Serializable]
+    public class Tag
 	{
 		[XmlAttribute("enumID")]
 		public int EnumId { get; set; }

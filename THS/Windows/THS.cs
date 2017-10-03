@@ -105,7 +105,7 @@ namespace THS.Windows
         {
             if (checkBoxTCP.Checked)
             {
-                irc.StartConnection("irc.freenode.net", 6667, "THStone", "none");
+                irc.StartConnection("irc.freenode.net", 6667, "THStone1", "none");
                 _messageThread = new Thread(irc.StartTwitchChat) { Name = "TwitchChatReader" };
                 _messageThread.Start("THS");
             }

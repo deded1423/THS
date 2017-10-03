@@ -10,7 +10,8 @@ using static HearthDb.Enums.GameTag;
 
 namespace HearthDb
 {
-	public class Card
+    [Serializable]
+    public class Card
 	{
 		internal Card(Entity entity)
 		{

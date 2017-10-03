@@ -43,6 +43,8 @@ namespace THS.Windows
             this.buttonTest6 = new System.Windows.Forms.Button();
             this.buttonTest7 = new System.Windows.Forms.Button();
             this.buttonTest8 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -175,11 +177,31 @@ namespace THS.Windows
             this.buttonTest8.UseVisualStyleBackColor = true;
             this.buttonTest8.Click += new System.EventHandler(this.buttonTest_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 142);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "label2";
+            // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 270);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonTest8);
             this.Controls.Add(this.buttonTest7);
             this.Controls.Add(this.buttonTest6);
@@ -233,6 +255,8 @@ namespace THS.Windows
         protected Button buttonTest6;
         protected Button buttonTest7;
         protected Button buttonTest8;
+        private Label label1;
+        private Label label2;
     }
 }
 

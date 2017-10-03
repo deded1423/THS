@@ -8,6 +8,7 @@ using THS.HSImport;
 using THS.Utils;
 using Type = HearthDb.Enums.Type;
 using THS.Twitch_Integration;
+using System.Linq;
 
 namespace THS.HSApp
 {
@@ -31,6 +32,10 @@ namespace THS.HSApp
         private List<HSCard> OldBoard;
         private List<HSCard> OldEnemyHand;
         private List<HSCard> OldEnemyBoard;
+        private HSCard OldHero;
+        private HSCard OldEnemyHero;
+        private HSCard OldPower;
+        private HSCard OldEnemyPower;
         public IrcClient irc;
 
         public HSGame(IrcClient i)
@@ -86,10 +91,10 @@ namespace THS.HSApp
         //Methods that do something to the game
         public void SendLogs()
         {
-            if (User.Tags.ContainsKey(GameTag.MULLIGAN_STATE) && User.Tags[GameTag.MULLIGAN_STATE] != (int)Mulligan.DONE)
-            {
-                return;
-            }
+            //if (User.Tags.ContainsKey(GameTag.MULLIGAN_STATE) && User.Tags[GameTag.MULLIGAN_STATE] != (int)Mulligan.DONE)
+            //{
+            //return;
+            //}
             if (OldHand == null)
             {
                 OldHand = new List<HSCard>();
@@ -126,6 +131,24 @@ namespace THS.HSApp
             List<HSCard> Board = GetUserBoard();
             List<HSCard> EnemyHand = GetOpponentHand();
             List<HSCard> EnemyBoard = GetOpponentBoard();
+            HSCard Hero = User.Hero;
+            HSCard EnemyHero = Opponent.Hero;
+            HSCard Power = User.HeroPower;
+            HSCard EnemyPower = Opponent.HeroPower;
+            HSCard[] tmp = new HSCard[10];
+
+            if (OldHero == null || OldHero.TrueHealth != OldHero.TrueHealth || Hero.Attack != OldHero.Attack)
+            {
+                OldHero = Utils.Misc.DeepClone(Hero);
+                irc.SendChatMessage("Hero_" + Hero.Name + "_" + Hero.TrueHealth + "_" + Hero.Armor + "_" + Hero.Attack);
+            }
+            if (OldEnemyHero == null || EnemyHero.TrueHealth != OldEnemyHero.TrueHealth || EnemyHero.Attack != OldEnemyHero.Attack)
+            {
+                OldEnemyHero = Utils.Misc.DeepClone(EnemyHero);
+                irc.SendChatMessage("EnemyHero_" + EnemyHero.Name + "_" + EnemyHero.TrueHealth + "_" + EnemyHero.Armor + "_" + EnemyHero.Attack);
+            }
+
+
 
             if (Hand.Count != OldHand.Count)
             {
@@ -146,7 +169,7 @@ namespace THS.HSApp
                     send = send + (c.Stealth ? 1 : 0) + "]";
                 }
                 irc.SendChatMessage(send);
-                OldHand = Hand;
+                OldHand = Utils.Misc.DeepClone(Hand);
             }
             else
             {
@@ -175,7 +198,7 @@ namespace THS.HSApp
                             send = send + (c.Stealth ? 1 : 0) + "]";
                         }
                         irc.SendChatMessage(send);
-                        OldHand = Hand;
+                        OldHand = Utils.Misc.DeepClone(Hand);
                         break;
                     }
                 }
@@ -200,7 +223,7 @@ namespace THS.HSApp
                     send = send + (c.Stealth ? 1 : 0) + "]";
                 }
                 irc.SendChatMessage(send);
-                OldBoard = Board;
+                OldBoard = Utils.Misc.DeepClone(Board); ;
             }
             else
             {
@@ -238,7 +261,7 @@ namespace THS.HSApp
                             send = send + (c.Stealth ? 1 : 0) + "]";
                         }
                         irc.SendChatMessage(send);
-                        OldBoard = Board;
+                        OldBoard = Utils.Misc.DeepClone(Board);
                         break;
                     }
                 }
@@ -248,22 +271,7 @@ namespace THS.HSApp
             {
                 string send;
                 send = "EnemyHand " + EnemyHand.Count;
-                foreach (var c in EnemyHand)
-                {
-                    send = send + "_[";
-                    send = send + c.Name + ",";
-                    send = send + c.Attack + ",";
-                    send = send + c.TrueHealth + ",";
-                    send = send + (c.DivineShield ? 1 : 0) + ",";
-                    send = send + (c.Taunt ? 1 : 0) + ",";
-                    send = send + (c.Lifesteal ? 1 : 0) + ",";
-                    send = send + (c.Charge ? 1 : 0) + ",";
-                    send = send + (c.Windfury ? 1 : 0) + ",";
-                    send = send + (c.Exhausted ? 1 : 0) + ",";
-                    send = send + (c.Stealth ? 1 : 0) + "]";
-                }
-                irc.SendChatMessage(send);
-                OldEnemyHand = EnemyHand;
+                OldEnemyHand = Utils.Misc.DeepClone(EnemyHand);
             }
             else
             {
@@ -288,7 +296,7 @@ namespace THS.HSApp
                             send = send + (c.Stealth ? 1 : 0) + "]";
                         }
                         irc.SendChatMessage(send);
-                        OldEnemyHand = EnemyHand;
+                        OldEnemyHand = Utils.Misc.DeepClone(EnemyHand);
                         break;
                     }
                 }
@@ -312,7 +320,7 @@ namespace THS.HSApp
                     send = send + (c.Stealth ? 1 : 0) + "]";
                 }
                 irc.SendChatMessage(send);
-                OldEnemyBoard = EnemyBoard;
+                OldEnemyBoard = Utils.Misc.DeepClone(EnemyBoard);
             }
             else
             {
@@ -350,7 +358,7 @@ namespace THS.HSApp
                             send = send + (c.Stealth ? 1 : 0) + "]";
                         }
                         irc.SendChatMessage(send);
-                        OldEnemyBoard = EnemyBoard;
+                        OldEnemyBoard = Utils.Misc.DeepClone(EnemyBoard);
                         break;
                     }
                 }
@@ -463,13 +471,13 @@ namespace THS.HSApp
                 {
                     return User.HeroPower;
                 }
-                if ((card = User.GetPlayId(id)) != null) return card;
-                if ((card = User.GetDeckId(id)) != null) return card;
-                if ((card = User.GetHandId(id)) != null) return card;
-                if ((card = User.GetGraveyardId(id)) != null) return card;
-                if ((card = User.GetSetasideId(id)) != null) return card;
-                if ((card = User.GetRemovedId(id)) != null) return card;
-                if ((card = User.GetSecretId(id)) != null) return card;
+                if ((card = User.GetPlayCard(id)) != null) return card;
+                if ((card = User.GetDeckCard(id)) != null) return card;
+                if ((card = User.GetHandCard(id)) != null) return card;
+                if ((card = User.GetGraveyardCard(id)) != null) return card;
+                if ((card = User.GetSetasideCard(id)) != null) return card;
+                if ((card = User.GetRemovedCard(id)) != null) return card;
+                if ((card = User.GetSecretCard(id)) != null) return card;
 
             }
             else if (player == Opponent.PlayerId)
@@ -482,13 +490,13 @@ namespace THS.HSApp
                 {
                     return Opponent.HeroPower;
                 }
-                if ((card = Opponent.GetPlayId(id)) != null) return card;
-                if ((card = Opponent.GetDeckId(id)) != null) return card;
-                if ((card = Opponent.GetHandId(id)) != null) return card;
-                if ((card = Opponent.GetGraveyardId(id)) != null) return card;
-                if ((card = Opponent.GetSetasideId(id)) != null) return card;
-                if ((card = Opponent.GetRemovedId(id)) != null) return card;
-                if ((card = Opponent.GetSecretId(id)) != null) return card;
+                if ((card = Opponent.GetPlayCard(id)) != null) return card;
+                if ((card = Opponent.GetDeckCard(id)) != null) return card;
+                if ((card = Opponent.GetHandCard(id)) != null) return card;
+                if ((card = Opponent.GetGraveyardCard(id)) != null) return card;
+                if ((card = Opponent.GetSetasideCard(id)) != null) return card;
+                if ((card = Opponent.GetRemovedCard(id)) != null) return card;
+                if ((card = Opponent.GetSecretCard(id)) != null) return card;
             }
             return null;
         }
@@ -527,7 +535,7 @@ namespace THS.HSApp
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in User.Play)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
                 {
                     tmp.Add(card);
                 }

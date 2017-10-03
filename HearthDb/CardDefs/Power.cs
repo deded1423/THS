@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -7,7 +8,8 @@ using System.Xml.Serialization;
 
 namespace HearthDb.CardDefs
 {
-	public class Power
+    [Serializable]
+    public class Power
 	{
 		[XmlElement("PlayRequirement")]
 		public List<PlayRequirement> PlayRequirements { get; set; }

@@ -5,12 +5,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using static HearthDb.Enums.Locale;
+using System;
 
 #endregion
 
 namespace HearthDb.CardDefs
 {
-	public class Entity
+    [Serializable]
+    public class Entity
 	{
 		[XmlAttribute("CardID")]
 		public string CardId { get; set; }

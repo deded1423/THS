@@ -39,6 +39,71 @@ namespace THS.HSApp
             Secret = new List<HSCard>();
         }
 
+        //GETTERS GENERAL
+        public int Attack
+        {
+            get
+            {
+                return Hero.Attack;
+            }
+        }
+        public int Health
+        {
+            get
+            {
+                return Hero.TrueHealth;
+            }
+        }
+        public int Armor
+        {
+            get
+            {
+                return Hero.Armor;
+            }
+        }
+        public int Mana
+        {
+            get
+            {
+                return Tags[GameTag.RESOURCES] - (Tags.ContainsKey(GameTag.RESOURCES_USED) ? Tags[GameTag.RESOURCES_USED] : 0) + (Tags.ContainsKey(GameTag.TEMP_RESOURCES) ? Tags[GameTag.TEMP_RESOURCES] : 0);
+            }
+        }
+        public int MaxMana
+        {
+            get
+            {
+                return Tags[GameTag.RESOURCES];
+            }
+        }
+        public bool IsPlaying
+        {
+            get
+            {
+                return Tags[GameTag.CURRENT_PLAYER] == 1 ? true : false;
+            }
+        }
+        public bool HasCombo
+        {
+            get
+            {
+                return Tags[GameTag.COMBO_ACTIVE] == 1 ? true : false;
+            }
+        }
+        public HSCard Weapon
+        {
+            get
+            {
+                foreach (var card in Play)
+                {
+                    if (card.CardType.Equals(CardType.WEAPON))
+                    {
+                        return card;
+                    }
+                }
+                return null;
+            }
+        }
+
         public void Clear()
         {
             IO.LogDebug("Clearing Player", IO.DebugFile.Hs);
@@ -76,8 +141,8 @@ namespace THS.HSApp
             }
         }
 
-        //GETTERS
-        public HSCard GetHandId(int id)
+        //GETTERS CARDS
+        public HSCard GetHandCard(int id)
         {
             foreach (var card in Hand)
             {
@@ -89,7 +154,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetDeckId(int id)
+        public HSCard GetDeckCard(int id)
         {
             foreach (var card in Deck)
             {
@@ -101,7 +166,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetPlayId(int id)
+        public HSCard GetPlayCard(int id)
         {
             foreach (var card in Play)
             {
@@ -113,7 +178,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetSetasideId(int id)
+        public HSCard GetSetasideCard(int id)
         {
             foreach (var card in Setaside)
             {
@@ -125,7 +190,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetGraveyardId(int id)
+        public HSCard GetGraveyardCard(int id)
         {
             foreach (var card in Graveyard)
             {
@@ -137,7 +202,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetRemovedId(int id)
+        public HSCard GetRemovedCard(int id)
         {
             foreach (var card in Removed)
             {
@@ -149,7 +214,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetSecretId(int id)
+        public HSCard GetSecretCard(int id)
         {
             foreach (var card in Secret)
             {

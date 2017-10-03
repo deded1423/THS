@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
@@ -65,7 +66,6 @@ namespace THS.Twitch_Integration
                             SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
                             SendChatMessage(@"Attack Hero <boardEnemySize> <boardEnemyNumber>");
                             SendChatMessage(@"Attack Hero Hero");
-                            SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
                             SendChatMessage(@"Choose <card>");
                             SendChatMessage(@"Discover <card>");
                             SendChatMessage(@"End");

@@ -4,9 +4,11 @@ using HearthDb;
 using HearthDb.CardDefs;
 using THS.Utils;
 using HearthDb.Enums;
+using System;
 
 namespace THS.HSApp
 {
+    [Serializable]
     public class HSCard
     {
         public int Id;
@@ -18,6 +20,10 @@ namespace THS.HSApp
             Id = i;
         }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
         //Tags
         public void AddTag(string tag, string value)
         {
@@ -34,6 +40,7 @@ namespace THS.HSApp
                 Tags.Add(gt, i);
             }
         }
+
         public string Name
         {
             get
@@ -201,6 +208,17 @@ namespace THS.HSApp
                     return Tags[GameTag.EXHAUSTED] == 1 ? true : false;
                 }
                 return false;
+            }
+        }
+        public int Armor
+        {
+            get
+            {
+                if (CardType.Equals(CardType.HERO) && Tags.ContainsKey(GameTag.ARMOR))
+                {
+                    return Tags[GameTag.ARMOR];
+                }
+                return 0;
             }
         }
 
