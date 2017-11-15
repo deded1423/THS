@@ -59,10 +59,18 @@ namespace THS.Windows
             {
                 if (Process.GetProcessesByName("Hearthstone").Length != 0 || checkBoxHs.Checked)
                 {
-                    GameCore = new HSApp.HSCore(irc);
+                    GameCore = new HSApp.HSCore(irc, this);
                     GameCore.Start();
                     ButtonStart.Text = "Stop";
                     Text = "THS";
+                    if (DateTime.Compare(File.GetLastWriteTime(Path.Combine(ConfigFile.HearthstonePath, "Logs", "LoadingScreen.log")), File.GetLastWriteTime(Path.Combine(ConfigFile.HearthstonePath, "Logs", "Power.log"))) > 0)
+                    {
+                        IO.LogDebug("Delete Power.log");
+                        if (!checkBoxDeletePower.Checked)
+                        {
+                            File.Delete(Path.Combine(ConfigFile.HearthstonePath, "Logs", "Power.log"));
+                        }
+                    }
                 }
                 else
                 {
@@ -130,51 +138,27 @@ namespace THS.Windows
             }
             else if (((Button)sender).Equals(buttonTest3))
             {
-                IO.LogDebug("USER BOARD");
-                foreach (var card in GameCore.Game.GetUserBoard())
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
             else if (((Button)sender).Equals(buttonTest4))
             {
-                IO.LogDebug("OPPONENT BOARD");
-                foreach (var card in GameCore.Game.GetOpponentBoard())
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
             else if (((Button)sender).Equals(buttonTest5))
             {
-                IO.LogDebug("USER HAND " + GameCore.Game.User.Hand.Count);
-                foreach (var card in GameCore.Game.User.Hand)
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
             else if (((Button)sender).Equals(buttonTest6))
             {
-                IO.LogDebug("OPPONENT HAND " + GameCore.Game.Opponent.Hand.Count);
-                foreach (var card in GameCore.Game.Opponent.Hand)
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
             else if (((Button)sender).Equals(buttonTest7))
             {
-                IO.LogDebug("USER DEAD MINIONS");
-                foreach (var card in GameCore.Game.GetUserDeadMinion())
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
             else if (((Button)sender).Equals(buttonTest8))
             {
-                IO.LogDebug("OPPONENT DEAD MINIONS");
-                foreach (var card in GameCore.Game.GetOpponentDeadMinion())
-                {
-                    IO.LogDebug(card.ToString());
-                }
+
             }
         }
 
@@ -182,12 +166,124 @@ namespace THS.Windows
         {
             buttonTest1.Text = "Mouse";
             buttonTest2.Text = "Debug";
-            buttonTest3.Text = "U Board";
-            buttonTest4.Text = "O Board";
-            buttonTest5.Text = "U Hand";
-            buttonTest6.Text = "O Hand";
-            buttonTest7.Text = "U Dead";
-            buttonTest8.Text = "O Dead";
+            buttonTest3.Text = "";
+            buttonTest4.Text = "";
+            buttonTest5.Text = "";
+            buttonTest6.Text = "";
+            buttonTest7.Text = "";
+            buttonTest8.Text = "";
+        }
+
+
+        public void UpdateUI()
+        {
+            listViewUserHand.Invoke(new Action(() =>
+            {
+                listViewUserHand.BeginUpdate();
+                listViewUserHand.Items.Clear();
+                foreach (var card in GameCore.Game.User.Hand)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewUserHand.Items.Add(new ListViewItem(arr));
+                }
+                listViewUserHand.EndUpdate();
+            }));
+
+            listViewOpponentHand.Invoke(new Action(() =>
+            {
+                listViewOpponentHand.BeginUpdate();
+                listViewOpponentHand.Items.Clear();
+                foreach (var card in GameCore.Game.Opponent.Hand)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewOpponentHand.Items.Add(new ListViewItem(arr));
+                }
+                listViewOpponentHand.EndUpdate();
+            }));
+
+            listViewUserBoard.Invoke(new Action(() =>
+            {
+                listViewUserBoard.BeginUpdate();
+                listViewUserBoard.Items.Clear();
+                foreach (var card in GameCore.Game.User.Play)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewUserBoard.Items.Add(new ListViewItem(arr));
+                }
+                listViewUserBoard.EndUpdate();
+            }));
+
+            listViewOpponentBoard.Invoke(new Action(() =>
+            {
+                listViewOpponentBoard.BeginUpdate();
+                listViewOpponentBoard.Items.Clear();
+                foreach (var card in GameCore.Game.Opponent.Play)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewOpponentBoard.Items.Add(new ListViewItem(arr));
+                }
+                listViewOpponentBoard.EndUpdate();
+            }));
+
+            listViewUserGraveyard.Invoke(new Action(() =>
+            {
+                listViewUserGraveyard.BeginUpdate();
+                listViewUserGraveyard.Items.Clear();
+                foreach (var card in GameCore.Game.User.Graveyard)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewUserGraveyard.Items.Add(new ListViewItem(arr));
+                }
+                listViewUserGraveyard.EndUpdate();
+            }));
+
+            listViewOpponentGraveyard.Invoke(new Action(() =>
+            {
+                listViewOpponentGraveyard.BeginUpdate();
+                listViewOpponentGraveyard.Items.Clear();
+                foreach (var card in GameCore.Game.Opponent.Graveyard)
+                {
+                    string[] arr = new string[6];
+                    arr[0] = card.Id.ToString();
+                    arr[1] = card.CardDB?.Name;
+                    arr[2] = card.CardType.ToString();
+                    arr[3] = card.TrueHealth.ToString();
+                    arr[4] = card.Attack.ToString();
+                    arr[5] = card.ManaCost.ToString();
+                    listViewOpponentGraveyard.Items.Add(new ListViewItem(arr));
+                }
+                listViewOpponentGraveyard.EndUpdate();
+            }));
         }
     }
 }

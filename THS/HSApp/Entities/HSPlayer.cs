@@ -65,21 +65,25 @@ namespace THS.HSApp
         {
             get
             {
-                return Tags[GameTag.RESOURCES] - (Tags.ContainsKey(GameTag.RESOURCES_USED) ? Tags[GameTag.RESOURCES_USED] : 0) + (Tags.ContainsKey(GameTag.TEMP_RESOURCES) ? Tags[GameTag.TEMP_RESOURCES] : 0);
+                return (Tags.ContainsKey(GameTag.RESOURCES) ? Tags[GameTag.RESOURCES] : 0) - (Tags.ContainsKey(GameTag.RESOURCES_USED) ? Tags[GameTag.RESOURCES_USED] : 0) + (Tags.ContainsKey(GameTag.TEMP_RESOURCES) ? Tags[GameTag.TEMP_RESOURCES] : 0);
             }
         }
         public int MaxMana
         {
             get
             {
-                return Tags[GameTag.RESOURCES];
+                return (Tags.ContainsKey(GameTag.RESOURCES) ? Tags[GameTag.RESOURCES] : 0);
             }
         }
         public bool IsPlaying
         {
             get
             {
-                return Tags[GameTag.CURRENT_PLAYER] == 1 ? true : false;
+                if (Tags.ContainsKey(GameTag.CURRENT_PLAYER))
+                {
+                    return Tags[GameTag.CURRENT_PLAYER] == 1 ? true : false;
+                }
+                return false;
             }
         }
         public bool HasCombo
@@ -100,9 +104,26 @@ namespace THS.HSApp
                         return card;
                     }
                 }
-                return null;
+                return new HSCard();
             }
         }
+
+        // List<HSCard> Secret esta hecho arriba
+        //public List<HSCard> Secrets
+        //{
+        //    get
+        //    {
+        //        List<HSCard> tmp = new List<HSCard>();
+        //        foreach (var card in Play)
+        //        {
+        //            if (card.IsSecret)
+        //            {
+        //                tmp.Add(card);
+        //            }
+        //        }
+        //        return tmp;
+        //    }
+        //}
 
         public void Clear()
         {
@@ -224,6 +245,18 @@ namespace THS.HSApp
                 }
             }
             return null;
+        }
+        public List<HSCard> GetEnchantsCard(int id)
+        {
+            var tmp = new List<HSCard>();
+            foreach (var card in Play)
+            {
+                if (card.Tags.ContainsKey(GameTag.ATTACHED) && Tags[GameTag.ATTACHED] == id)
+                {
+                    tmp.Add(card);
+                }
+            }
+            return tmp;
         }
 
     }

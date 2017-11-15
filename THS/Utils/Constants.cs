@@ -100,7 +100,7 @@ namespace THS.Utils
     public static class LogRegex
     {
         public static readonly Regex EntityRegex =
-            new Regex(@"\[name=(?<name>.*) id=(?<id>.*) zone=(?<zone>.*) zonePos=(?<zonePos>.*) cardId=(?<cardId>.*) player=(?<player>.*)\]");
+            new Regex(@"\[entityName=(?<name>.*) id=(?<id>.*) zone=(?<zone>.*) zonePos=(?<zonePos>.*) cardId=(?<cardId>.*) player=(?<player>.*)\]");
         public static readonly Regex BlockStartRegex =
             new Regex(@"BLOCK_START.*BlockType=((?<type>(POWER|TRIGGER|DEATHS|ATTACK)).*Entity=(?<entity>.*) EffectCardId=(?<effectcardid>([\d-]*)) EffectIndex=(?<effectindex>[\d-]*) Target=(?<target>[\d-]*))");
     }

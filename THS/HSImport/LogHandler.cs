@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace THS.HSImport
 {
-    class LogHandler
+    public class LogHandler
     {
         //TODO: La lectura del log no se si esta preparada para meterse  en un juego reconectado
         public LogReader PowerReader;
@@ -116,7 +116,7 @@ namespace THS.HSImport
                     {
                         throw new IndexOutOfRangeException();
                     }
-                    Game.SendLogs();
+                    
                 }
                 else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
                 {
@@ -195,8 +195,8 @@ namespace THS.HSImport
                 {
                     Utils.IO.LogDebug("NOT PROCESSED: " + line, IO.DebugFile.LogReader);
                 }
+                Game.GameCore.ths.UpdateUI();
             }
-
         }
 
         public void ProcessLoadingScreen()
@@ -634,6 +634,10 @@ namespace THS.HSImport
                 }
                 //Añadido esto para los adapts
                 else if (PowerTaskList.InfoRegex.IsMatch(line.Log))
+                {
+                }
+                //Añadido esto para los adapts
+                else if (PowerTaskList.HideEntityRegex.IsMatch(line.Log))
                 {
                 }
                 else

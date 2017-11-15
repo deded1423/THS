@@ -6,7 +6,7 @@ using THS.Utils;
 
 namespace THS.HSImport
 {
-    class LogReader
+    public class LogReader
     {
         private FileStream _fs;
         public string Namespace;

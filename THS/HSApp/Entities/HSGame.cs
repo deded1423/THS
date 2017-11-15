@@ -14,6 +14,7 @@ namespace THS.HSApp
 {
     public class HSGame
     {
+        public HSCore GameCore;
 
         //// Cards
         public List<HSCard> EnchantmentHsCards = new List<HSCard>();
@@ -36,13 +37,18 @@ namespace THS.HSApp
         private HSCard OldEnemyHero;
         private HSCard OldPower;
         private HSCard OldEnemyPower;
+        private HSCard OldWeapon;
+        private HSCard OldEnemyWeapon;
+        private int OldMana = 0;
+        private int OldEnemyMana = 0;
         public IrcClient irc;
 
-        public HSGame(IrcClient i)
+        public HSGame(IrcClient i, HSCore core)
         {
             User = new HSPlayer();
             Opponent = new HSPlayer();
             irc = i;
+            GameCore = core;
         }
 
 
@@ -89,12 +95,9 @@ namespace THS.HSApp
         }
 
         //Methods that do something to the game
+        //DEPRECATED
         public void SendLogs()
         {
-            //if (User.Tags.ContainsKey(GameTag.MULLIGAN_STATE) && User.Tags[GameTag.MULLIGAN_STATE] != (int)Mulligan.DONE)
-            //{
-            //return;
-            //}
             if (OldHand == null)
             {
                 OldHand = new List<HSCard>();
@@ -135,17 +138,33 @@ namespace THS.HSApp
             HSCard EnemyHero = Opponent.Hero;
             HSCard Power = User.HeroPower;
             HSCard EnemyPower = Opponent.HeroPower;
+            HSCard Weapon = User.Weapon;
+            HSCard EnemyWeapon = Opponent.Weapon;
             HSCard[] tmp = new HSCard[10];
 
-            if (OldHero == null || OldHero.TrueHealth != OldHero.TrueHealth || Hero.Attack != OldHero.Attack)
+            if (OldWeapon == null || Weapon.TrueHealth != OldWeapon.TrueHealth || Weapon.Attack != OldWeapon.Attack)
+            {
+                irc.SendChatMessage("Weapon" + "_" + Weapon.Name + "_" + Weapon.TrueHealth + "_" + Weapon.Attack);
+                OldWeapon = OldHero = Utils.Misc.DeepClone(Weapon);
+            }
+
+            if (OldEnemyWeapon == null || EnemyWeapon.TrueHealth != OldEnemyWeapon.TrueHealth || EnemyWeapon.Attack != OldEnemyWeapon.Attack)
+            {
+                irc.SendChatMessage("EnemyWeapon" + "_" + EnemyWeapon.Name + "_" + EnemyWeapon.TrueHealth + "_" + EnemyWeapon.Attack);
+                OldEnemyWeapon = OldHero = Utils.Misc.DeepClone(EnemyWeapon);
+            }
+
+            if (OldHero == null || Hero.TrueHealth != OldHero.TrueHealth || Hero.Attack != OldHero.Attack || User.Mana != OldMana)
             {
                 OldHero = Utils.Misc.DeepClone(Hero);
-                irc.SendChatMessage("Hero_" + Hero.Name + "_" + Hero.TrueHealth + "_" + Hero.Armor + "_" + Hero.Attack);
+                irc.SendChatMessage("Hero_" + Hero.Name + "_" + Hero.TrueHealth + "_" + Hero.Armor + "_" + Hero.Attack + "_" + User.Mana + "_" + User.MaxMana + "_" + (User.IsPlaying ? 1 : 0));
+                OldMana = User.Mana;
             }
-            if (OldEnemyHero == null || EnemyHero.TrueHealth != OldEnemyHero.TrueHealth || EnemyHero.Attack != OldEnemyHero.Attack)
+            if (OldEnemyHero == null || EnemyHero.TrueHealth != OldEnemyHero.TrueHealth || EnemyHero.Attack != OldEnemyHero.Attack || Opponent.Mana != OldEnemyMana)
             {
                 OldEnemyHero = Utils.Misc.DeepClone(EnemyHero);
-                irc.SendChatMessage("EnemyHero_" + EnemyHero.Name + "_" + EnemyHero.TrueHealth + "_" + EnemyHero.Armor + "_" + EnemyHero.Attack);
+                irc.SendChatMessage("EnemyHero_" + EnemyHero.Name + "_" + EnemyHero.TrueHealth + "_" + EnemyHero.Armor + "_" + EnemyHero.Attack + "_" + Opponent.Mana + "_" + Opponent.MaxMana + "_" + (Opponent.IsPlaying ? 1 : 0));
+                OldEnemyMana = Opponent.Mana;
             }
 
 
@@ -160,6 +179,7 @@ namespace THS.HSApp
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
+                    send = send + c.ManaCost + ",";
                     send = send + (c.DivineShield ? 1 : 0) + ",";
                     send = send + (c.Taunt ? 1 : 0) + ",";
                     send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -189,6 +209,7 @@ namespace THS.HSApp
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
+                            send = send + c.ManaCost + ",";
                             send = send + (c.DivineShield ? 1 : 0) + ",";
                             send = send + (c.Taunt ? 1 : 0) + ",";
                             send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -214,6 +235,7 @@ namespace THS.HSApp
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
+                    send = send + c.ManaCost + ",";
                     send = send + (c.DivineShield ? 1 : 0) + ",";
                     send = send + (c.Taunt ? 1 : 0) + ",";
                     send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -252,6 +274,7 @@ namespace THS.HSApp
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
+                            send = send + c.ManaCost + ",";
                             send = send + (c.DivineShield ? 1 : 0) + ",";
                             send = send + (c.Taunt ? 1 : 0) + ",";
                             send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -287,6 +310,7 @@ namespace THS.HSApp
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
+                            send = send + c.ManaCost + ",";
                             send = send + (c.DivineShield ? 1 : 0) + ",";
                             send = send + (c.Taunt ? 1 : 0) + ",";
                             send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -311,6 +335,7 @@ namespace THS.HSApp
                     send = send + c.Name + ",";
                     send = send + c.Attack + ",";
                     send = send + c.TrueHealth + ",";
+                    send = send + c.ManaCost + ",";
                     send = send + (c.DivineShield ? 1 : 0) + ",";
                     send = send + (c.Taunt ? 1 : 0) + ",";
                     send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -349,6 +374,7 @@ namespace THS.HSApp
                             send = send + c.Name + ",";
                             send = send + c.Attack + ",";
                             send = send + c.TrueHealth + ",";
+                            send = send + c.ManaCost + ",";
                             send = send + (c.DivineShield ? 1 : 0) + ",";
                             send = send + (c.Taunt ? 1 : 0) + ",";
                             send = send + (c.Lifesteal ? 1 : 0) + ",";
@@ -548,7 +574,7 @@ namespace THS.HSApp
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in Opponent.Play)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY))
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
                 {
                     tmp.Add(card);
                 }

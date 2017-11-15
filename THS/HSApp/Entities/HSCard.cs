@@ -15,15 +15,15 @@ namespace THS.HSApp
         public Card CardDB;
         public Dictionary<GameTag, int> Tags = new Dictionary<GameTag, int>();
 
+        public HSCard()
+        {
+        }
+
         public HSCard(int i)
         {
             Id = i;
         }
 
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
         //Tags
         public void AddTag(string tag, string value)
         {
@@ -67,7 +67,7 @@ namespace THS.HSApp
                 {
                     return Tags[GameTag.ZONE_POSITION];
                 }
-                return -1;
+                return 0;
             }
         }
         public int Controller
@@ -78,7 +78,7 @@ namespace THS.HSApp
                 {
                     return Tags[GameTag.CONTROLLER];
                 }
-                return -1;
+                return 0;
             }
         }
         public CardType CardType
@@ -101,7 +101,7 @@ namespace THS.HSApp
                 {
                     return Tags[GameTag.ATK];
                 }
-                return -1;
+                return 0;
             }
         }
         public int Health
@@ -112,7 +112,18 @@ namespace THS.HSApp
                 {
                     return Tags[GameTag.HEALTH];
                 }
-                return -1;
+                return 0;
+            }
+        }
+        public int ManaCost
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.COST))
+                {
+                    return Tags[GameTag.COST];
+                }
+                return 0;
             }
         }
         public int Damage
@@ -219,6 +230,17 @@ namespace THS.HSApp
                     return Tags[GameTag.ARMOR];
                 }
                 return 0;
+            }
+        }
+        public bool IsSecret
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.SECRET))
+                {
+                    return true;
+                }
+                return false;
             }
         }
 

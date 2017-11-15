@@ -112,6 +112,7 @@
     <Compile Include="HSApp\Entities\HSCard.cs" />
     <Compile Include="HSApp\Entities\HSGame.cs" />
     <Compile Include="HSApp\Entities\HSPlayer.cs" />
+    <Compile Include="HSApp\HSActions.cs" />
     <Compile Include="HSApp\HSCore.cs" />
     <Compile Include="HSImport\LogHandler.cs" />
     <Compile Include="HSImport\LogLine.cs" />

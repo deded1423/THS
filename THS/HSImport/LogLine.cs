@@ -4,7 +4,7 @@ using THS.Utils;
 
 namespace THS.HSImport
 {
-    class LogLine
+    public class LogLine
     {
         public DateTime Time;
         public string Process;
