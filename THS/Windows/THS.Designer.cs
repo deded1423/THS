@@ -30,6 +30,11 @@ namespace THS.Windows
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("4");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("5");
             this.ButtonConfig = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.checkBoxTCP = new System.Windows.Forms.CheckBox();
@@ -47,6 +52,21 @@ namespace THS.Windows
             this.tabPageControl = new System.Windows.Forms.TabPage();
             this.checkBoxDeletePower = new System.Windows.Forms.CheckBox();
             this.tabPageUI = new System.Windows.Forms.TabPage();
+            this.labelCOpponentGraveyard = new System.Windows.Forms.Label();
+            this.listViewOpponentGraveyard = new System.Windows.Forms.ListView();
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listViewUserGraveyard = new System.Windows.Forms.ListView();
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelCOpponentBoard = new System.Windows.Forms.Label();
             this.labelCUserBoard = new System.Windows.Forms.Label();
             this.labelCOpponentHand = new System.Windows.Forms.Label();
@@ -80,24 +100,14 @@ namespace THS.Windows
             this.columnHeaderHealth = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAttack = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderMana = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listViewUserGraveyard = new System.Windows.Forms.ListView();
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listViewOpponentGraveyard = new System.Windows.Forms.ListView();
-            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.labelCOpponentGraveyard = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonActions = new System.Windows.Forms.Button();
+            this.listViewActions = new System.Windows.Forms.ListView();
+            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControlMain.SuspendLayout();
             this.tabPageControl.SuspendLayout();
             this.tabPageUI.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -234,10 +244,11 @@ namespace THS.Windows
             // 
             this.tabControlMain.Controls.Add(this.tabPageControl);
             this.tabControlMain.Controls.Add(this.tabPageUI);
+            this.tabControlMain.Controls.Add(this.tabPage1);
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1213, 503);
+            this.tabControlMain.Size = new System.Drawing.Size(1270, 597);
             this.tabControlMain.TabIndex = 26;
             // 
             // tabPageControl
@@ -259,7 +270,7 @@ namespace THS.Windows
             this.tabPageControl.Location = new System.Drawing.Point(4, 22);
             this.tabPageControl.Name = "tabPageControl";
             this.tabPageControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageControl.Size = new System.Drawing.Size(1205, 477);
+            this.tabPageControl.Size = new System.Drawing.Size(1262, 571);
             this.tabPageControl.TabIndex = 0;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
@@ -291,10 +302,123 @@ namespace THS.Windows
             this.tabPageUI.Location = new System.Drawing.Point(4, 22);
             this.tabPageUI.Name = "tabPageUI";
             this.tabPageUI.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageUI.Size = new System.Drawing.Size(1205, 477);
+            this.tabPageUI.Size = new System.Drawing.Size(1262, 571);
             this.tabPageUI.TabIndex = 1;
             this.tabPageUI.Text = "UI";
             this.tabPageUI.UseVisualStyleBackColor = true;
+            // 
+            // labelCOpponentGraveyard
+            // 
+            this.labelCOpponentGraveyard.AutoSize = true;
+            this.labelCOpponentGraveyard.Location = new System.Drawing.Point(701, 199);
+            this.labelCOpponentGraveyard.Name = "labelCOpponentGraveyard";
+            this.labelCOpponentGraveyard.Size = new System.Drawing.Size(106, 13);
+            this.labelCOpponentGraveyard.TabIndex = 10;
+            this.labelCOpponentGraveyard.Text = "Opponent Graveyard";
+            // 
+            // listViewOpponentGraveyard
+            // 
+            this.listViewOpponentGraveyard.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader25,
+            this.columnHeader26,
+            this.columnHeader27,
+            this.columnHeader28,
+            this.columnHeader29,
+            this.columnHeader30});
+            this.listViewOpponentGraveyard.GridLines = true;
+            this.listViewOpponentGraveyard.Location = new System.Drawing.Point(684, 215);
+            this.listViewOpponentGraveyard.Name = "listViewOpponentGraveyard";
+            this.listViewOpponentGraveyard.Size = new System.Drawing.Size(332, 165);
+            this.listViewOpponentGraveyard.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listViewOpponentGraveyard.TabIndex = 9;
+            this.listViewOpponentGraveyard.UseCompatibleStateImageBehavior = false;
+            this.listViewOpponentGraveyard.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader25
+            // 
+            this.columnHeader25.Text = "Id";
+            this.columnHeader25.Width = 26;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "Name";
+            this.columnHeader26.Width = 108;
+            // 
+            // columnHeader27
+            // 
+            this.columnHeader27.DisplayIndex = 5;
+            this.columnHeader27.Text = "Type";
+            this.columnHeader27.Width = 66;
+            // 
+            // columnHeader28
+            // 
+            this.columnHeader28.DisplayIndex = 2;
+            this.columnHeader28.Text = "Health";
+            this.columnHeader28.Width = 44;
+            // 
+            // columnHeader29
+            // 
+            this.columnHeader29.DisplayIndex = 3;
+            this.columnHeader29.Text = "Attack";
+            this.columnHeader29.Width = 45;
+            // 
+            // columnHeader30
+            // 
+            this.columnHeader30.DisplayIndex = 4;
+            this.columnHeader30.Text = "Mana";
+            this.columnHeader30.Width = 39;
+            // 
+            // listViewUserGraveyard
+            // 
+            this.listViewUserGraveyard.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22,
+            this.columnHeader23,
+            this.columnHeader24});
+            this.listViewUserGraveyard.GridLines = true;
+            this.listViewUserGraveyard.Location = new System.Drawing.Point(684, 20);
+            this.listViewUserGraveyard.Name = "listViewUserGraveyard";
+            this.listViewUserGraveyard.Size = new System.Drawing.Size(332, 165);
+            this.listViewUserGraveyard.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listViewUserGraveyard.TabIndex = 8;
+            this.listViewUserGraveyard.UseCompatibleStateImageBehavior = false;
+            this.listViewUserGraveyard.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "Id";
+            this.columnHeader19.Width = 26;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Name";
+            this.columnHeader20.Width = 108;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.DisplayIndex = 5;
+            this.columnHeader21.Text = "Type";
+            this.columnHeader21.Width = 66;
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.DisplayIndex = 2;
+            this.columnHeader22.Text = "Health";
+            this.columnHeader22.Width = 44;
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.DisplayIndex = 3;
+            this.columnHeader23.Text = "Attack";
+            this.columnHeader23.Width = 45;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.DisplayIndex = 4;
+            this.columnHeader24.Text = "Mana";
+            this.columnHeader24.Width = 39;
             // 
             // labelCOpponentBoard
             // 
@@ -545,124 +669,60 @@ namespace THS.Windows
             this.columnHeaderMana.Text = "Mana";
             this.columnHeaderMana.Width = 39;
             // 
-            // listViewUserGraveyard
+            // tabPage1
             // 
-            this.listViewUserGraveyard.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22,
-            this.columnHeader23,
-            this.columnHeader24});
-            this.listViewUserGraveyard.GridLines = true;
-            this.listViewUserGraveyard.Location = new System.Drawing.Point(684, 20);
-            this.listViewUserGraveyard.Name = "listViewUserGraveyard";
-            this.listViewUserGraveyard.Size = new System.Drawing.Size(332, 165);
-            this.listViewUserGraveyard.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listViewUserGraveyard.TabIndex = 8;
-            this.listViewUserGraveyard.UseCompatibleStateImageBehavior = false;
-            this.listViewUserGraveyard.View = System.Windows.Forms.View.Details;
+            this.tabPage1.Controls.Add(this.buttonActions);
+            this.tabPage1.Controls.Add(this.listViewActions);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1262, 571);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // columnHeader19
+            // buttonActions
             // 
-            this.columnHeader19.Text = "Id";
-            this.columnHeader19.Width = 26;
+            this.buttonActions.Location = new System.Drawing.Point(610, 6);
+            this.buttonActions.Name = "buttonActions";
+            this.buttonActions.Size = new System.Drawing.Size(88, 74);
+            this.buttonActions.TabIndex = 17;
+            this.buttonActions.Text = "Actions";
+            this.buttonActions.UseVisualStyleBackColor = true;
+            this.buttonActions.Click += new System.EventHandler(this.buttonActions_Click);
             // 
-            // columnHeader20
+            // listViewActions
             // 
-            this.columnHeader20.Text = "Name";
-            this.columnHeader20.Width = 108;
+            this.listViewActions.BackColor = System.Drawing.Color.Sienna;
+            this.listViewActions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader31});
+            this.listViewActions.FullRowSelect = true;
+            this.listViewActions.GridLines = true;
+            this.listViewActions.HideSelection = false;
+            this.listViewActions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
+            this.listViewActions.Location = new System.Drawing.Point(8, 6);
+            this.listViewActions.MultiSelect = false;
+            this.listViewActions.Name = "listViewActions";
+            this.listViewActions.Size = new System.Drawing.Size(596, 555);
+            this.listViewActions.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listViewActions.TabIndex = 1;
+            this.listViewActions.UseCompatibleStateImageBehavior = false;
+            this.listViewActions.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader21
+            // columnHeader31
             // 
-            this.columnHeader21.DisplayIndex = 5;
-            this.columnHeader21.Text = "Type";
-            this.columnHeader21.Width = 66;
-            // 
-            // columnHeader22
-            // 
-            this.columnHeader22.DisplayIndex = 2;
-            this.columnHeader22.Text = "Health";
-            this.columnHeader22.Width = 44;
-            // 
-            // columnHeader23
-            // 
-            this.columnHeader23.DisplayIndex = 3;
-            this.columnHeader23.Text = "Attack";
-            this.columnHeader23.Width = 45;
-            // 
-            // columnHeader24
-            // 
-            this.columnHeader24.DisplayIndex = 4;
-            this.columnHeader24.Text = "Mana";
-            this.columnHeader24.Width = 39;
-            // 
-            // listViewOpponentGraveyard
-            // 
-            this.listViewOpponentGraveyard.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader25,
-            this.columnHeader26,
-            this.columnHeader27,
-            this.columnHeader28,
-            this.columnHeader29,
-            this.columnHeader30});
-            this.listViewOpponentGraveyard.GridLines = true;
-            this.listViewOpponentGraveyard.Location = new System.Drawing.Point(684, 215);
-            this.listViewOpponentGraveyard.Name = "listViewOpponentGraveyard";
-            this.listViewOpponentGraveyard.Size = new System.Drawing.Size(332, 165);
-            this.listViewOpponentGraveyard.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listViewOpponentGraveyard.TabIndex = 9;
-            this.listViewOpponentGraveyard.UseCompatibleStateImageBehavior = false;
-            this.listViewOpponentGraveyard.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader25
-            // 
-            this.columnHeader25.Text = "Id";
-            this.columnHeader25.Width = 26;
-            // 
-            // columnHeader26
-            // 
-            this.columnHeader26.Text = "Name";
-            this.columnHeader26.Width = 108;
-            // 
-            // columnHeader27
-            // 
-            this.columnHeader27.DisplayIndex = 5;
-            this.columnHeader27.Text = "Type";
-            this.columnHeader27.Width = 66;
-            // 
-            // columnHeader28
-            // 
-            this.columnHeader28.DisplayIndex = 2;
-            this.columnHeader28.Text = "Health";
-            this.columnHeader28.Width = 44;
-            // 
-            // columnHeader29
-            // 
-            this.columnHeader29.DisplayIndex = 3;
-            this.columnHeader29.Text = "Attack";
-            this.columnHeader29.Width = 45;
-            // 
-            // columnHeader30
-            // 
-            this.columnHeader30.DisplayIndex = 4;
-            this.columnHeader30.Text = "Mana";
-            this.columnHeader30.Width = 39;
-            // 
-            // labelCOpponentGraveyard
-            // 
-            this.labelCOpponentGraveyard.AutoSize = true;
-            this.labelCOpponentGraveyard.Location = new System.Drawing.Point(701, 199);
-            this.labelCOpponentGraveyard.Name = "labelCOpponentGraveyard";
-            this.labelCOpponentGraveyard.Size = new System.Drawing.Size(106, 13);
-            this.labelCOpponentGraveyard.TabIndex = 10;
-            this.labelCOpponentGraveyard.Text = "Opponent Graveyard";
+            this.columnHeader31.Width = 590;
             // 
             // THS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1269, 502);
+            this.ClientSize = new System.Drawing.Size(1269, 595);
             this.Controls.Add(this.tabControlMain);
             this.Name = "THS";
             this.Text = "THS";
@@ -673,6 +733,7 @@ namespace THS.Windows
             this.tabPageControl.PerformLayout();
             this.tabPageUI.ResumeLayout(false);
             this.tabPageUI.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -760,6 +821,10 @@ namespace THS.Windows
         private ColumnHeader columnHeader22;
         private ColumnHeader columnHeader23;
         private ColumnHeader columnHeader24;
+        private TabPage tabPage1;
+        private ListView listViewActions;
+        protected Button buttonActions;
+        private ColumnHeader columnHeader31;
     }
 }
 

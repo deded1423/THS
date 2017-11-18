@@ -614,7 +614,7 @@ namespace THS.Input
             RestMouse();
         }
 
-        public static void Power()
+        public static void HeroPower()
         {
             SelectPower();
             IO.LogDebug("Hero Power", IO.DebugFile.Input);
@@ -622,7 +622,7 @@ namespace THS.Input
             RestMouse();
         }
 
-        public static void Power(bool enemy)
+        public static void HeroPower(bool enemy)
         {
             SelectPower();
             Thread.Sleep(200);
@@ -640,7 +640,7 @@ namespace THS.Input
             RestMouse();
         }
 
-        public static void Power(int boardSize, int boardNumber, bool enemy)
+        public static void HeroPower(int boardSize, int boardNumber, bool enemy)
         {
             SelectPower();
             Thread.Sleep(200);

@@ -116,7 +116,7 @@ namespace THS.HSImport
                     {
                         throw new IndexOutOfRangeException();
                     }
-                    
+
                 }
                 else if (PowerTaskList.FullEntityCreatingRegex.IsMatch(line.Log))
                 {
@@ -326,7 +326,7 @@ namespace THS.HSImport
             else if (LogRegex.EntityRegex.IsMatch(match.Groups["entity"].Value))
             {
                 Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
-                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), int.Parse(matchEntity.Groups["id"].Value));
                 if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
                 {
                     //Cambiar la zona de la carta en las variables
@@ -359,7 +359,7 @@ namespace THS.HSImport
                 }
                 Game.PlayersOrdered = true;
             }
-            HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+            HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), int.Parse(matchEntity.Groups["id"].Value));
             if (card.CardDB == null)
             {
                 card.CardDB = Cards.All[match.Groups["cardId"].Value];
@@ -385,7 +385,7 @@ namespace THS.HSImport
         private void FullEntityUpdating(LogLine line)
         {
             Match match = PowerTaskList.FullEntityUpdatingRegex.Match(line.Log);
-            HSCard card = Game.GetCard(int.Parse(match.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, match.Groups["zone"].Value), int.Parse(match.Groups["id"].Value));
+            HSCard card = Game.GetCard(int.Parse(match.Groups["player"].Value), int.Parse(match.Groups["id"].Value));
             if (card == null)
             {
                 card = CreateCard(int.Parse(match.Groups["id"].Value), match.Groups["cardId"].Value);
@@ -412,7 +412,7 @@ namespace THS.HSImport
             if (LogRegex.EntityRegex.IsMatch(match.Groups["entity"].Value))
             {
                 Match matchEntity = LogRegex.EntityRegex.Match(match.Groups["entity"].Value);
-                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), (Zone)HsConstants.TagToInt(GameTag.ZONE, matchEntity.Groups["zone"].Value), int.Parse(matchEntity.Groups["id"].Value));
+                HSCard card = Game.GetCard(int.Parse(matchEntity.Groups["player"].Value), int.Parse(matchEntity.Groups["id"].Value));
                 Match matchPeek = PowerTaskList.TagChangeRegex.Match(PeekLine(PowerReader).Log);
                 if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.ZONE))
                 {

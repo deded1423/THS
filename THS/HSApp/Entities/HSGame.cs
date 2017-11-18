@@ -87,7 +87,7 @@ namespace THS.HSApp
 
             if (gt.Equals(GameTag.STEP) && i == (int)Step.BEGIN_MULLIGAN)
             {
-                foreach (var item in GetMulliganCards())
+                foreach (var item in GetUserHand())
                 {
                     IO.LogDebug("Mulligan " + item, IO.DebugFile.Hs);
                 }
@@ -109,7 +109,7 @@ namespace THS.HSApp
             if (OldBoard == null)
             {
                 OldBoard = new List<HSCard>();
-                foreach (var card in GetUserBoard())
+                foreach (var card in GetUserMinions())
                 {
                     OldBoard.Add(card);
                 }
@@ -125,15 +125,15 @@ namespace THS.HSApp
             if (OldEnemyBoard == null)
             {
                 OldEnemyBoard = new List<HSCard>();
-                foreach (var card in GetOpponentBoard())
+                foreach (var card in GetOpponentMinions())
                 {
                     OldEnemyBoard.Add(card);
                 }
             }
             List<HSCard> Hand = GetUserHand();
-            List<HSCard> Board = GetUserBoard();
+            List<HSCard> Board = GetUserMinions();
             List<HSCard> EnemyHand = GetOpponentHand();
-            List<HSCard> EnemyBoard = GetOpponentBoard();
+            List<HSCard> EnemyBoard = GetOpponentMinions();
             HSCard Hero = User.Hero;
             HSCard EnemyHero = Opponent.Hero;
             HSCard Power = User.HeroPower;
@@ -391,6 +391,120 @@ namespace THS.HSApp
             }
 
         }
+
+        public List<string> GetActions()
+        {
+            List<string> tmp = new List<string>();
+            List<HSCard> targets = new List<HSCard>();
+            if (!User.IsPlaying) return tmp;
+            foreach (var card in GetOpponentMinions())
+            {
+                if (card.Stealth)
+                {
+                    break;
+                }
+                if (card.Taunt)
+                {
+                    foreach (var target in targets)
+                    {
+                        if (!target.Taunt)
+                        {
+                            targets.Remove(target);
+                        }
+                    }
+                    targets.Add(card);
+                }
+                else
+                {
+                    if (targets.Count != 0 && targets[0].Taunt)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        targets.Add(card);
+                    }
+                }
+            }
+            if (!Opponent.Hero.Stealth || !(Opponent.Hero.Tags[GameTag.IMMUNE] == 1) || (targets.Count != 0 && targets[0].Taunt))
+            {
+                targets.Add(Opponent.Hero);
+            }
+
+            foreach (var card in GetUserHand())
+            {
+                if (card.ManaCost <= User.Mana)
+                {
+                    if (card.CardType == CardType.MINION)
+                    {
+                        if (GetUserMinions().Count < 7)
+                        {
+                            foreach (var target in targets)
+                            {
+                                tmp.Add("Play " + card.Name + " on " + target.Name);
+                            }
+                            foreach (var target in GetUserMinions())
+                            {
+                                tmp.Add("Play " + card.Name + " on " + target.Name);
+                            }
+                            tmp.Add("Play " + card.Name + " on " + User.Hero.Name);
+                            tmp.Add("Play " + card.Name);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var target in targets)
+                        {
+                            tmp.Add("Play " + card.Name + " on " + target.Name);
+                        }
+                        foreach (var target in GetUserMinions())
+                        {
+                            tmp.Add("Play " + card.Name + " on " + target.Name);
+                        }
+                        tmp.Add("Play " + card.Name + " on " + User.Hero.Name);
+                        tmp.Add("Play " + card.Name);
+                    }
+                }
+            }
+            foreach (var card in GetUserMinions())
+            {
+                if (!card.Exhausted)
+                {
+                    foreach (var target in targets)
+                    {
+                        tmp.Add(card.Name + " attack " + target.Name);
+                    }
+                }
+            }
+            if (User.Mana >= 2 && !User.HeroPower.Exhausted)
+            {
+                if (User.HeroPowerNeedsTarget)
+                {
+                    foreach (var target in targets)
+                    {
+                        tmp.Add("HP on " + target.Name);
+                    }
+                    foreach (var target in GetUserMinions())
+                    {
+                        tmp.Add("HP on " + target.Name);
+                    }
+                    tmp.Add("HP on " + User.Hero.Name);
+                }
+                else
+                {
+                    tmp.Add("HP");
+                }
+            }
+            if (User.Attack > 0 && !User.Hero.Exhausted)
+            {
+                foreach (var target in targets)
+                {
+                    tmp.Add(User.Hero.Name + " attack " + target.Name);
+                }
+            }
+            tmp.Add("End Turn");
+            return tmp;
+        }
         //Methods of info
         public void Debug()
         {
@@ -483,7 +597,7 @@ namespace THS.HSApp
 
 
         //Methods that take info from the game
-        public HSCard GetCard(int player, Zone zone, int id)
+        public HSCard GetCard(int player, int id)
         {
             //Mira todas las cartas porque sino da fallo al cambiar de posicion de deck a hand 
             HSCard card;
@@ -527,15 +641,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public List<HSCard> GetMulliganCards()
-        {
-            if (!((Step)Tags[GameTag.STEP]).Equals(Step.BEGIN_MULLIGAN))
-            {
-                return null;
-            }
-            return User.Hand;
-        }
-
+        //Methods that get List of cards from somewhere in the game
         public List<HSCard> GetUserHand()
         {
             List<HSCard> tmp = new List<HSCard>();
@@ -556,12 +662,12 @@ namespace THS.HSApp
             tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
             return tmp;
         }
-        public List<HSCard> GetUserBoard()
+        public List<HSCard> GetUserMinions()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in User.Play)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
                 {
                     tmp.Add(card);
                 }
@@ -569,12 +675,12 @@ namespace THS.HSApp
             tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
             return tmp;
         }
-        public List<HSCard> GetOpponentBoard()
+        public List<HSCard> GetOpponentMinions()
         {
             List<HSCard> tmp = new List<HSCard>();
             foreach (var card in Opponent.Play)
             {
-                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.Tags.ContainsKey(GameTag.LINKED_ENTITY) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
+                if (!card.Tags.ContainsKey(GameTag.ATTACHED) && !card.CardType.Equals(CardType.WEAPON) && !card.CardType.Equals(CardType.SPELL))
                 {
                     tmp.Add(card);
                 }

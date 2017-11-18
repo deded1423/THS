@@ -22,7 +22,7 @@ namespace THS.Twitch_Integration
         private StreamReader inputStream;
         private StreamWriter outputStream;
 
-        private ConcurrentQueue<CommandChat> _queue = new ConcurrentQueue<CommandChat>();
+        public ConcurrentQueue<CommandChat> Queue = new ConcurrentQueue<CommandChat>();
 
         public IrcClient()
         {
@@ -54,25 +54,6 @@ namespace THS.Twitch_Integration
                     string msg = ReadMessage();
                     if (msg != null)
                     {
-                        if (msg.Equals("!help"))
-                        {
-                            //SendChatMessage(@"Play <handSize> <handNumber> // Play <handSize> <handNumber> <enemy>[ef] <boardSize> <boardNumber> // Play <handSize> <handNumber> <enemy>[ef] Hero");
-                            SendChatMessage(@"Play <handSize> <handNumber>");
-                            SendChatMessage(@"Play <handSize> <handNumber> <enemy>[e-f] <boardSize> <boardNumber>");
-                            SendChatMessage(@"Play <handSize> <handNumber> <enemy>[e-f] Hero");
-                            //SendChatMessage(@"Mulligan <first> <second> <third> {<fourth> c} // Attack <boardSize> <boardNumber> <boardEnemySize> <boardEnemyNumber> // Attack <boardSize> <boardNumber> Hero");
-                            SendChatMessage(@"Mulligan <first>[0-1] <second>[0-1] <third>[0-1] {<fourth>[0-1] c}");
-                            SendChatMessage(@"Attack <boardSize> <boardNumber> <boardEnemySize> <boardEnemyNumber>");
-                            SendChatMessage(@"Attack <boardSize> <boardNumber> Hero");
-                            SendChatMessage(@"Attack Hero <boardEnemySize> <boardEnemyNumber>");
-                            SendChatMessage(@"Attack Hero Hero");
-                            SendChatMessage(@"Choose <card>");
-                            SendChatMessage(@"Discover <card>");
-                            SendChatMessage(@"End");
-                            SendChatMessage(@"Power");
-                            SendChatMessage(@"Power <enemy>[e-f] Hero");
-                            SendChatMessage(@"Power <enemy>[e-f] <boardSize> <boardNumber>");
-                        }
                         msg = msg.ToLower();
                         if (msg.Contains("tmi.twitch.tv"))
                         {
@@ -82,7 +63,7 @@ namespace THS.Twitch_Integration
                         var cmd = new CommandChat(msg);
                         if (cmd.Type != PlayType.Incorrect)
                         {
-                            _queue.Enqueue(cmd);
+                            Queue.Enqueue(cmd);
                             IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
                         }
                         else
@@ -143,16 +124,6 @@ namespace THS.Twitch_Integration
                 return msg[2];
             }
             return message;
-        }
-
-        public List<CommandChat> GetCommandChats()
-        {
-            List<CommandChat> list = new List<CommandChat>();
-            foreach (var commandChat in _queue)
-            {
-                list.Add(commandChat);
-            }
-            return list;
         }
 
         public void Stop()

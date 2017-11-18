@@ -107,6 +107,27 @@ namespace THS.HSApp
                 return new HSCard();
             }
         }
+        public bool Exhausted
+        {
+            get
+            {
+                return (Hero.Tags.ContainsKey(GameTag.EXHAUSTED) && Hero.Tags[GameTag.EXHAUSTED] == 1) ? true : false;
+            }
+        }
+        public bool HeroPowerNeedsTarget
+        {
+            get
+            {
+                if (Hero.CardDB.Class == CardClass.MAGE || Hero.CardDB.Class == CardClass.PRIEST)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         // List<HSCard> Secret esta hecho arriba
         //public List<HSCard> Secrets
@@ -246,7 +267,7 @@ namespace THS.HSApp
             }
             return null;
         }
-        public List<HSCard> GetEnchantsCard(int id)
+        public List<HSCard> GetEnchantsOfCard(int id)
         {
             var tmp = new List<HSCard>();
             foreach (var card in Play)
@@ -257,6 +278,90 @@ namespace THS.HSApp
                 }
             }
             return tmp;
+        }
+
+        public HSCard GetHandCard(string name)
+        {
+            foreach (var card in Hand)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetDeckCard(string name)
+        {
+            foreach (var card in Deck)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetPlayCard(string name)
+        {
+            foreach (var card in Play)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetSetasideCard(string name)
+        {
+            foreach (var card in Setaside)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetGraveyardCard(string name)
+        {
+            foreach (var card in Graveyard)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetRemovedCard(string name)
+        {
+            foreach (var card in Removed)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
+        }
+
+        public HSCard GetSecretCard(string name)
+        {
+            foreach (var card in Secret)
+            {
+                if (card.Name.ToLower().Equals(name.ToLower()))
+                {
+                    return card;
+                }
+            }
+            return null;
         }
 
     }
