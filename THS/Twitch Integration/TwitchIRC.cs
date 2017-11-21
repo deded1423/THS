@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -54,7 +52,6 @@ namespace THS.Twitch_Integration
                     string msg = ReadMessage();
                     if (msg != null)
                     {
-                        msg = msg.ToLower();
                         if (msg.Contains("tmi.twitch.tv"))
                         {
                             IO.LogDebug(msg, IO.DebugFile.Twitch);

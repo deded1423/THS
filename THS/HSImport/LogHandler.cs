@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 using THS.Utils;
 using THS.HSApp;
 using HearthDb;
 using HearthDb.Enums;
-using System.Threading.Tasks;
 
 namespace THS.HSImport
 {
@@ -356,6 +349,8 @@ namespace THS.HSImport
                     HSPlayer tmp = Game.User;
                     Game.User = Game.Opponent;
                     Game.Opponent = tmp;
+                    Game.User.Enemy = false;
+                    Game.Opponent.Enemy = true;
                 }
                 Game.PlayersOrdered = true;
             }
@@ -853,13 +848,31 @@ namespace THS.HSImport
                 case Zone.PLAY:
                     if (card.Controller == Game.User.PlayerId)
                     {
-                        Game.User.Play.Add(card);
-                        IO.LogDebug("Added User " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                        if (card.CardType == CardType.HERO)
+                        {
+                            Game.User.Play.Add(Game.User.Hero);
+                            Game.User.Hero = card;
+                            IO.LogDebug("Added User Hero card id: " + card.Id, IO.DebugFile.Hs, false);
+                        }
+                        else
+                        {
+                            Game.User.Play.Add(card);
+                            IO.LogDebug("Added User " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                        }
                     }
                     else if (card.Controller == Game.Opponent.PlayerId)
                     {
-                        Game.Opponent.Play.Add(card);
-                        IO.LogDebug("Added Opponent " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                        if (card.CardType == CardType.HERO)
+                        {
+                            Game.Opponent.Play.Add(Game.Opponent.Hero);
+                            Game.Opponent.Hero = card;
+                            IO.LogDebug("Added Opponent Hero card id: " + card.Id, IO.DebugFile.Hs, false);
+                        }
+                        else
+                        {
+                            Game.Opponent.Play.Add(card);
+                            IO.LogDebug("Added Opponent " + Zone.PLAY + " card id: " + card.Id, IO.DebugFile.Hs, false);
+                        }
                     }
                     break;
                 case Zone.DECK:

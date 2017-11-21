@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using THS.Input;
+﻿using System.Text.RegularExpressions;
 using THS.Utils;
 
 namespace THS.Twitch_Integration
@@ -288,6 +286,7 @@ namespace THS.Twitch_Integration
 
         public CommandChat(string line)
         {
+            line = line.ToLower();
             //Full Instructions
             if (InstructionRegexType.InstructionPlayOnRegex.IsMatch(line))
             {
@@ -306,12 +305,12 @@ namespace THS.Twitch_Integration
             {
                 Match match = InstructionRegexType.InstructionHeroPowerOnRegex.Match(line);
                 Type = PlayType.HeroPower;
+                Target = match.Groups["target"].Value;
             }
             else if (InstructionRegexType.InstructionHeroPowerRegex.IsMatch(line))
             {
                 Match match = InstructionRegexType.InstructionHeroPowerRegex.Match(line);
                 Type = PlayType.HeroPower;
-                Target = match.Groups["target"].Value;
             }
             else if (InstructionRegexType.InstructionAttackRegex.IsMatch(line))
             {

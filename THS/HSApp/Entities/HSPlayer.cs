@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using HearthDb.Enums;
 using THS.Utils;
 
@@ -12,6 +11,7 @@ namespace THS.HSApp
         public int EntityId;
         public string PlayerName;
         public string GameAccountId;
+        public bool Enemy;
 
         //INFO GAME
         public HSCard HeroPower;
@@ -182,6 +182,36 @@ namespace THS.HSApp
                 Tags.Add(gt, i);
             }
         }
+        public bool CheckTag(GameTag tag)
+        {
+            if (Tags.ContainsKey(tag))
+            {
+                return (Tags[tag] == 1 ? true : false);
+            }
+            return false;
+        }
+        public bool Stealth
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.STEALTH))
+                {
+                    return Tags[GameTag.STEALTH] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Immune
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.IMMUNE))
+                {
+                    return Tags[GameTag.IMMUNE] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
 
         //GETTERS CARDS
         public HSCard GetHandCard(int id)
@@ -280,7 +310,7 @@ namespace THS.HSApp
             return tmp;
         }
 
-        public HSCard GetHandCard(string name)
+        public HSCard GetHandCard(string name, bool exact = false, int precision = 4)
         {
             foreach (var card in Hand)
             {
@@ -289,10 +319,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Hand)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetDeckCard(string name)
+        public HSCard GetDeckCard(string name, bool exact = false, int precision = 4)
         {
             foreach (var card in Deck)
             {
@@ -301,10 +347,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Deck)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetPlayCard(string name)
+        public HSCard GetPlayCard(string name, bool exact = false, int precision = 4)
         {
             foreach (var card in Play)
             {
@@ -313,10 +375,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Play)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetSetasideCard(string name)
+        public HSCard GetSetasideCard(string name, bool exact = true, int precision = 4)
         {
             foreach (var card in Setaside)
             {
@@ -325,10 +403,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Setaside)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetGraveyardCard(string name)
+        public HSCard GetGraveyardCard(string name, bool exact = true, int precision = 4)
         {
             foreach (var card in Graveyard)
             {
@@ -337,10 +431,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Graveyard)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetRemovedCard(string name)
+        public HSCard GetRemovedCard(string name, bool exact = true, int precision = 4)
         {
             foreach (var card in Removed)
             {
@@ -349,10 +459,26 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Removed)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
         }
 
-        public HSCard GetSecretCard(string name)
+        public HSCard GetSecretCard(string name, bool exact = true, int precision = 4)
         {
             foreach (var card in Secret)
             {
@@ -361,7 +487,57 @@ namespace THS.HSApp
                     return card;
                 }
             }
+
+            if (!exact)
+            {
+
+                bool repeated = false;
+                HSCard correct = null;
+                foreach (var card in Secret)
+                {
+                    if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
+                    {
+                        if (repeated) return null;
+                        correct = card;
+                    }
+                }
+                return correct;
+            }
             return null;
+        }
+
+        public bool EqualsHeroName(string name, bool noothernames = false, bool exact = false, int precision = 4)
+        {
+            if (name.ToLower().Equals(Hero.Name.ToLower()))
+            {
+                return true;
+            }
+            if (!noothernames)
+            {
+                if (Enemy)
+                {
+                    foreach (var item in HsConstants.UserHeroNames)
+                    {
+
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            if (!exact)
+            {
+                if (name.Length >= precision && Hero.Name.ToLower().Contains(name.ToLower()))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
     }

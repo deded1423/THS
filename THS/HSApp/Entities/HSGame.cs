@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using HearthDb;
-using HearthDb.CardDefs;
+﻿using System.Collections.Generic;
 using HearthDb.Enums;
-using THS.HSImport;
 using THS.Utils;
-using Type = HearthDb.Enums.Type;
 using THS.Twitch_Integration;
-using System.Linq;
 
 namespace THS.HSApp
 {
@@ -472,7 +465,10 @@ namespace THS.HSApp
                 {
                     foreach (var target in targets)
                     {
-                        tmp.Add(card.Name + " attack " + target.Name);
+                        if (card.Attack > 0)
+                        {
+                            tmp.Add(card.Name + " attack " + target.Name);
+                        }
                     }
                 }
             }
@@ -713,6 +709,14 @@ namespace THS.HSApp
             }
             tmp.Sort((x, y) => x.ZonePos - y.ZonePos);
             return tmp;
+        }
+        public List<HSCard> GetUserSecret()
+        {
+            return User.Secret;
+        }
+        public List<HSCard> GetOpponentSecret()
+        {
+            return Opponent.Secret;
         }
     }
 }

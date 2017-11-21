@@ -5,12 +5,11 @@ using System.Windows.Forms;
 using THS.Twitch_Integration;
 using THS.Utils;
 using THS.Input;
-using System.Net.Sockets;
-using System.Net;
 using System.IO;
-using HearthMirror;
 using System.Diagnostics;
-using System.Windows.Input;
+using System.Linq;
+using HearthDb.Enums;
+using THS.HSApp.Dictionaries;
 
 namespace THS.Windows
 {
@@ -30,7 +29,7 @@ namespace THS.Windows
         private Config _configwindow;
 
         //IMPORT SHIT
-        private HSApp.HSCore GameCore;
+        public static HSApp.HSCore GameCore;
 
         public THS()
         {
@@ -38,6 +37,41 @@ namespace THS.Windows
             IO.OpenDebugFiles();
             ConfigFile.readConfigFile();
             irc = new IrcClient();
+            var mycards = CardDict.Dict;
+            var cards = HearthDb.Cards.All;
+
+            cards = cards.Where(item => !item.Value.Type.Equals(CardType.ENCHANTMENT)).ToDictionary(t => t.Key, t => t.Value);
+            var CORE = cards.Where(item => item.Value.Set.Equals(CardSet.CORE)).ToList();
+            var EXPERT1 = cards.Where(item => item.Value.Set.Equals(CardSet.EXPERT1)).ToList();
+            var HOF = cards.Where(item => item.Value.Set.Equals(CardSet.HOF)).ToList();
+
+            var NAXX = cards.Where(item => item.Value.Set.Equals(CardSet.NAXX)).ToList();
+            var GVG = cards.Where(item => item.Value.Set.Equals(CardSet.GVG)).ToList();
+            var BRM = cards.Where(item => item.Value.Set.Equals(CardSet.BRM)).ToList();
+            var TGT = cards.Where(item => item.Value.Set.Equals(CardSet.TGT)).ToList();
+            var LOE = cards.Where(item => item.Value.Set.Equals(CardSet.LOE)).ToList();
+            var KARA = cards.Where(item => item.Value.Set.Equals(CardSet.KARA)).ToList();
+            var KARA_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.KARA_RESERVE)).ToList();
+            var GANGS = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS)).ToList();
+            var GANGS_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS_RESERVE)).ToList();
+            var OG = cards.Where(item => item.Value.Set.Equals(CardSet.OG)).ToList();
+            var OG_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.OG_RESERVE)).ToList();
+            var UNGORO = cards.Where(item => item.Value.Set.Equals(CardSet.UNGORO)).ToList();
+            var ICECROWN = cards.Where(item => item.Value.Set.Equals(CardSet.ICECROWN)).ToList();
+
+            var HERO_SKINS = cards.Where(item => item.Value.Set.Equals(CardSet.HERO_SKINS)).ToList();
+            var NONE = cards.Where(item => item.Value.Set.Equals(CardSet.NONE)).ToList();
+            var PROMO = cards.Where(item => item.Value.Set.Equals(CardSet.PROMO)).ToList();
+            var MISSIONS = cards.Where(item => item.Value.Set.Equals(CardSet.MISSIONS)).ToList();
+            var SLUSH = cards.Where(item => item.Value.Set.Equals(CardSet.SLUSH)).ToList();
+            var TB = cards.Where(item => item.Value.Set.Equals(CardSet.TB)).ToList();
+            var TEST_TEMPORARY = cards.Where(item => item.Value.Set.Equals(CardSet.TEST_TEMPORARY)).ToList();
+            var BLANK = cards.Where(item => item.Value.Set.Equals(CardSet.BLANK)).ToList();
+            var CHEAT = cards.Where(item => item.Value.Set.Equals(CardSet.CHEAT)).ToList();
+            var CREDITS = cards.Where(item => item.Value.Set.Equals(CardSet.CREDITS)).ToList();
+            var DEBUG_SP = cards.Where(item => item.Value.Set.Equals(CardSet.DEBUG_SP)).ToList();
+            var DEMO = cards.Where(item => item.Value.Set.Equals(CardSet.DEMO)).ToList();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,13 +84,20 @@ namespace THS.Windows
                 while (true)
                 {
                     var num0 = Methods.GetKeyState(0x60);
+                    var num1 = Methods.GetKeyState(0x61);
                     var num2 = Methods.GetKeyState(0x62);
+                    var num3 = Methods.GetKeyState(0x63);
+                    var num4 = Methods.GetKeyState(0x64);
                     var num5 = Methods.GetKeyState(0x65);
+                    var num6 = Methods.GetKeyState(0x66);
+                    var num7 = Methods.GetKeyState(0x67);
                     var num8 = Methods.GetKeyState(0x68);
+                    var num9 = Methods.GetKeyState(0x69);
                     int index = 0;
 
                     if (num0 < 0)
                     {
+                        //Select Action Menu
                         listViewActions.Invoke(new Action(() =>
                         {
                             if (listViewActions.SelectedItems.Count == 1)
@@ -77,6 +118,16 @@ namespace THS.Windows
                             }
                         }));
                     }
+
+                    if (num1 < 0)
+                    {
+                        //Select Discover 1
+                        if (irc == null) return;
+                        var cmd = new CommandChat("Discover 1");
+                        irc.Queue.Enqueue(cmd);
+                        IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                    }
+
                     if (num2 < 0)
                     {
                         listViewActions.Invoke(new Action(() =>
@@ -89,6 +140,25 @@ namespace THS.Windows
                             }
                         }));
                     }
+
+                    if (num3 < 0)
+                    {
+                        //Select Choose 1
+                        if (irc == null) return;
+                        var cmd = new CommandChat("Choose 1");
+                        irc.Queue.Enqueue(cmd);
+                        IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                    }
+
+                    if (num4 < 0)
+                    {
+                        //Select Discover 2
+                        if (irc == null) return;
+                        var cmd = new CommandChat("Discover 2");
+                        irc.Queue.Enqueue(cmd);
+                        IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                    }
+
                     if (num5 < 0)
                     {
                         buttonActions_Click(null, null);
@@ -100,6 +170,25 @@ namespace THS.Windows
                             }
                         }));
                     }
+
+                    if (num3 < 0)
+                    {
+                        //Select Choose 2
+                        if (irc == null) return;
+                        var cmd = new CommandChat("Choose 2");
+                        irc.Queue.Enqueue(cmd);
+                        IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                    }
+
+                    if (num7 < 0)
+                    {
+                        //Select Discover 3
+                        if (irc == null) return;
+                        var cmd = new CommandChat("Discover 3");
+                        irc.Queue.Enqueue(cmd);
+                        IO.LogDebug(cmd.ToString(), IO.DebugFile.Twitch, false);
+                    }
+
                     if (num8 < 0)
                     {
                         listViewActions.Invoke(new Action(() =>
@@ -418,13 +507,13 @@ namespace THS.Windows
                             }
                             else if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target)) != null)
                             {
-                                MouseMovement.PlayCardOn(GameCore.Game.Opponent.Hand.Count, _namepos, true, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
+                                MouseMovement.PlayCardOn(GameCore.Game.User.Hand.Count, _namepos, true, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
                             }
-                            else if (GameCore.Game.User.Hero.Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
                             {
                                 MouseMovement.PlayCardOn(0, 0, false, 0, 0, true);
                             }
-                            else if (GameCore.Game.Opponent.Hero.Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
                             {
                                 MouseMovement.PlayCardOn(0, 0, true, 0, 0, true);
                             }
@@ -445,18 +534,23 @@ namespace THS.Windows
                             {
                                 MouseMovement.HeroPower(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1, true);
                             }
-                            else if (GameCore.Game.User.Hero.Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
                             {
                                 MouseMovement.HeroPower(false);
                             }
-                            else if (GameCore.Game.Opponent.Hero.Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
                             {
                                 MouseMovement.HeroPower(true);
                             }
                         }
                         break;
                     case PlayType.Attack:
-                        if ((GameCore.Game.User.GetPlayCard(cmd.Name) == null && !GameCore.Game.User.Hero.Name.ToLower().Equals(cmd.Name)) || (GameCore.Game.Opponent.GetPlayCard(cmd.Target) == null && !GameCore.Game.Opponent.Hero.Name.ToLower().Equals(cmd.Target)))
+                        if (GameCore.Game.User.GetPlayCard(cmd.Name) == null && !GameCore.Game.User.EqualsHeroName(cmd.Name))
+                        {
+                            IO.LogDebug("FAIL " + cmd.ToString(), IO.DebugFile.Input);
+                            continue;
+                        }
+                        if (GameCore.Game.Opponent.GetPlayCard(cmd.Target) == null && !GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
                         {
                             IO.LogDebug("FAIL " + cmd.ToString(), IO.DebugFile.Input);
                             continue;
@@ -465,20 +559,20 @@ namespace THS.Windows
                         {
                             if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target)) != null)
                             {
-                                MouseMovement.AttackCard(GameCore.Game.GetOpponentMinions().Count, name.ZonePos - 1, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
+                                MouseMovement.AttackCard(GameCore.Game.GetUserMinions().Count, name.ZonePos - 1, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
                             }
-                            else if ((target = GameCore.Game.Opponent.Hero).Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
                             {
-                                MouseMovement.AttackCard(GameCore.Game.GetOpponentMinions().Count, name.ZonePos - 1, 0, 0, true);
+                                MouseMovement.AttackCard(GameCore.Game.GetUserMinions().Count, name.ZonePos - 1, 0, 0, true);
                             }
                         }
-                        else if ((name = GameCore.Game.User.Hero).Name.ToLower().Equals(cmd.Name))
+                        else if ((name = GameCore.Game.User.Hero).Name.ToLower().Equals(cmd.Name) || GameCore.Game.User.EqualsHeroName(cmd.Name))
                         {
                             if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target)) != null)
                             {
                                 MouseMovement.AttackHero(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
                             }
-                            else if ((target = GameCore.Game.Opponent.Hero).Name.ToLower().Equals(cmd.Target))
+                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
                             {
                                 MouseMovement.AttackHero(0, 0, true);
                             }

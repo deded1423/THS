@@ -1,9 +1,6 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
-using System.Collections.Generic;
-using Type = System.Type;
 
 namespace THS.Utils
 {
@@ -13,12 +10,12 @@ namespace THS.Utils
     }
     public class InstructionRegexType
     { //TODO: Ver como se diferencian 2 cartas que son iguales
-        public static Regex InstructionPlayRegex = new Regex(@"play\s+(?<name>(.+))");
-        public static Regex InstructionPlayOnRegex = new Regex(@"play\s+(?<name>(.+))\s+on\s+(?<target>.+)");
+        public static Regex InstructionPlayRegex = new Regex(@"(play|use)\s+(?<name>(.+))");
+        public static Regex InstructionPlayOnRegex = new Regex(@"(play|use)\s+(?<name>(.+))\s+on\s+(?<target>.+)");
         public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
         public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
-        public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+attacks?\s+(?<target>.+)");
-        public static Regex InstructionEndRegex = new Regex(@"^end turn$");
+        public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+(attacks?|trade|atk)\s+(?<target>.+)");
+        public static Regex InstructionEndRegex = new Regex(@"^(end turn)|(end)$");
 
         public static Regex PlayRegex = new Regex(@"^play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))$");
         public static Regex PlayOnBoardRegex = new Regex(@"^play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))\s(?<enemy>([ef]))\s(?<boardSize>(\d))\s(?<boardNumber>(\d))$");
@@ -31,17 +28,14 @@ namespace THS.Utils
         public static Regex HeroPowerHeroRegex = new Regex(@"^power\s(?<enemy>([ef]))\shero$");
         public static Regex HeroPowerBoardRegex = new Regex(@"^power\s(?<enemy>([ef]))\s(?<boardSize>(\d))\s(?<boardNumber>(\d))$");
 
-        public static Regex ChooseRegex = new Regex(@"^choose\s(?<card>(\d))$");
-        public static Regex DiscoverRegex = new Regex(@"^discover\s(?<card>(\d))$");
+        public static Regex ChooseRegex = new Regex(@"^choose\s(?<card>([12]))$");
+        public static Regex DiscoverRegex = new Regex(@"^discover\s(?<card>([123]))$");
         public static Regex MulliganRegex = new Regex(@"^mulligan\s(?<first>(\d))\s(?<second>(\d))\s(?<third>(\d))(\s(?<fourth>(\d)))*$");
         public static Regex EmoteRegex = new Regex(@"^emote\s(?<emote>(\w+))$");
         public static Regex QueueRegex = new Regex(@"^queue\s(?<deck>(\d{1,2}))$");
         public static Regex SilenceRegex = new Regex(@"^silence$");
         public static Regex SeeDeckRegex = new Regex(@"^deck$");
         public static Regex ConcedeRegex = new Regex(@"^concede$");
-
-
-        public static Regex EndRegex = new Regex(@"^end$");
     }
     public enum PlayType
     {
@@ -110,8 +104,10 @@ namespace THS.Utils
     }
 
 
-    public class HsConstants
+    public static class HsConstants
     {
+        public static string[] UserHeroNames = { };
+
         public static int TagToInt(GameTag tag, string value)
         {
             int temp;

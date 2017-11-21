@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using THS.Utils;
 using static THS.Input.Methods;
 
@@ -582,7 +578,7 @@ namespace THS.Input
         public static void ChooseOne(int card)
         {
             IO.LogDebug("ChooseOne card " + ++card, IO.DebugFile.Input);
-            if (card == 1)
+            if (card == 2)
             {
                 MoveMouseHs(HSPoints.ChooseOne_Left);
                 Methods.ClickMouseHS(true);
@@ -598,8 +594,8 @@ namespace THS.Input
 
         public static void Discover(int card)
         {
-            IO.LogDebug("Discover card " + card + 1, IO.DebugFile.Input);
-            MoveMouseHs(HSPoints.DiscoverThree[card]);
+            IO.LogDebug("Discover card " + card , IO.DebugFile.Input);
+            MoveMouseHs(HSPoints.DiscoverThree[card -1]);
             Methods.ClickMouseHS(true);
             Thread.Sleep(100);
             RestMouse();

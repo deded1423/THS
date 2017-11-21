@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using HearthDb;
-using HearthDb.CardDefs;
 using THS.Utils;
 using HearthDb.Enums;
 using System;
@@ -39,6 +37,14 @@ namespace THS.HSApp
                 IO.LogDebug("Added " + Id + " " + CardDB?.Name + " Tag: " + tag + " to " + i, IO.DebugFile.Hs, false);
                 Tags.Add(gt, i);
             }
+        }
+        public bool CheckTag(GameTag tag)
+        {
+            if (Tags.ContainsKey(tag))
+            {
+                return (Tags[tag] == 1 ? true : false);
+            }
+            return false;
         }
 
         public string Name
@@ -199,6 +205,28 @@ namespace THS.HSApp
                 return false;
             }
         }
+        public bool Immune
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.IMMUNE))
+                {
+                    return Tags[GameTag.IMMUNE] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool CantTarget
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.CANT_BE_TARGETED_BY_ABILITIES))
+                {
+                    return Tags[GameTag.CANT_BE_TARGETED_BY_ABILITIES] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
         public bool Windfury
         {
             get
@@ -206,6 +234,17 @@ namespace THS.HSApp
                 if (Tags.ContainsKey(GameTag.WINDFURY))
                 {
                     return Tags[GameTag.WINDFURY] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+        public bool Frozen
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.FROZEN))
+                {
+                    return Tags[GameTag.FROZEN] == 1 ? true : false;
                 }
                 return false;
             }

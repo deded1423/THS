@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using THS.HSImport;
 using THS.Twitch_Integration;
-using THS.Windows;
 
 namespace THS.HSApp
 {
@@ -20,6 +14,7 @@ namespace THS.HSApp
             Game = new HSApp.HSGame(irc, this);
             _logHandler = new LogHandler(Game);
             ths = window;
+            Dictionaries.CardDict.UpdateGame(Game);
         }
 
         public void Start() => (new Thread(_logHandler.StartLogReader) { IsBackground = true, Name = "Main Log Handler" }).Start();
