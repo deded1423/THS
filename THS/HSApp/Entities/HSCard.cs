@@ -99,6 +99,30 @@ namespace THS.HSApp
             }
 
         }
+        public Race Race
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.CARDRACE))
+                {
+                    return (Race)Tags[GameTag.CARDRACE];
+                }
+                return Race.INVALID;
+            }
+
+        }
+        public Rarity Rarity
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.RARITY))
+                {
+                    return (Rarity)Tags[GameTag.RARITY];
+                }
+                return Rarity.INVALID;
+            }
+
+        }
         public int Attack
         {
             get

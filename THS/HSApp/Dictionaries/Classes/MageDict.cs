@@ -3,18 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using THS.HSApp.Dictionaries.Util;
+using THS.HSApp.Dictionaries.Misc;
 
-namespace THS.HSApp.Dictionaries
+namespace THS.HSApp.Dictionaries.Classes
 {
     class MageDict
     {
         private static CardBase foo;
-        public static void MageCORE(Dictionary<string, CardBase> Dict)
+        public static void Update(Dictionary<string, CardBase> Dict)
+        {
+
+            CORE(Dict);
+            EXPERT(Dict);
+            HOF(Dict);
+            NAXX(Dict);
+            GVG(Dict);
+            BRM(Dict);
+            TGT(Dict);
+            LOE(Dict);
+            OG(Dict);
+            KARA(Dict);
+            GANGS(Dict);
+            UNGORO(Dict);
+            ICECROWN(Dict);
+            TB(Dict);
+        }
+        public static void CORE(Dictionary<string, CardBase> Dict)
         {
             //Polymorph
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("CS2_022", foo);
             //Arcane Intellect
@@ -22,7 +40,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("CS2_023", foo);
             //Frostbolt
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("CS2_024", foo);
             //Arcane Explosion
@@ -37,7 +55,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("CS2_027", foo);
             //Fire Ball
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("CS2_029", foo);
             //Flamestrike
@@ -49,7 +67,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("CS2_033", foo);
             //Fireblast
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("CS2_034", foo);
             //Mirror Image (Minion)
@@ -61,7 +79,7 @@ namespace THS.HSApp.Dictionaries
             foo.PlayFunc = Play.Minion;
             Dict.Add("EX1_277", foo);
         }
-        public static void MageEXPERT(Dictionary<string, CardBase> Dict)
+        public static void EXPERT(Dictionary<string, CardBase> Dict)
         {
             //Blizzard
             foo = new CardBase();
@@ -72,12 +90,12 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("EX1_274", foo);
             //Cone of Cold
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("EX1_275", foo);
             //Pyroblast
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("EX1_279", foo);
             //Counterspell
@@ -125,22 +143,22 @@ namespace THS.HSApp.Dictionaries
             foo.PlayFunc = Play.Minion;
             Dict.Add("tt_010a", foo);
         }
-        public static void MageHOF(Dictionary<string, CardBase> Dict)
+        public static void HOF(Dictionary<string, CardBase> Dict)
         {
             //Ice Lance
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("CS2_031", foo);
         }
-        public static void MageNAXX(Dictionary<string, CardBase> Dict)
+        public static void NAXX(Dictionary<string, CardBase> Dict)
         {
             //Duplicate
             foo = new CardBase();
             foo.PlayFunc = () => Play.SpellSecret("FP1_018");
             Dict.Add("FP1_018", foo);
         }
-        public static void MageGVG(Dictionary<string, CardBase> Dict)
+        public static void GVG(Dictionary<string, CardBase> Dict)
         {
             //Flamecannon
             foo = new CardBase();
@@ -167,13 +185,13 @@ namespace THS.HSApp.Dictionaries
             //Wee Spellstopper
             foo = new CardBase();
             foo.PlayFunc = Play.Minion;
-            Dict.Add("GVG_112", foo);
+            Dict.Add("GVG_122", foo);
             //Soot Spewer
             foo = new CardBase();
             foo.PlayFunc = Play.Minion;
             Dict.Add("GVG_123", foo);
         }
-        public static void MageBRM(Dictionary<string, CardBase> Dict)
+        public static void BRM(Dictionary<string, CardBase> Dict)
         {
             //Flamewalker
             foo = new CardBase();
@@ -181,15 +199,15 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("BRM_002", foo);
             //Dragon's Breath
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("BRM_003", foo);
         }
-        public static void MageTGT(Dictionary<string, CardBase> Dict)
+        public static void TGT(Dictionary<string, CardBase> Dict)
         {
             //Flame Lance
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("AT_001", foo);
             //Effigy
@@ -202,11 +220,12 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("AT_003", foo);
             //Arcane Blast
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("AT_004", foo);
             //Polymorph: Boar
             foo = new CardBase();
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("AT_005", foo);
             //Dalaran Aspirant
@@ -227,20 +246,20 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("AT_009", foo);
             //Fireblast Rank 2
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("AT_132_MAGE", foo);
         }
-        public static void MageLOE(Dictionary<string, CardBase> Dict)
+        public static void LOE(Dictionary<string, CardBase> Dict)
         {
             //Forgotten Torch
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("LOE_002", foo);
             //Roaring Torch
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("LOE_002t", foo);
             //Ethereal Conjurer
@@ -253,12 +272,12 @@ namespace THS.HSApp.Dictionaries
             foo.PlayFunc = Play.Minion;
             Dict.Add("LOE_119", foo);
         }
-        public static void MageOG(Dictionary<string, CardBase> Dict)
+        public static void OG(Dictionary<string, CardBase> Dict)
         {
             //Shatter
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
-            foo.PlayFunc = () => Play.SpellTargetMinionAllWithTag(HearthDb.Enums.GameTag.FROZEN);
+            foo.TargetFunc = () => Target.SpellTargetMinionAll(HearthDb.Enums.GameTag.FROZEN);
+            foo.PlayFunc = () => Play.SpellTargetMinionAll(HearthDb.Enums.GameTag.FROZEN);
             Dict.Add("OG_081", foo);
             //Twilight Flamecaller
             foo = new CardBase();
@@ -270,7 +289,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("OG_085", foo);
             //Forbidden Flame
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("OG_086", foo);
             //Servant of Yogg-Saron
@@ -283,7 +302,7 @@ namespace THS.HSApp.Dictionaries
             //Anomalus
             foo = new CardBase();
             foo.PlayFunc = Play.Minion;
-            Dict.Add("LOE_002", foo);
+            Dict.Add("OG_120", foo);
             //Faceless Summoner
             foo = new CardBase();
             foo.PlayFunc = Play.SpellTargetAll;
@@ -293,7 +312,7 @@ namespace THS.HSApp.Dictionaries
             foo.PlayFunc = Play.Minion;
             Dict.Add("OG_303", foo);
         }
-        public static void MageKARA(Dictionary<string, CardBase> Dict)
+        public static void KARA(Dictionary<string, CardBase> Dict)
         {
             //Babbling Book
             foo = new CardBase();
@@ -301,20 +320,20 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("KAR_009", foo);
             //Forbidden Flame
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("KAR_076", foo);
             //Medivh's Valet
             foo = new CardBase();
             foo.TargetFunc = Target.MedivhsValet;
             foo.PlayFunc = Play.Minion;
-            Dict.Add("OG_086", foo);
+            Dict.Add("KAR_092", foo);
         }
-        public static void MageGANGS(Dictionary<string, CardBase> Dict)
+        public static void GANGS(Dictionary<string, CardBase> Dict)
         {
             //Freezing Potion
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetEnemy;
             foo.PlayFunc = Play.SpellTargetEnemy;
             Dict.Add("CFM_021", foo);
             //Volcanic Potion
@@ -333,7 +352,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("CFM_623", foo);
             //Manic Soulcaster
             foo = new CardBase();
-            foo.TargetFunc = Target.OneFriendlyBoard;
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
             foo.PlayFunc = Play.Minion;
             Dict.Add("CFM_660", foo);
             //Cryomancer
@@ -347,13 +366,13 @@ namespace THS.HSApp.Dictionaries
             //Kabal Crystal Runner
             foo = new CardBase();
             foo.PlayFunc = Play.Minion;
-            Dict.Add("CFM 760", foo);
+            Dict.Add("CFM_760", foo);
         }
-        public static void MageUNGORO(Dictionary<string, CardBase> Dict)
+        public static void UNGORO(Dictionary<string, CardBase> Dict)
         {
             //Flame geyser
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetAll;
             foo.PlayFunc = Play.SpellTargetAll;
             Dict.Add("UNG_018", foo);
             //Arcanologist
@@ -396,16 +415,16 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("UNG_941", foo);
             //Molten Reflection
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
-            foo.PlayFunc = Play.SpellTarget;
+            foo.TargetFunc = Target.SpellTargetMinionUser;
+            foo.PlayFunc = Play.SpellTargetMinionUser;
             Dict.Add("UNG_948", foo);
             //Meteor
             foo = new CardBase();
-            foo.TargetFunc = Target.AlwaysTarget;
+            foo.TargetFunc = Target.SpellTargetMinionAll;
             foo.PlayFunc = Play.SpellTargetMinionAll;
             Dict.Add("UNG_955", foo);
         }
-        public static void MageICECROWN(Dictionary<string, CardBase> Dict)
+        public static void ICECROWN(Dictionary<string, CardBase> Dict)
         {
             //Ice Walker
             foo = new CardBase();
@@ -417,7 +436,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("ICC_069", foo);
             //Frozen Clone
             foo = new CardBase();
-            foo.PlayFunc = ()=> Play.SpellSecret("ICC_082");
+            foo.PlayFunc = () => Play.SpellSecret("ICC_082");
             Dict.Add("ICC_082", foo);
             //Doomed Apprentice
             foo = new CardBase();
@@ -454,9 +473,8 @@ namespace THS.HSApp.Dictionaries
             foo.PlayFunc = Play.Minion;
             Dict.Add("ICC_838t", foo);
         }
-        public static void MageTB(Dictionary<string, CardBase> Dict)
+        public static void TB(Dictionary<string, CardBase> Dict)
         {
-
         }
     }
 }

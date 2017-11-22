@@ -125,10 +125,18 @@
     </Compile>
     <Compile Include="HSApp\Dictionaries\CardBase.cs" />
     <Compile Include="HSApp\Dictionaries\CardDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\DruidDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\HunterDict.cs" />
     <Compile Include="HSApp\Dictionaries\Classes\MageDict.cs" />
     <Compile Include="HSApp\Dictionaries\Classes\NeutralDict.cs" />
-    <Compile Include="HSApp\Dictionaries\Util\Play.cs" />
-    <Compile Include="HSApp\Dictionaries\Util\Target.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\PaladinDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\PriestDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\RogueDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\ShamanDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\WarlockDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Classes\WarriorDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Misc\Play.cs" />
+    <Compile Include="HSApp\Dictionaries\Misc\Target.cs" />
     <Compile Include="HSApp\Entities\HSCard.cs" />
     <Compile Include="HSApp\Entities\HSGame.cs" />
     <Compile Include="HSApp\Entities\HSPlayer.cs" />

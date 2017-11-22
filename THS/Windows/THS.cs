@@ -31,6 +31,9 @@ namespace THS.Windows
         //IMPORT SHIT
         public static HSApp.HSCore GameCore;
 
+        public int a = 0;
+        public Dictionary<string, HearthDb.Card> all;
+
         public THS()
         {
             InitializeComponent();
@@ -39,41 +42,86 @@ namespace THS.Windows
             irc = new IrcClient();
             var mycards = CardDict.Dict;
             var cards = HearthDb.Cards.All;
+            all = HearthDb.Cards.All.DeepClone();
 
+            all = all.Where(item => !item.Value.Type.Equals(CardType.ENCHANTMENT)).ToDictionary(t => t.Key, t => t.Value);
             cards = cards.Where(item => !item.Value.Type.Equals(CardType.ENCHANTMENT)).ToDictionary(t => t.Key, t => t.Value);
-            var CORE = cards.Where(item => item.Value.Set.Equals(CardSet.CORE)).ToList();
-            var EXPERT1 = cards.Where(item => item.Value.Set.Equals(CardSet.EXPERT1)).ToList();
-            var HOF = cards.Where(item => item.Value.Set.Equals(CardSet.HOF)).ToList();
 
-            var NAXX = cards.Where(item => item.Value.Set.Equals(CardSet.NAXX)).ToList();
-            var GVG = cards.Where(item => item.Value.Set.Equals(CardSet.GVG)).ToList();
-            var BRM = cards.Where(item => item.Value.Set.Equals(CardSet.BRM)).ToList();
-            var TGT = cards.Where(item => item.Value.Set.Equals(CardSet.TGT)).ToList();
-            var LOE = cards.Where(item => item.Value.Set.Equals(CardSet.LOE)).ToList();
-            var KARA = cards.Where(item => item.Value.Set.Equals(CardSet.KARA)).ToList();
-            var KARA_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.KARA_RESERVE)).ToList();
-            var GANGS = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS)).ToList();
-            var GANGS_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS_RESERVE)).ToList();
-            var OG = cards.Where(item => item.Value.Set.Equals(CardSet.OG)).ToList();
-            var OG_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.OG_RESERVE)).ToList();
-            var UNGORO = cards.Where(item => item.Value.Set.Equals(CardSet.UNGORO)).ToList();
-            var ICECROWN = cards.Where(item => item.Value.Set.Equals(CardSet.ICECROWN)).ToList();
+            var CORE = cards.Where(item => item.Value.Set.Equals(CardSet.CORE)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(CORE, "CORE");
+            var EXPERT1 = cards.Where(item => item.Value.Set.Equals(CardSet.EXPERT1)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(EXPERT1, "EXPERT1");
+            var HOF = cards.Where(item => item.Value.Set.Equals(CardSet.HOF)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(HOF, "HOF");
+            var NAXX = cards.Where(item => item.Value.Set.Equals(CardSet.NAXX)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(NAXX, "NAXX");
+            var GVG = cards.Where(item => item.Value.Set.Equals(CardSet.GVG)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(GVG, "GVG");
+            var BRM = cards.Where(item => item.Value.Set.Equals(CardSet.BRM)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(BRM, "BRM");
+            var TGT = cards.Where(item => item.Value.Set.Equals(CardSet.TGT)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(TGT, "TGT");
+            var LOE = cards.Where(item => item.Value.Set.Equals(CardSet.LOE)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(LOE, "LOE");
+            var KARA = cards.Where(item => item.Value.Set.Equals(CardSet.KARA)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(KARA, "KARA");
+            var KARA_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.KARA_RESERVE)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(KARA_RESERVE, "KARA_RESERVE");
+            var GANGS = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(GANGS, "GANGS");
+            var GANGS_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.GANGS_RESERVE)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(GANGS_RESERVE, "GANGS_RESERVE");
+            var OG = cards.Where(item => item.Value.Set.Equals(CardSet.OG)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(OG, "OG");
+            var OG_RESERVE = cards.Where(item => item.Value.Set.Equals(CardSet.OG_RESERVE)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(OG_RESERVE, "OG_RESERVE");
+            var UNGORO = cards.Where(item => item.Value.Set.Equals(CardSet.UNGORO)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(UNGORO, "UNGORO");
+            var ICECROWN = cards.Where(item => item.Value.Set.Equals(CardSet.ICECROWN)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(ICECROWN, "ICECROWN");
 
-            var HERO_SKINS = cards.Where(item => item.Value.Set.Equals(CardSet.HERO_SKINS)).ToList();
-            var NONE = cards.Where(item => item.Value.Set.Equals(CardSet.NONE)).ToList();
-            var PROMO = cards.Where(item => item.Value.Set.Equals(CardSet.PROMO)).ToList();
-            var MISSIONS = cards.Where(item => item.Value.Set.Equals(CardSet.MISSIONS)).ToList();
-            var SLUSH = cards.Where(item => item.Value.Set.Equals(CardSet.SLUSH)).ToList();
-            var TB = cards.Where(item => item.Value.Set.Equals(CardSet.TB)).ToList();
-            var TEST_TEMPORARY = cards.Where(item => item.Value.Set.Equals(CardSet.TEST_TEMPORARY)).ToList();
-            var BLANK = cards.Where(item => item.Value.Set.Equals(CardSet.BLANK)).ToList();
-            var CHEAT = cards.Where(item => item.Value.Set.Equals(CardSet.CHEAT)).ToList();
-            var CREDITS = cards.Where(item => item.Value.Set.Equals(CardSet.CREDITS)).ToList();
-            var DEBUG_SP = cards.Where(item => item.Value.Set.Equals(CardSet.DEBUG_SP)).ToList();
-            var DEMO = cards.Where(item => item.Value.Set.Equals(CardSet.DEMO)).ToList();
-
+            var HERO_SKINS = cards.Where(item => item.Value.Set.Equals(CardSet.HERO_SKINS)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(HERO_SKINS, "HERO_SKINS");
+            var MISSIONS = cards.Where(item => item.Value.Set.Equals(CardSet.MISSIONS)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(MISSIONS, "MISSIONS");
+            var TB = cards.Where(item => item.Value.Set.Equals(CardSet.TB)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(TB, "TB");
+            var CREDITS = cards.Where(item => item.Value.Set.Equals(CardSet.CREDITS)).ToDictionary(t => t.Key, t => t.Value);
+            aaa(CREDITS, "CREDITS");
         }
+        void aaa(Dictionary<string, HearthDb.Card> dict, string name)
+        {
+            a += dict.Count;
+            foreach (var _class in Enum.GetValues(typeof(CardClass)))
+            {
+                if (!Directory.Exists(Path.Combine(GlobalConstants.LogPath, "Test", Enum.GetName(typeof(CardClass), _class))))
+                {
+                    Directory.CreateDirectory(Path.Combine(GlobalConstants.LogPath, "Test", Enum.GetName(typeof(CardClass), _class)));
+                }
 
+                StreamWriter writer;
+                if (!File.Exists(Path.Combine(GlobalConstants.LogPath, "Test", Enum.GetName(typeof(CardClass), _class), name + ".txt")))
+                {
+                    writer = new StreamWriter(new FileStream(Path.Combine(GlobalConstants.LogPath, "Test", Enum.GetName(typeof(CardClass), _class), name + ".txt"), FileMode.CreateNew));
+                }
+                else
+                {
+                    writer = new StreamWriter(Path.Combine(GlobalConstants.LogPath, "Test", Enum.GetName(typeof(CardClass), _class), name + ".txt"));
+                }
+                foreach (var item in dict)
+                {
+                    if (item.Value.Class.Equals(_class))
+                    {
+                        all.Remove(item.Key);
+                        writer.WriteLine("//" + item.Value.ToString());
+                        writer.WriteLine("foo = new CardBase();");
+                        writer.WriteLine("foo.PlayFunc = Play.Minion;");
+                        writer.WriteLine("Dict.Add(\"" + item.Value.Id + "\", foo);");
+                        writer.Flush();
+                    }
+                }
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             //var decks = Reflection.GetDecks();

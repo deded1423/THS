@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using THS.HSApp.Dictionaries.Classes;
 
 namespace THS.HSApp.Dictionaries
 {
@@ -9,20 +10,23 @@ namespace THS.HSApp.Dictionaries
 
         static CardDict()
         {
-            MageDict.MageCORE(Dict);
-            MageDict.MageEXPERT(Dict);
-            MageDict.MageHOF(Dict);
-            MageDict.MageNAXX(Dict);
-            MageDict.MageGVG(Dict);
-            MageDict.MageBRM(Dict);
-            MageDict.MageTGT(Dict);
+            NeutralDict.Update(Dict);
+            MageDict.Update(Dict);
+            RogueDict.Update(Dict);
+            DruidDict.Update(Dict);
+            HunterDict.Update(Dict);
+            PaladinDict.Update(Dict);
+            PriestDict.Update(Dict);
+            ShamanDict.Update(Dict);
+            WarlockDict.Update(Dict);
+            WarriorDict.Update(Dict);
         }
         public static void UpdateGame(HSGame Game)
         {
-            Util.Play.Game = Game;
-            Util.Play.Core = Game.GameCore;
-            Util.Target.Game = Game;
-            Util.Target.Core = Game.GameCore;
+            Misc.Play.Game = Game;
+            Misc.Play.Core = Game.GameCore;
+            Misc.Target.Game = Game;
+            Misc.Target.Core = Game.GameCore;
         }
     }
 }

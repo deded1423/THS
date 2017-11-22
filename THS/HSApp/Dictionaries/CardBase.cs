@@ -1,6 +1,7 @@
 ﻿using HearthDb;
 using System;
-using THS.HSApp.Dictionaries.Util;
+using System.Collections.Generic;
+using THS.HSApp.Dictionaries.Misc;
 
 namespace THS.HSApp.Dictionaries
 {
@@ -8,7 +9,7 @@ namespace THS.HSApp.Dictionaries
     {
         public bool HasDiscover;
         public bool HasChoose;
-        public Func<bool> TargetFunc;
+        public Func<List<HSCard>> TargetFunc;
         public Func<bool> PlayFunc;
 
         public CardBase()
