@@ -7,15 +7,19 @@ namespace THS.HSApp.Dictionaries
 {
     public class CardBase
     {
-        public bool HasDiscover;
-        public bool HasChoose;
+        public Func<bool> DiscoverFunc;
+        public string[] DiscoverArray;
+        public Func<bool> ChooseFunc;
+        public string[] ChooseArray;
         public Func<List<HSCard>> TargetFunc;
         public Func<bool> PlayFunc;
 
         public CardBase()
         {
-            HasDiscover = false;
-            HasChoose = false;
+            DiscoverFunc = Discover.NeverDiscover;
+            DiscoverArray = null;
+            ChooseFunc = Choose.NeverChoose;
+            ChooseArray = null;
             TargetFunc = Target.NoTarget;
             PlayFunc = () => true;
         }

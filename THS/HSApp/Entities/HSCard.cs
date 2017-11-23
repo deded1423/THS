@@ -123,6 +123,7 @@ namespace THS.HSApp
             }
 
         }
+
         public int Attack
         {
             get
@@ -174,6 +175,7 @@ namespace THS.HSApp
                 return Health;
             }
         }
+
         public bool DivineShield
         {
             get
@@ -262,6 +264,18 @@ namespace THS.HSApp
                 return false;
             }
         }
+        public bool Deathrattle
+        {
+            get
+            {
+                if (Tags.ContainsKey(GameTag.DEATHRATTLE))
+                {
+                    return Tags[GameTag.DEATHRATTLE] == 1 ? true : false;
+                }
+                return false;
+            }
+        }
+
         public bool Frozen
         {
             get
@@ -284,17 +298,6 @@ namespace THS.HSApp
                 return false;
             }
         }
-        public int Armor
-        {
-            get
-            {
-                if (CardType.Equals(CardType.HERO) && Tags.ContainsKey(GameTag.ARMOR))
-                {
-                    return Tags[GameTag.ARMOR];
-                }
-                return 0;
-            }
-        }
         public bool IsSecret
         {
             get
@@ -304,6 +307,18 @@ namespace THS.HSApp
                     return true;
                 }
                 return false;
+            }
+        }
+        //Hero
+        public int Armor
+        {
+            get
+            {
+                if (CardType.Equals(CardType.HERO) && Tags.ContainsKey(GameTag.ARMOR))
+                {
+                    return Tags[GameTag.ARMOR];
+                }
+                return 0;
             }
         }
 

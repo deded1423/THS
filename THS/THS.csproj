@@ -135,6 +135,8 @@
     <Compile Include="HSApp\Dictionaries\Classes\ShamanDict.cs" />
     <Compile Include="HSApp\Dictionaries\Classes\WarlockDict.cs" />
     <Compile Include="HSApp\Dictionaries\Classes\WarriorDict.cs" />
+    <Compile Include="HSApp\Dictionaries\Misc\Choose.cs" />
+    <Compile Include="HSApp\Dictionaries\Misc\Discover.cs" />
     <Compile Include="HSApp\Dictionaries\Misc\Play.cs" />
     <Compile Include="HSApp\Dictionaries\Misc\Target.cs" />
     <Compile Include="HSApp\Entities\HSCard.cs" />

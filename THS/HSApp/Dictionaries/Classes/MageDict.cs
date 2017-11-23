@@ -264,7 +264,7 @@ namespace THS.HSApp.Dictionaries.Classes
             Dict.Add("LOE_002t", foo);
             //Ethereal Conjurer
             foo = new CardBase();
-            foo.HasDiscover = true;
+            foo.DiscoverFunc = Discover.NeverDiscover;
             foo.PlayFunc = Play.Minion;
             Dict.Add("LOE_003", foo);
             //Animated Armor
@@ -411,7 +411,7 @@ namespace THS.HSApp.Dictionaries.Classes
             Dict.Add("UNG_846", foo);
             //Primordial Glyph
             foo = new CardBase();
-            foo.HasDiscover = true;
+            foo.DiscoverFunc = Discover.AlwaysDiscover;
             Dict.Add("UNG_941", foo);
             //Molten Reflection
             foo = new CardBase();

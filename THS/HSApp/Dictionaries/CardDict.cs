@@ -27,6 +27,10 @@ namespace THS.HSApp.Dictionaries
             Misc.Play.Core = Game.GameCore;
             Misc.Target.Game = Game;
             Misc.Target.Core = Game.GameCore;
+            Misc.Discover.Game = Game;
+            Misc.Discover.Core = Game.GameCore;
+            Misc.Choose.Game = Game;
+            Misc.Choose.Core = Game.GameCore;
         }
     }
 }

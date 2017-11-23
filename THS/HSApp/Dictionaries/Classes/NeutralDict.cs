@@ -657,6 +657,7 @@ namespace THS.HSApp.Dictionaries
             Dict.Add("EX1_tk29", foo);
             //Hungry Crab <b>Battlecry:</b> Destroy a Murloc and gain +2/+2.
             foo = new CardBase();
+            foo.TargetFunc = () => Target.MinionImmuneTargetMinionAll((card) => card.Race.Equals(Race.MURLOC));
             foo.PlayFunc = Play.Minion;
             Dict.Add("NEW1_017", foo);
             //Bloodsail Raider <b>Battlecry:</b> Gain Attack equal to the Attack of your weapon.
@@ -2535,21 +2536,2751 @@ namespace THS.HSApp.Dictionaries
         }
         public static void LOE(Dictionary<string, CardBase> Dict)
         {
+            //Eye of Hakkar Take a secret from your opponent's deck and put it into the battlefield.
+            foo = new CardBase();
+            Dict.Add("LOE_008", foo);
+            //Eye of Hakkar Take a secret from your opponent's deck and put it into the battlefield.
+            foo = new CardBase();
+            Dict.Add("LOE_008H", foo);
+            //Reno Jackson <b>Battlecry:</b> If your deck has no duplicates, fully heal your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_011", foo);
+            //Rock <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_016t", foo);
+            //Map to the Golden Monkey Shuffle the Golden Monkey into your deck. Draw a card.
+            foo = new CardBase();
+            Dict.Add("LOE_019t", foo);
+            //Golden Monkey <b>Taunt</b> < b > Battlecry:</ b > Replace your hand and deck with<b> Legendary</ b > minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_019t2", foo);
+            //Rolling Boulder At the end of your turn, destroy the minion to the left.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_024t", foo);
+            //Jeweled Scarab <b>Battlecry: Discover</b> a 3 - Cost card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_029", foo);
+            //Naga Sea Witch Your cards cost (5).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_038", foo);
+            //Gorillabot A-3 <b>Battlecry:</b> If you control another Mech, <b>Discover</b> a Mech.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_039", foo);
+            //Huge Toad <b>Deathrattle:</b> Deal 1 damage to a random enemy.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_046", foo);
+            //Tomb Spider <b>Battlecry: Discover</b> a Beast.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_047", foo);
+            //Djinni of Zephyrs After you cast a spell on another friendly minion, cast a copy of it on this one.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_053", foo);
+            //Anubisath Sentinel <b>Deathrattle:</b> Give a random friendly minion +3/+3.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_061", foo);
+            //Fossilized Devilsaur <b>Battlecry:</b> If you control a Beast, gain <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_073", foo);
+            //Sir Finley Mrrgglton <b>Battlecry: Discover</b> a new basic Hero Power.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_076", foo);
+            //Brann Bronzebeard Your <b>Battlecries</b> trigger twice.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_077", foo);
+            //Elise Starseeker <b>Battlecry:</b> Shuffle the 'Map to the Golden Monkey'   into your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_079", foo);
+            //Summoning Stone Whenever you cast a spell, summon a random minion of the same Cost.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_086", foo);
+            //Wobbling Runts <b>Deathrattle:</b> Summon three 2/2 Runts.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_089", foo);
+            //Rascally Runt 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_089t", foo);
+            //Wily Runt 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_089t2", foo);
+            //Grumbly Runt 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_089t3", foo);
+            //Arch-Thief Rafaam <b>Battlecry: Discover</b> a powerful Artifact.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_092", foo);
+            //Eerie Statue Can’t attack unless it’s the only minion in the battlefield.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_107", foo);
+            //Ancient Shade <b>Battlecry:</b> Shuffle an 'Ancient Curse' into your deck that deals 7 damage to you when drawn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOE_110", foo);
+            //Ancient Curse When you draw this, take 7 damage and draw a card.
+            foo = new CardBase();
+            Dict.Add("LOE_110t", foo);
+
+            //Sun Raider Phaerix 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_01", foo);
+            //Sun Raider Phaerix 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_01h", foo);
+            //Blessings of the Sun <b>Passive Hero Power</b> Whoever controls the Rod of the Sun is < b > Immune.</ b >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_02", foo);
+            //Blessings of the Sun <b>Passive Hero Power</b> Phaerix is < b > Immune </ b > while he controls the Rod of the Sun.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_02h", foo);
+            //Rod of the Sun <b>Deathrattle:</b> Surrender this to your opponent.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_11", foo);
+            //Rod of the Sun <b>Deathrattle:</b> Surrender this to your opponent.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_11h", foo);
+            //Tol'vir Hoplite <b>Deathrattle:</b> Deal 5 damage to both heroes.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_12", foo);
+            //Tol'vir Hoplite <b>Deathrattle:</b> Deal 5 damage to both heroes.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA01_12h", foo);
+            //Zinaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_01", foo);
+            //Zinaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_01h", foo);
+            //Djinn’s Intuition Draw a card. Give your opponent a Wish.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_02", foo);
+            //Djinn’s Intuition Draw a card. Gain a Mana Crystal. Give your opponent a Wish.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_02h", foo);
+            //Wish for Power <b>Discover</b> a spell.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_03", foo);
+            //Wish for Valor <b>Discover</b> a (4)-Cost card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_04", foo);
+            //Wish for Glory <b>Discover</b> a minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_05", foo);
+            //Wish for More Wishes Gain 2 Wishes.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_06", foo);
+            //Wish for Companionship <b>Discover</b> a Companion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA02_10", foo);
+            //Temple Escape 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_01", foo);
+            //Temple Escape 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_01h", foo);
+            //Escape! Encounter new obstacles!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_02", foo);
+            //Escape! Encounter new obstacles!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_02h", foo);
+            //Pit of Spikes <b>Choose Your Path!</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_06", foo);
+            //Swing Across Take 10 damage or no damage, at random.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_06a", foo);
+            //Walk Across Gingerly Take 5 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_06b", foo);
+            //Orsis Guard <b>Divine Shield</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_13bt", foo);
+            //Orsis Guard <b>Divine Shield</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_13bth", foo);
+            //Giant Insect 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_23", foo);
+            //Giant Insect 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_23h", foo);
+            //Anubisath Temple Guard 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_24", foo);
+            //Anubisath Temple Guard 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_24h", foo);
+            //Seething Statue At the end of your turn, deal 2 damage to all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_25", foo);
+            //Seething Statue At the end of your turn, deal 5 damage to all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_25h", foo);
+            //Animated Statue You've disturbed the ancient statue...
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_27", foo);
+            //A Glowing Pool <b>Drink?</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_28", foo);
+            //Drink Deeply Draw a card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_28a", foo);
+            //Wade Through Gain a Mana Crystal
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_28b", foo);
+            //The Eye <b>Choose Your Path!</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_29", foo);
+            //Touch It Restore 10 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_29a", foo);
+            //Investigate the Runes Draw 2 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_29b", foo);
+            //The Darkness <b>Take the Shortcut?</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_30", foo);
+            //Take the Shortcut Get 1 turn closer to the Exit! Encounter a 7/7 War Golem.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_30a", foo);
+            //No Way! Do nothing.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA04_31b", foo);
+            //Chieftain Scarvash 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_01", foo);
+            //Chieftain Scarvash 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_01h", foo);
+            //Trogg Hate Minions! <b>Passive Hero Power</b> Enemy minions cost(2) more.Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_02", foo);
+            //Trogg Hate Minions! <b>Passive Hero Power</b> Enemy minions cost(2) more.Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_02a", foo);
+            //Trogg Hate Minions! <b>Passive Hero Power</b> Enemy minions cost(11).Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_02h", foo);
+            //Trogg Hate Minions! <b>Passive Hero Power</b> Enemy minions cost(11).Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_02ha", foo);
+            //Trogg Hate Spells! <b>Passive Hero Power</b> Enemy spells cost(2) more.Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_03", foo);
+            //Trogg Hate Spells! <b>Passive Hero Power</b> Enemy spells cost(11).Swap at the start of your turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA05_03h", foo);
+            //Stonesculpting <b>Hero Power</b> Summon a 0 / 2 Statue for both players.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_02", foo);
+            //Stonesculpting <b>Hero Power</b> Summon a Statue for both players.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_02h", foo);
+            //Earthen Statue 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_02t", foo);
+            //Earthen Statue 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_02th", foo);
+            //Animate Earthen Give your minions +1/+1 and <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_03", foo);
+            //Animate Earthen Give your minions +3/+3 and <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_03h", foo);
+            //Shattering Spree Destroy all Statues. For each destroyed, deal 1 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_04", foo);
+            //Shattering Spree Destroy all Statues. For each destroyed, deal 3 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA06_04h", foo);
+            //Mine Cart 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_01", foo);
+            //Mine Shaft 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_02", foo);
+            //Mine Shaft 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_02h", foo);
+            //Flee the Mine! Escape the Troggs!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_03", foo);
+            //Flee the Mine! Escape the Troggs!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_03h", foo);
+            //Chasing Trogg 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_09", foo);
+            //Debris <b>Taunt.</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_11", foo);
+            //Earthen Pursuer 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_12", foo);
+            //Lumbering Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_14", foo);
+            //Dynamite Deal $10 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_18", foo);
+            //Boom! Deal $3 damage to all enemy minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_20", foo);
+            //Barrel Forward Get 1 turn closer to the Exit!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_21", foo);
+            //Spiked Decoy <b>Taunt</b> Can't attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_24", foo);
+            //Mechanical Parrot 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_25", foo);
+            //Consult Brann Draw 3 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_26", foo);
+            //Repairs Restore 10 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_28", foo);
+            //Throw Rocks <b>Hero Power</b> Deal 3 damage to a random enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA07_29", foo);
+            //Archaedas 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA08_01", foo);
+            //Archaedas 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA08_01h", foo);
+            //Lord Slitherspear 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_1", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_10", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_11", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_12", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_13", foo);
+            //Lord Slitherspear 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_1H", foo);
+            //Enraged! Give your hero +2 attack this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_2", foo);
+            //Enraged! Give your hero +5 attack this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_2H", foo);
+            //Getting Hungry <b>Hero Power</b> Summon a Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_3", foo);
+            //Getting Hungry <b>Hero Power</b> Summon a 1 / 1 Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_3b", foo);
+            //Getting Hungry <b>Hero Power</b> Summon a 2 / 1 Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_3c", foo);
+            //Getting Hungry <b>Hero Power</b> Summon a 5 / 1 Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_3d", foo);
+            //Endless Hunger <b>Hero Power</b> Summon a Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_3H", foo);
+            //Rare Spear Whenever your opponent plays a Rare card, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_4", foo);
+            //Rare Spear Whenever your opponent plays a Rare card, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_4H", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_5", foo);
+            //Hungry Naga 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_5H", foo);
+            //Slithering Archer <b>Battlecry:</b> Deal 1 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_6", foo);
+            //Slithering Archer <b>Battlecry:</b> Deal 2 damage to all enemy minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_6H", foo);
+            //Cauldron <b>Taunt</b> < b > Deathrattle:</ b > Save Sir Finley and stop the Naga onslaught!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_7", foo);
+            //Cauldron <b>Taunt</b> < b > Deathrattle:</ b > Save Sir Finley!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_7H", foo);
+            //Slithering Guard <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_8", foo);
+            //Slithering Guard <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_8H", foo);
+            //Naga Repellent Destroy all Hungry Naga.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_9", foo);
+            //Naga Repellent Change the Attack of all Hungry Naga to 1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA09_9H", foo);
+            //Giantfin 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_1", foo);
+            //Giantfin 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_1H", foo);
+            //Mrglmrgl MRGL! <b>Hero Power</b> Draw cards until you have as many in hand as your opponent.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_2", foo);
+            //Mrglmrgl MRGL! <b>Hero Power</b> Draw 2 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_2H", foo);
+            //Murloc Tinyfin 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_3", foo);
+            //Mrgl Mrgl Nyah Nyah Summon 3 Murlocs that died this game.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_5", foo);
+            //Mrgl Mrgl Nyah Nyah Summon 5 Murlocs that died this game.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA10_5H", foo);
+            //Lady Naz'jar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA12_1", foo);
+            //Lady Naz'jar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA12_1H", foo);
+            //Pearl of the Tides At the end of your turn, replace all minions with new ones that cost (1) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA12_2", foo);
+            //Pearl of the Tides At the end of your turn, replace all minions with new ones. Yours cost (1) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA12_2H", foo);
+            //Skelesaurus Hex 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA13_1", foo);
+            //Skelesaurus Hex 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA13_1h", foo);
+            //Ancient Power <b>Hero Power</b> Give each player a random card. It costs (0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA13_2", foo);
+            //Ancient Power <b>Hero Power</b> Add a random card to your hand.It costs (0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA13_2H", foo);
+            //The Steel Sentinel 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA14_1", foo);
+            //The Steel Sentinel 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA14_1H", foo);
+            //Platemail Armor <b>Passive Hero Power</b> Your Hero can only take 1 damage at a time.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA14_2", foo);
+            //Platemail Armor <b>Passive Hero Power</b> Your Hero and your minions can only take 1 damage at a time.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA14_2H", foo);
+            //Rafaam 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_1", foo);
+            //Rafaam 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_1H", foo);
+            //Unstable Portal <b>Hero Power</b> Add a random minion to your hand.It costs (3) less.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_2", foo);
+            //Unstable Portal <b>Hero Power</b> Add a random minion to your hand.It costs (3) less.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_2H", foo);
+            //Boneraptor <b>Battlecry:</b>Take control of your opponent's weapon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_3", foo);
+            //Boneraptor <b>Battlecry:</b>Take control of your opponent's weapon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA15_3H", foo);
+            //Rafaam 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_1", foo);
+            //Hakkari Blood Goblet Transform a minion into a 2/1 Pit Snake.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_10", foo);
+            //Crown of Kael'thas Deal $10 damage randomly split among ALL characters.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_11", foo);
+            //Medivh's Locket Replace your hand with Unstable Portals.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_12", foo);
+            //Eye of Orsis <b>Discover</b> a minion and gain 3 copies of it.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_13", foo);
+            //Khadgar's Pipe Put a random spell into each player's hand.  Yours costs (0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_14", foo);
+            //Ysera's Tear Gain 4 Mana Crystals this turn only.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_15", foo);
+            //Rummage Find an artifact.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_16", foo);
+            //Rummage Find an artifact.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_16H", foo);
+            //Animated Statue 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_17", foo);
+            //Zinaar At the end of your turn, gain a wish.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_18", foo);
+            //Zinaar At the end of your turn, gain a wish.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_18H", foo);
+            //Sun Raider Phaerix At the end of your turn, add a Blessing of the Sun to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_19", foo);
+            //Sun Raider Phaerix Your other minions are <b>Immune</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_19H", foo);
+            //Rafaam 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_1H", foo);
+            //Staff of Origination <b>Passive Hero Power</b> Your hero is < b > Immune </ b > while the staff charges.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_2", foo);
+            //Blessing of the Sun Give a minion <b>Immune</b> this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_20", foo);
+            //Chieftain Scarvash Enemy cards cost (1) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_21", foo);
+            //Chieftain Scarvash Enemy cards cost (2) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_21H", foo);
+            //Archaedas At the end of your turn, turn a random enemy minion into a 0/2 Statue.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_22", foo);
+            //Archaedas At the end of your turn, turn a random enemy minion into a 0/2 Statue.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_22H", foo);
+            //Lord Slitherspear At the end of your turn, summon 1/1 Hungry Naga for each enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_23", foo);
+            //Lord Slitherspear At the end of your turn, summon 1/1 Hungry Naga for each enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_23H", foo);
+            //Giantfin At the end of your turn, draw until you have as many cards as your opponent.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_24", foo);
+            //Giantfin At the end of your turn, draw 2 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_24H", foo);
+            //Lady Naz'jar At the end of your turn, replace all other minions with new ones of the same Cost.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_25", foo);
+            //Lady Naz'jar At the end of your turn, replace all other minions with new ones of the same Cost.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_25H", foo);
+            //Skelesaurus Hex At the end of your turn, give each player a random card. It costs (0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_26", foo);
+            //Skelesaurus Hex At the end of your turn, put a random card in your hand. It costs (0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_26H", foo);
+            //The Steel Sentinel This minion can only take 1 damage at a time.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_27", foo);
+            //The Steel Sentinel This minion can only take 1 damage at a time.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_27H", foo);
+            //Staff of Origination <b>Passive Hero Power</b> Your hero is < b > Immune </ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_2H", foo);
+            //Lantern of Power Give a minion +10/+10.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_3", foo);
+            //Timepiece of Horror Deal $10 damage randomly split among all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_4", foo);
+            //Mirror of Doom Fill your board with 3/3 Mummy Zombies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_5", foo);
+            //Mummy Zombie 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_5t", foo);
+            //Shard of Sulfuras Deal $5 damage to ALL characters.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_6", foo);
+            //Benediction Splinter Restore #10 Health to ALL characters.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_7", foo);
+            //Putress' Vial Destroy a random enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_8", foo);
+            //Lothar's Left Greave Deal $3 damage to all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA16_9", foo);
+            //Looming Presence Draw 2 cards. Gain 4 Armor.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA_01", foo);
+            //Looming Presence Draw 3 cards. Gain 6 Armor.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("LOEA_01H", foo);
+
         }
         public static void OG(Dictionary<string, CardBase> Dict)
         {
+            //Silithid Swarmer Can only attack if your hero attacked this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_034", foo);
+            //Y'Shaarj, Rage Unbound At the end of your turn, put a minion from your deck into the battlefield.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_042", foo);
+            //Evolved Kobold <b>Spell Damage +2</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_082", foo);
+            //Darkspeaker <b>Battlecry:</b> Swap stats with a friendly minion.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_102", foo);
+            //Mukla, Tyrant of the Vale <b>Battlecry:</b> Add 2 Bananas to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_122", foo);
+            //Shifter Zerus Each turn this is in your hand, transform it into a random minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_123", foo);
+            //Twin Emperor Vek'lor [x]<b><b>Taunt</b> Battlecry:</ b > If your C'Thun has at least 10 Attack, summon another Emperor.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_131", foo);
+            //N'Zoth, the Corruptor <b>Battlecry:</b> Summon your <b>Deathrattle</b> minions that died this game.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_133", foo);
+            //Yogg-Saron, Hope's End <b>Battlecry:</b> Cast a random spell for each spell you've cast this game <i>(targets chosen randomly)</i>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_134", foo);
+            //Nerubian Prophet At the start of your turn, reduce this card's Cost by (1).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_138", foo);
+            //Faceless Behemoth 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_141", foo);
+            //Eldritch Horror 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_142", foo);
+            //Psych-o-Tron <b>Taunt</b> < b > Divine Shield </ b >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_145", foo);
+            //Corrupted Healbot <b>Deathrattle:</b> Restore 8 Health to the enemy hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_147", foo);
+            //Aberrant Berserker <b>Enrage:</b> +2 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_150", foo);
+            //Tentacle of N'Zoth <b>Deathrattle:</b> Deal 1 damage to all minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_151", foo);
+            //Grotesque Dragonhawk <b>Windfury</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_152", foo);
+            //Bog Creeper <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_153", foo);
+            //Bilefin Tidehunter <b>Battlecry:</b> Summon a 1/1 Ooze with <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_156", foo);
+            //Ooze <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_156a", foo);
+            //Zealous Initiate <b>Deathrattle:</b> Give a random friendly minion +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_158", foo);
+            //Corrupted Seer <b>Battlecry:</b> Deal 2 damage to all non-Murloc minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_161", foo);
+            //Disciple of C'Thun <b>Battlecry:</b> Deal 2 damage. Give your C'Thun +2/+2 <i>(wherever it is)</i>.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_162", foo);
+            //Blood of The Ancient One If you control two of these at the end of your turn, merge them into 'The Ancient One'.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_173", foo);
+            //The Ancient One 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_173a", foo);
+            //Faceless Shambler <b>Taunt</b> < b > Battlecry:</ b > Copy a friendly minion's Attack and Health.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_174", foo);
+            //Validated Doomsayer At the start of your turn, set this minion's Attack to 7.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_200", foo);
+            //Twisted Worgen <b>Stealth</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_247", foo);
+            //Am'gam Rager 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_248", foo);
+            //Infested Tauren <b>Taunt</b> < b > Deathrattle:</ b > Summon a 2 / 2 Slime.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_249", foo);
+            //Slime 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_249a", foo);
+            //Eater of Secrets <b>Battlecry:</b> Destroy all enemy <b>Secrets</b>. Gain +1/+1 for each.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_254", foo);
+            //Doomcaller <b>Battlecry:</b> Give your C'Thun +2/+2 <i>(wherever it is).</i> If it's dead, shuffle it into your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_255", foo);
+            //Spawn of N'Zoth <b>Deathrattle:</b> Give your minions +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_256", foo);
+            //Nerubian Soldier 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_270a", foo);
+            //Scaled Nightmare At the start of your turn, double this minion's Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_271", foo);
+            //Twilight Summoner <b>Deathrattle:</b> Summon a 5/5 Faceless Destroyer.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_272", foo);
+            //Faceless Destroyer 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_272t", foo);
+            //C'Thun <b>Battlecry:</b> Deal damage equal to this minion's Attack randomly split among all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_279", foo);
+            //C'Thun <b>Battlecry:</b> Deal damage equal to this minion's Attack randomly split among all enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_280", foo);
+            //Beckoner of Evil <b>Battlecry:</b> Give your C'Thun +2/+2 <i>(wherever it is).</i>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_281", foo);
+            //C'Thun's Chosen [x]<b>Divine Shield</b> < b > Battlecry:</ b > Give your C'Thun + 2 / +2 < i > (wherever it is).</ i >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_283", foo);
+            //Twilight Geomancer [x]<b>Taunt</b> < b > Battlecry:</ b > Give your C'Thun < b > Taunt </ b > < i > (wherever it is).</ i >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_284", foo);
+            //Twilight Elder At the end of your turn, give your C'Thun +1/+1 <i>(wherever it is).</i>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_286", foo);
+            //Ancient Harbinger At the start of your turn, put a 10-Cost minion from your deck into your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_290", foo);
+            //Cult Apothecary <b>Battlecry:</b> For each enemy minion, restore 2 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_295", foo);
+            //The Boogeymonster Whenever this attacks and kills a minion, gain +2/+2.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_300", foo);
+            //Deathwing, Dragonlord <b>Deathrattle:</b> Put all Dragons from your hand into the battlefield.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_317", foo);
+            //Hogger, Doom of Elwynn Whenever this minion takes damage, summon a 2/2 Gnoll with <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_318", foo);
+            //Gnoll <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_318t", foo);
+            //Twin Emperor Vek'nilash <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_319", foo);
+            //Midnight Drake <b>Battlecry:</b> Gain +1 Attack for each other card in your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_320", foo);
+            //Crazed Worshipper <b>Taunt.</b> Whenever this minion takes damage, give your C'Thun +1/+1 <i>(wherever it is).</i>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_321", foo);
+            //Blackwater Pirate Your weapons cost (2) less.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_322", foo);
+            //Polluted Hoarder <b>Deathrattle:</b> Draw a card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_323", foo);
+            //Duskboar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_326", foo);
+            //Squirming Tentacle <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_327", foo);
+            //Cyclopian Horror <b>Taunt</b>. <b>Battlecry:</b> Gain      +1 Health for each enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_337", foo);
+            //Nat, the Darkfisher At the start of your opponent's turn, they have a 50% chance to draw an extra card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_338", foo);
+            //Skeram Cultist <b>Battlecry:</b> Give your C'Thun +2/+2 <i>(wherever it is).</i>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_339", foo);
+            //Soggoth the Slitherer <b>Taunt</b> Can't be targeted by spells or Hero Powers.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("OG_340", foo);
+
         }
         public static void KARA(Dictionary<string, CardBase> Dict)
         {
+            //Pompous Thespian <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_011", foo);
+            //Runic Egg <b>Deathrattle:</b> Draw a card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_029", foo);
+            //Cellar Spider 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_030", foo);
+            //Pantry Spider <b>Battlecry:</b> Summon a 1 / 3 Spider.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_030a", foo);
+            //Book Wyrm <b>Battlecry:</b> If you're holding a Dragon, destroy an enemy minion with 3 or less Attack.
+            foo = new CardBase();
+            foo.TargetFunc = () => Target.HasInHand((card) => card.Race.Equals(Race.DRAGON), () => Target.MinionImmuneTargetMinionEnemy((card) => card.Attack <= 3));
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_033", foo);
+            //Arcane Anomaly Whenever you cast a spell, give this minion +1 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_036", foo);
+            //Avian Watcher <b>Battlecry:</b> If you control a <b>Secret</b>, gain +1/+1 and<b> Taunt</ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_037", foo);
+            //Moat Lurker <b>Battlecry:</b> Destroy a minion. <b>Deathrattle:</b> Resummon it.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_041", foo);
+            //Moroes <b>Stealth</b> At the end of your turn, summon a 1 / 1 Steward.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_044", foo);
+            //Steward 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_044a", foo);
+            //The Curator <b>Taunt</b> < b > Battlecry:</ b > Draw a Beast, Dragon, and Murloc from your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_061", foo);
+            //Netherspite Historian <b>Battlecry:</b> If you're holding a Dragon, <b>Discover</b> a Dragon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_062", foo);
+            //Zoobot <b>Battlecry:</b> Give a random friendly Beast, Dragon, and Murloc +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_095", foo);
+            //Prince Malchezaar [x]When the game starts, add 5 extra<b> Legendary</ b > minions to your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_096", foo);
+            //Medivh, the Guardian <b>Battlecry:</b> Equip Atiesh, Greatstaff of the Guardian.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_097", foo);
+            //Atiesh [x]After you cast a spell, summon a random minion of that Cost. Lose 1 Durability.
+            foo = new CardBase();
+            Dict.Add("KAR_097t", foo);
+            //Barnes <b>Battlecry:</b> Summon a 1/1 copy of a random minion in your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_114", foo);
+            //Menagerie Magician <b>Battlecry:</b> Give a random friendly Beast, Dragon, and Murloc +2/+2.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_702", foo);
+            //Arcanosmith <b>Battlecry:</b> Summon a 0/5 minion with <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_710", foo);
+            //Animated Shield <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_710m", foo);
+            //Arcane Giant [x]Costs (1) less for each spell you've cast this game.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_711", foo);
+            //Violet Illusionist During your turn, your hero is <b>Immune</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_712", foo);
+
+            //Magic Mirror 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A01_01", foo);
+            //Magic Mirror 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A01_01H", foo);
+            //Reflections <b>Passive Hero Power</b> Whenever a minion is played, summon a 1 / 1 copy of it.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A01_02", foo);
+            //Reflections <b>Passive Hero Power</b> Whenever a minion is played, Magic Mirror summons a 1 / 1 copy of it.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A01_02H", foo);
+            //Plate 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_01", foo);
+            //Plate 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_01H", foo);
+            //Spoon 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_02", foo);
+            //Spoon 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_02H", foo);
+            //Fork Plates have <b>Charge</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_03", foo);
+            //Fork Plates have <b>Charge</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_03H", foo);
+            //Knife Plates have <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_04", foo);
+            //Knife Plates have <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_04H", foo);
+            //Cup Plates have +1 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_05", foo);
+            //Cup Plates have +3 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_05H", foo);
+            //Pitcher <b>Battlecry:</b> Give a minion +2/+2.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_06", foo);
+            //Pitcher <b>Battlecry:</b> Give a minion +3/+3.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_06H", foo);
+            //Set the Table Give your Plates +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_09", foo);
+            //Set the Table Give your Plates +2/+2.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_09H", foo);
+            //Pour a Round Draw a card for each of your Plates.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_10", foo);
+            //Tossing Plates Summon five 1/1 Plates.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_11", foo);
+            //Silverware Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_12", foo);
+            //Silverware Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_12H", foo);
+            //Be Our Guest <b>Hero Power</b> Summon a 1 / 1 Plate.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_13", foo);
+            //Be Our Guest <b>Hero Power</b> Summon two 1 / 1 Plates.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A02_13H", foo);
+            //Black Pawn <b>Auto-Attack:</b> Deal 1 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_01", foo);
+            //White Pawn <b>Auto-Attack:</b> Deal 1 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_02", foo);
+            //Black Rook <b>Auto-Attack:</b> Deal 2 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_03", foo);
+            //White Rook <b>Auto-Attack:</b> Deal 2 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_04", foo);
+            //White Bishop <b>Auto-Attack:</b> Restore 2 Health to adjacent minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_05", foo);
+            //Black Bishop <b>Auto-Attack:</b> Restore 2 Health to adjacent minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_06", foo);
+            //Black Knight <b>Charge</b>. Can't Attack Heroes.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_07", foo);
+            //White Knight <b>Charge</b>. Can't Attack Heroes.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_08", foo);
+            //White Queen <b>Auto-Attack:</b> Deal 4 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_09", foo);
+            //Black Queen <b>Auto-Attack:</b> Deal 4 damage to the enemies opposite this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_10", foo);
+            //Castle <b>Hero Power</b> < b > Discover </ b > a chess piece.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_22", foo);
+            //Castle <b>Hero Power</b> Move a friendly minion left.Repeatable.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_22H", foo);
+            //Cheat <b>Hero Power</b> Destroy the left - most enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_A10_33", foo);
+            //White King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_a10_Boss1", foo);
+            //White King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_a10_Boss1H", foo);
+            //Black King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_a10_Boss2", foo);
+            //Black King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KAR_a10_Boss2H", foo);
+            //Prince Malchezaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_01", foo);
+            //Prince Malchezaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_01H", foo);
+            //Legion <b>Hero Power</b> Summon a 6 / 6 Abyssal.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_02", foo);
+            //Legion <b>Hero Power</b> Summon a 6 / 6 Abyssal.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_02H", foo);
+            //Medivh 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_03c", foo);
+            //Brilliance <b>Hero Power</b> Draw 3 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_04", foo);
+            //Brilliance <b>Hero Power</b> Draw 3 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_00_04H", foo);
+            //Dorothee Minions to the left have <b>Charge</b>. Minions to the right have <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_01", foo);
+            //The Crone 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_01h", foo);
+            //The Crone 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_01heroic", foo);
+            //Twister <b>Hero Power</b> Deal 100 damage.Can't be used if Dorothee is alive.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_02hp", foo);
+            //Flying Monkey <b>Charge</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_05", foo);
+            //Flying Monkey <b>Charge</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_04_05h", foo);
+            //Kindly Grandmother 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_01b", foo);
+            //Big Bad Wolf 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_01h", foo);
+            //Big Bad Wolf 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_01hheroic", foo);
+            //Trembling <b>Passive Hero Power</b> Enemy minions are 1/1 and cost (1).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_01hp", foo);
+            //Trembling <b>Passive Hero Power</b> Minions cost (1). Enemy minions are 1/1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_01hpheroic", foo);
+            //Big Bad Claws 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_02", foo);
+            //Big Bad Claws 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_05_02heroic", foo);
+            //Romulo Julianne is <b>Immune</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_01", foo);
+            //Romulo Julianne is <b>Immune</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_01heroic", foo);
+            //Julianne 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_02", foo);
+            //Julianne 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_02heroic", foo);
+            //True Love <b>Hero Power</b> If you don't have Romulo, summon him.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_03hp", foo);
+            //True Love <b>Hero Power</b> If you don't have Romulo, summon him.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_06_03hpheroic", foo);
+            //Curator 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_01", foo);
+            //Curator 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_01heroic", foo);
+            //Gallery Protection <b>Passive Hero Power</b>  Your hero has<b> Taunt</ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_02", foo);
+            //Murloc Escaping! Summon a random Murloc.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_03", foo);
+            //Murlocs Escaping! Summon two random Murlocs.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_03heroic", foo);
+            //Stampeding Beast! Summon a random Beast.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_05", foo);
+            //Stampeding Beast! Summon a random Beast.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_05heroic", foo);
+            //Demons Loose! Summon a random Demon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_06", foo);
+            //Demons Loose! Summon a random Demon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_06heroic", foo);
+            //Haywire Mech! Summon a random Mech.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_07", foo);
+            //Haywire Mech! Summon a random Mech.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_07heroic", foo);
+            //Dragons Free! Summon a random Dragon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_08", foo);
+            //Dragons Free! Summon a random Dragon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_07_08heroic", foo);
+            //Netherspite 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_01", foo);
+            //Netherspite 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_01H", foo);
+            //Nether Rage <b>Hero Power</b> Give your hero + 3 Attack this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_02", foo);
+            //Nether Rage <b>Hero Power</b> Give your hero + 8 Attack this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_02H", foo);
+            //Nether Breath [x]Change the Health of all enemy minions to 1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_03", foo);
+            //Nether Breath [x]Change the Health of all enemy minions to 1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_03H", foo);
+            //Empowerment Give your hero +8 Attack this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_04", foo);
+            //Terrifying Roar Return an enemy minion to your opponent's hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_05", foo);
+            //Terrifying Roar Return an enemy minion to your opponent's hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_05H", foo);
+            //Blue Portal The character in the blue beam only takes 1 damage at a time.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_06", foo);
+            //Red Portal The character in the red beam has <b>Windfury</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_08_08", foo);
+            //Terestian Illhoof 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_01", foo);
+            //Terestian Illhoof 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_01heroic", foo);
+            //Curator 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_02", foo);
+            //Many Imps! Summon 2 Icky Imps.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_03", foo);
+            //Icky Imp <b>Deathrattle:</b> Resummon this minion and Illhoof loses 2 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_03a", foo);
+            //Icky Imp <b>Deathrattle:</b> Resummon this minion and Illhoof loses 2 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_03a_heroic", foo);
+            //Many Imps! Summon 2 Icky Imps.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_03heroic", foo);
+            //Dark Pact <b>Passive Hero Power</b> Only Icky Imps can damage Illhoof!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_04", foo);
+            //Summon Kil'rek Summon Kil'rek.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_05", foo);
+            //Summon Kil'rek Summon Kil'rek.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_05heroic", foo);
+            //Shadow Volley Deal $3 damage to all non-Demon minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_06", foo);
+            //Shadow Volley Deal $3 damage to all non-Demon minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_06heroic", foo);
+            //Steal Life Deal $5 damage. Restore #5 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_07", foo);
+            //Steal Life Deal $5 damage. Restore #5 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_09_07heroic", foo);
+            //Nightbane 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_11_01", foo);
+            //Nightbane 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_11_01heroic", foo);
+            //Manastorm <b>Passive Hero Power</b> Players start with 10 Mana Crystals.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_11_02", foo);
+            //Ley Lines [x]<b>Passive Hero Power</b> Both players have <b> Spell Damage + 3 </ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_12_02", foo);
+            //Ley Lines [x]<b>Passive Hero Power</b> Both players have <b> Spell Damage + 5 </ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_12_02H", foo);
+            //Prince Malchezaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_06", foo);
+            //Prince Malchezaar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_06H", foo);
+            //Shadow Bolt Volley Deal $4 damage to three random enemies.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_11", foo);
+            //Demonic Presence Draw 2 cards. Gain 10 Armor.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_12", foo);
+            //Demonic Presence Draw 3 cards. Gain 10 Armor.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_12H", foo);
+            //Legion <b>Hero Power</b> Summon a 6 / 6 Abyssal.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_13", foo);
+            //Legion <b>Hero Power</b> Summon two 6 / 6 Abyssals.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_13H", foo);
+            //Atiesh [x]After you cast a spell, summon a random minion of that Cost. Lose 1 Durability.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("KARA_13_26", foo);
+
         }
         public static void GANGS(Dictionary<string, CardBase> Dict)
         {
+            //Wind-up Burglebot Whenever this attacks a minion and survives, draw a card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_025", foo);
+            //Street Trickster <b>Spell Damage +1</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_039", foo);
+            //Red Mana Wyrm Whenever  you cast a spell, gain +2 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_060", foo);
+            //Kooky Chemist <b>Battlecry:</b> Swap the Attack and Health of a minion.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_063", foo);
+            //Blubber Baron Whenever you summon a <b>Battlecry</b> minion while this is in your hand, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_064", foo);
+            //Hozen Healer <b>Battlecry</b>: Restore a minion to full Health.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_067", foo);
+            //Weasel Tunneler <b>Deathrattle:</b> Shuffle this minion into your opponent's deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_095", foo);
+            //Mistress of Mixtures <b>Deathrattle:</b> Restore 4 Health to each hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_120", foo);
+            //Grimestreet Informant [x]<b>Battlecry:</b> <b>Discover</b> a Hunter, Paladin, or Warrior card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_321", foo);
+            //Small-Time Buccaneer Has +2 Attack while you have a weapon equipped.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_325", foo);
+            //Fight Promoter [x]<b>Battlecry:</b> If you control a minion with 6 or more Health, draw two cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_328", foo);
+            //Sergeant Sally <b>Deathrattle:</b> Deal damage equal to this minion's Attack to all enemy minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_341", foo);
+            //Finja, the Flying Star [x]<b>Stealth</b> Whenever this attacks and kills a minion, summon 2 Murlocs from your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_344", foo);
+            //Fel Orc Soulfiend At the start of your turn, deal 2 damage to this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_609", foo);
+            //Kabal Chemist <b>Battlecry:</b> Add a random Potion to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_619", foo);
+            //Kazakus [x]<b>Battlecry:</b> If your deck has no duplicates, create a custom spell.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_621", foo);
+            //Kabal Demon 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_621_m2", foo);
+            //Kabal Demon 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_621_m3", foo);
+            //Kabal Demon 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_621_m4", foo);
+            //Sheep 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_621_m5", foo);
+            //Kazakus Potion {0} { 1}
+            foo = new CardBase();
+            Dict.Add("CFM_621t", foo);
+            //Netherbloom Summon a 2/2 Demon.
+            foo = new CardBase();
+            Dict.Add("CFM_621t10", foo);
+            //Lesser Potion Create a 1-Cost spell.
+            foo = new CardBase();
+            Dict.Add("CFM_621t11", foo);
+            //Greater Potion Create a 5-Cost spell.
+            foo = new CardBase();
+            Dict.Add("CFM_621t12", foo);
+            //Superior Potion Create a 10-Cost spell.
+            foo = new CardBase();
+            Dict.Add("CFM_621t13", foo);
+            //Kazakus Potion {0} { 1}
+            foo = new CardBase();
+            Dict.Add("CFM_621t14", foo);
+            //Kazakus Potion {0} { 1}
+            foo = new CardBase();
+            Dict.Add("CFM_621t15", foo);
+            //Heart of Fire Deal $5 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.SpellTargetAll;
+            Dict.Add("CFM_621t16", foo);
+            //Stonescale Oil Gain 7 Armor.
+            foo = new CardBase();
+            Dict.Add("CFM_621t17", foo);
+            //Felbloom Deal $4 damage to all minions.
+            foo = new CardBase();
+            Dict.Add("CFM_621t18", foo);
+            //Icecap <b>Freeze</b> 2 random enemy minions.
+            foo = new CardBase();
+            Dict.Add("CFM_621t19", foo);
+            //Heart of Fire Deal $3 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.SpellTargetAll;
+            Dict.Add("CFM_621t2", foo);
+            //Netherbloom Summon a 5/5 Demon.
+            foo = new CardBase();
+            Dict.Add("CFM_621t20", foo);
+            //Mystic Wool Polymorph a random enemy minion.
+            foo = new CardBase();
+            Dict.Add("CFM_621t21", foo);
+            //Kingsblood Draw 2 cards.
+            foo = new CardBase();
+            Dict.Add("CFM_621t22", foo);
+            //Shadow Oil Add 2 random Demons to your hand.
+            foo = new CardBase();
+            Dict.Add("CFM_621t23", foo);
+            //Goldthorn Give your minions +4 Health.
+            foo = new CardBase();
+            Dict.Add("CFM_621t24", foo);
+            //Heart of Fire Deal $8 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.SpellTargetAll;
+            Dict.Add("CFM_621t25", foo);
+            //Stonescale Oil Gain 10 Armor.
+            foo = new CardBase();
+            Dict.Add("CFM_621t26", foo);
+            //Icecap <b>Freeze</b> 3 random enemy minions.
+            foo = new CardBase();
+            Dict.Add("CFM_621t27", foo);
+            //Netherbloom Summon an 8/8 Demon.
+            foo = new CardBase();
+            Dict.Add("CFM_621t28", foo);
+            //Mystic Wool Transform all minions into 1/1 Sheep.
+            foo = new CardBase();
+            Dict.Add("CFM_621t29", foo);
+            //Stonescale Oil Gain 4 Armor.
+            foo = new CardBase();
+            Dict.Add("CFM_621t3", foo);
+            //Kingsblood Draw 3 cards.
+            foo = new CardBase();
+            Dict.Add("CFM_621t30", foo);
+            //Shadow Oil Add 3 random Demons to your hand.
+            foo = new CardBase();
+            Dict.Add("CFM_621t31", foo);
+            //Goldthorn Give your minions +6 Health.
+            foo = new CardBase();
+            Dict.Add("CFM_621t32", foo);
+            //Felbloom Deal $6 damage to all minions.
+            foo = new CardBase();
+            Dict.Add("CFM_621t33", foo);
+            //Ichor of Undeath Summon a friendly minion that died this game.
+            foo = new CardBase();
+            Dict.Add("CFM_621t37", foo);
+            //Ichor of Undeath Summon 2 friendly minions that died this game.
+            foo = new CardBase();
+            Dict.Add("CFM_621t38", foo);
+            //Ichor of Undeath Summon 3 friendly minions that died this game.
+            foo = new CardBase();
+            Dict.Add("CFM_621t39", foo);
+            //Felbloom Deal $2 damage to all minions.
+            foo = new CardBase();
+            Dict.Add("CFM_621t4", foo);
+            //Icecap <b>Freeze</b> a random enemy minion.
+            foo = new CardBase();
+            Dict.Add("CFM_621t5", foo);
+            //Goldthorn Give your minions +2 Health.
+            foo = new CardBase();
+            Dict.Add("CFM_621t6", foo);
+            //Kingsblood Draw a card.
+            foo = new CardBase();
+            Dict.Add("CFM_621t8", foo);
+            //Shadow Oil Add a random Demon to your hand.
+            foo = new CardBase();
+            Dict.Add("CFM_621t9", foo);
+            //Patches the Pirate [x]<b>Charge</b> After you play a Pirate, summon this minion from your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_637", foo);
+            //Backstreet Leper [x]<b>Deathrattle:</b> Deal 2 damage to the enemy hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_646", foo);
+            //Blowgill Sniper <b>Battlecry:</b> Deal 1 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_647", foo);
+            //Big-Time Racketeer <b>Battlecry:</b> Summon a 6/6 Ogre.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_648", foo);
+            //"Little Friend" 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_648t", foo);
+            //Kabal Courier <b>Battlecry:</b> <b>Discover</b> a Mage, Priest, or Warlock card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_649", foo);
+            //Naga Corsair <b>Battlecry:</b> Give your weapon +1 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_651", foo);
+            //Second-Rate Bruiser [x]<b>Taunt</b> Costs(2) less if your opponent has at least three minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_652", foo);
+            //Hired Gun <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_653", foo);
+            //Friendly Bartender At the end of your turn, restore 1 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_654", foo);
+            //Toxic Sewer Ooze <b>Battlecry:</b> Remove 1 Durability from your opponent's weapon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_655", foo);
+            //Streetwise Investigator <b>Battlecry:</b> Enemy minions lose <b>Stealth</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_656", foo);
+            //Backroom Bouncer Whenever a friendly minion dies, gain +1 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_658", foo);
+            //Gadgetzan Socialite <b>Battlecry:</b> Restore 2 Health.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_659", foo);
+            //Worgen Greaser 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_665", foo);
+            //Grook Fu Master <b>Windfury</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_666", foo);
+            //Bomb Squad [x]<b>Battlecry:</b> Deal 5 damage to an enemy minion. < b > Deathrattle:</ b > Deal 5 damage to your hero.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetMinionAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_667", foo);
+            //Doppelgangster <b>Battlecry:</b> Summon 2 copies of this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_668", foo);
+            //Doppelgangster <b>Battlecry:</b> Summon 2 copies of this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_668t", foo);
+            //Doppelgangster <b>Battlecry:</b> Summon 2 copies of this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_668t2", foo);
+            //Burgly Bully Whenever your opponent casts a spell, add a Coin to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_669", foo);
+            //Mayor Noggenfogger All targets are chosen randomly.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_670", foo);
+            //Madam Goya <b>Battlecry:</b> Choose a friendly minion. Swap it with a minion in your deck.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_672", foo);
+            //Don Han'Cho <b>Battlecry:</b> Give a random minion in your hand +5/+5.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_685", foo);
+            //Spiked Hogrider <b>Battlecry:</b> If an enemy minion has <b>Taunt</b>, gain <b>Charge</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_688", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t01", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t02", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t03", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t04", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t05", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t06", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t07", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t08", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t09", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t10", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t11", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t12", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t13", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t14", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t15", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t16", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t17", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t18", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t19", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t20", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t21", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t22", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t23", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t24", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t25", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t26", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t27", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t28", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t29", foo);
+            //Jade Golem 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_712_t30", foo);
+            //Jade Spirit <b>Battlecry:</b> Summon a <b>Jade Golem</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_715", foo);
+            //Dirty Rat [x]<b>Taunt</b> < b > Battlecry:</ b > Your opponent summons a random minion from their hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_790", foo);
+            //Wrathion <b>Taunt</b>. <b>Battlecry:</b> Draw cards until you draw one that isn't a Dragon.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_806", foo);
+            //Auctionmaster Beardo After you cast a spell, refresh your Hero Power.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_807", foo);
+            //Genzo, the Shark Whenever this attacks, both players draw until they have 3 cards.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_808", foo);
+            //Tanaris Hogchopper [x]<b>Battlecry:</b> If your opponent's hand is empty, gain<b> Charge</ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_809", foo);
+            //Leatherclad Hogleader <b>Battlecry:</b> If your opponent has 6 or more cards in hand, gain <b>Charge</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_810", foo);
+            //Daring Reporter Whenever your opponent draws a card, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_851", foo);
+            //Lotus Agents <b>Battlecry:</b> <b>Discover</b> a Druid, Rogue, or Shaman card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_852", foo);
+            //Grimestreet Smuggler <b>Battlecry:</b> Give a random minion in your hand +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_853", foo);
+            //Ancient of Blossoms <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_854", foo);
+            //Defias Cleaner <b>Battlecry:</b> <b>Silence</b> a minion with <b>Deathrattle</b>.
+            foo = new CardBase();
+            foo.TargetFunc = () => Target.MinionImmuneTargetMinionAll((card) => card.Deathrattle);
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_855", foo);
+            //Aya Blackpaw  <b>Battlecry and Deathrattle:</b> Summon a <b>Jade Golem</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("CFM_902", foo);
+
         }
         public static void UNGORO(Dictionary<string, CardBase> Dict)
         {
+            //Stubborn Gastropod <b>Taunt</b>, <b>Poisonous</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_828t2", foo);
+            //Giant Wasp <b>Stealth</b>, <b>Poisonous</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_828t3", foo);
+            //Pterrordax Hatchling <b><b>Battlecry:</b> Adapt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_001", foo);
+            //Volcanosaur <b>Battlecry:</b> <b>Adapt</b>, then <b>Adapt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_002", foo);
+            //Ravasaur Runt <b>Battlecry:</b> If you control at least 2 other minions, <b>Adapt.</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_009", foo);
+            //Sated Threshadon <b>Deathrattle:</b> Summon three 1/1 Murlocs.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_010", foo);
+            //Tol'vir Stoneshaper [x]<b>Battlecry:</b> If you played an Elemental last turn, gain <b> Taunt</ b > and < b > DivineShield </ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_070", foo);
+            //Giant Mastodon <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_071", foo);
+            //Stonehill Defender <b>Taunt</b> < b > Battlecry:</ b > < b > Discover </ b > a < b > Taunt </ b > minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_072", foo);
+            //Rockpool Hunter <b>Battlecry:</b> Give a friendly Murloc +1/+1.
+            foo = new CardBase();
+            foo.TargetFunc = () => Target.MinionImmuneTargetMinionUser((card) => card.Race.Equals(Race.MURLOC));
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_073", foo);
+            //Vicious Fledgling After this minion attacks a hero, <b>Adapt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_075", foo);
+            //Eggnapper <b>Deathrattle:</b> Summon two 1/1 Raptors.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_076", foo);
+            //Raptor 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_076t1", foo);
+            //Frozen Crusher After this minion attacks, <b>Freeze</b> it.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_079", foo);
+            //Thunder Lizard <b>Battlecry</b>: If you played an Elemental last turn, <b>Adapt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_082", foo);
+            //Devilsaur Egg <b>Deathrattle:</b> Summon a 5/5 Devilsaur.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_083", foo);
+            //Devilsaur 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_083t1", foo);
+            //Fire Plume Phoenix <b>Battlecry:</b> Deal 2 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_084", foo);
+            //Emerald Hive Queen Your minions cost (2) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_085", foo);
+            //Bittertide Hydra Whenever this minion takes damage, deal 3 damage to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_087", foo);
+            //Tortollan Primalist <b>Battlecry:</b> <b>Discover</b> a spell and cast it with random targets.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_088", foo);
+            //Gentle Megasaur <b>Battlecry:</b> <b>Adapt</b> your Murlocs.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_089", foo);
+            //Charged Devilsaur <b>Charge</b> < b > Battlecry:</ b > Can't attack heroes this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_099", foo);
+            //Bright-Eyed Scout <b>Battlecry:</b> Draw a card. Change its Cost to (5).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_113", foo);
+            //Primalfin 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_201t", foo);
+            //Glacial Shard <b>Battlecry:</b> <b>Freeze</b> an enemy.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetEnemy;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_205", foo);
+            //Nesting Roc <b>Battlecry:</b> If you control at least 2 other minions, gain <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_801", foo);
+            //Emerald Reaver <b>Battlecry:</b> Deal 1 damage to each hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_803", foo);
+            //Ultrasaur 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_806", foo);
+            //Golakka Crawler <b>Battlecry:</b> Destroy a Pirate and gain +1/+1.
+            foo = new CardBase();
+            foo.TargetFunc = () => Target.MinionImmuneTargetMinionAll((card) => card.Race.Equals(Race.PIRATE));
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_807", foo);
+            //Stubborn Gastropod <b>Taunt</b> < b > Poisonous </ b >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_808", foo);
+            //Fire Fly <b>Battlecry</b>: Add a 1/2 Elemental to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_809", foo);
+            //Flame Elemental 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_809t1", foo);
+            //Stegodon <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_810", foo);
+            //Sabretooth Stalker <b>Stealth</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_812", foo);
+            //Stormwatcher <b>Windfury</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_813", foo);
+            //Giant Wasp <b>Stealth</b> < b > Poisonous </ b >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_814", foo);
+            //Servant of Kalimos [x]<b>Battlecry:</b> If you played an Elemental last turn, < b > Discover </ b > an Elemental.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_816", foo);
+            //Volatile Elemental <b>Deathrattle:</b> Deal 3 damage to a random enemy minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_818", foo);
+            //Hemet, Jungle Hunter <b>Battlecry:</b> Destroy all cards in your deck that cost (3) or less.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_840", foo);
+            //The Voraxx [x]After you cast a spell on this minion, summon a 1 / 1 Plant and cast another copy on it.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_843", foo);
+            //Humongous Razorleaf Can't attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_844", foo);
+            //Igneous Elemental <b>Deathrattle:</b> Add two 1/2 Elementals to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_845", foo);
+            //Blazecaller <b>Battlecry:</b> If you played an Elemental last turn, deal 5 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetAll;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_847", foo);
+            //Primordial Drake [x]<b>Taunt</b> < b > Battlecry:</ b > Deal 2 damage to all other minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_848", foo);
+            //Elise the Trailblazer <b>Battlecry:</b> Shuffle a sealed <b>Un'Goro</b> pack into your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_851", foo);
+            //Un'Goro Pack Add 5 <b>Journey to Un'Goro</b> cards to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_851t1", foo);
+            //Spiritsinger Umbra After you summon a minion, trigger its <b>Deathrattle</b> effect.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_900", foo);
+            //Ozruk [x]<b>Taunt</b> < b > Battlecry:</ b > Gain + 5 Health for each Elemental you played last turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_907", foo);
+            //Tar Creeper <b>Taunt</b> Has + 2 Attack during your opponent's turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_928", foo);
+            //DIE, INSECT! <b>Hero Power</b> Deal $8 damage to a random enemy.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionTargetEnemy;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_934t2", foo);
+            //Primalfin Lookout <b>Battlecry:</b> If you control another Murloc, <b>Discover</b> a Murloc.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_937", foo);
+            //Gluttonous Ooze <b>Battlecry:</b> Destroy your opponent's weapon and gain Armor equal to its Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_946", foo);
+            //Shrouding Mist <b>Stealth</b> until your next turn.
+            foo = new CardBase();
+            Dict.Add("UNG_999t10", foo);
+            //Poison Spit <b>Poisonous</b>
+            foo = new CardBase();
+            Dict.Add("UNG_999t13", foo);
+            //Volcanic Might +1/+1
+            foo = new CardBase();
+            Dict.Add("UNG_999t14", foo);
+            //Living Spores <b>Deathrattle:</b> Summon two 1/1 Plants.
+            foo = new CardBase();
+            Dict.Add("UNG_999t2", foo);
+            //Plant 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("UNG_999t2t1", foo);
+            //Flaming Claws +3 Attack
+            foo = new CardBase();
+            Dict.Add("UNG_999t3", foo);
+            //Rocky Carapace +3 Health
+            foo = new CardBase();
+            Dict.Add("UNG_999t4", foo);
+            //Liquid Membrane Can't be targeted by spells or Hero Powers.
+            foo = new CardBase();
+            Dict.Add("UNG_999t5", foo);
+            //Massive <b>Taunt</b>
+            foo = new CardBase();
+            Dict.Add("UNG_999t6", foo);
+            //Lightning Speed <b>Windfury</b>
+            foo = new CardBase();
+            Dict.Add("UNG_999t7", foo);
+            //Crackling Shield <b>Divine Shield</b>
+            foo = new CardBase();
+            Dict.Add("UNG_999t8", foo);
+
         }
         public static void ICECROWN(Dictionary<string, CardBase> Dict)
         {
+            //Phantom Freebooter <b>Battlecry:</b> Gain stats equal to your weapon's.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_018", foo);
+            //Skelemancer <b>Deathrattle:</b> If it's your opponent's turn, summon an 8/8 Skeleton.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_019", foo);
+            //Skeletal Flayer 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_019t", foo);
+            //Snowflipper Penguin 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_023", foo);
+            //Rattling Rascal [x]<b>Battlecry:</b> Summon a 5 / 5 Skeleton. < b > Deathrattle:</ b > Summon one for your opponent. 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_025", foo);
+            //Skeletal Enforcer 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_025t", foo);
+            //Grim Necromancer <b>Battlecry:</b> Summon two 1/1 Skeletons.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_026", foo);
+            //Skeleton 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_026t", foo);
+            //Bone Drake <b>Deathrattle:</b> Add a random Dragon to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_027", foo);
+            //Sunborne Val'kyr <b>Battlecry:</b> Give adjacent minions +2 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_028", foo);
+            //Cobalt Scalebane At the end of your turn, give another random friendly minion +3 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_029", foo);
+            //Night Howler Whenever this minion takes damage, gain + 2 Attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_031", foo);
+            //Venomancer <b>Poisonous</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_032", foo);
+            //Vryghoul [x]<b>Deathrattle:</b> If it's your opponent's turn, summon a 2 / 2 Ghoul.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_067", foo);
+            //Acherus Veteran <b>Battlecry:</b> Give a friendly minion +1 Attack.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_092", foo);
+            //Tuskarr Fisherman <b>Battlecry:</b> Give a friendly minion <b>Spell Damage +1</b>.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_093", foo);
+            //Fallen Sun Cleric <b>Battlecry:</b> Give a friendly minion +1/+1.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_094", foo);
+            //Furnacefire Colossus <b>Battlecry:</b> Discard all weapons from your hand and gain their stats.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_096", foo);
+            //Grave Shambler Whenever your weapon is destroyed, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_097", foo);
+            //Tomb Lurker [x]<b>Battlecry:</b> Add a random < b > Deathrattle </ b > minion that died this game to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_098", foo);
+            //Ticking Abomination <b>Deathrattle:</b> Deal 5 damage to your minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_099", foo);
+            //Deadscale Knight <b>Lifesteal</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_220", foo);
+            //Corpse Raiser [x]<b>Battlecry:</b> Give a friendly minion "<b>Deathrattle:</b> Resummon this minion."
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_257", foo);
+            //The Lich King [x]<b>Taunt</b> At the end of your turn, add a random < b > Death Knight </ b > card to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_314", foo);
+            //Saronite Chain Gang <b>Taunt</b> < b > Battlecry:</ b > Summon a copy of this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_466", foo);
+            //Deathspeaker <b>Battlecry:</b> Give a friendly minion <b>Immune</b> this turn.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_467", foo);
+            //Wretched Tiller Whenever this minion attacks, deal 2 damage to the enemy hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_468", foo);
+            //Transmute Spirit <b>Hero Power:</b> Transform a friendly minion into a random one that costs (1) more.
+            foo = new CardBase();
+            foo.TargetFunc = Target.SpellImmuneTargetMinionUser;
+            foo.PlayFunc = Play.SpellImmuneTargetMinionUser;
+            Dict.Add("ICC_481p", foo);
+            //Happy Ghoul Costs (0) if your hero was healed this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_700", foo);
+            //Skulking Geist <b>Battlecry:</b> Destroy all 1 - Cost spells in both hands and decks.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_701", foo);
+            //Shallow Gravedigger <b>Deathrattle:</b> Add a random <b>Deathrattle</b> minion to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_702", foo);
+            //Bonemare <b>Battlecry:</b> Give a friendly minion +4/+4 and <b>Taunt</b>.
+            foo = new CardBase();
+            foo.TargetFunc = Target.MinionImmuneTargetMinionUser;
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_705", foo);
+            //Nerubian Unraveler Spells cost (2) more.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_706", foo);
+            //Zombeast 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_800h3t", foo);
+            //Deathaxe Punisher <b>Battlecry:</b> Give a random <b>Lifesteal</b> minion in your hand +2/+2.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_810", foo);
+            //Meat Wagon [x]<b>Deathrattle:</b> Summon a minion from your deck with less Attack than this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_812", foo);
+            //Build-A-Beast <b>Hero Power</b> Craft a custom Zombeast.
+            foo = new CardBase();
+            Dict.Add("ICC_828p", foo);
+            //The Four Horsemen [x]<b>Hero Power</b> Summon a 2 / 2 Horseman. If you have all 4, destroy the enemy hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_829p", foo);
+            //Siphon Life <b>Hero Power</b> < b > Lifesteal </ b > Deal $3 damage.
+            foo = new CardBase();
+            foo.TargetFunc = Target.SpellTargetAll;
+            foo.PlayFunc = Play.SpellTargetAll;
+            Dict.Add("ICC_831p", foo);
+            //Plague Lord [x]<b>Hero Power</b> < b > Choose One -</ b > +3 Attack this turn; or Gain 3 Armor.
+            foo = new CardBase();
+            Dict.Add("ICC_832p", foo);
+            //Icy Touch <b>Hero Power</b> Deal $1 damage.If this kills a minion, summon a Water Elemental.
+            foo = new CardBase();
+            foo.TargetFunc = Target.SpellTargetAll;
+            foo.PlayFunc = Play.SpellTargetAll;
+            Dict.Add("ICC_833h", foo);
+            //Prince Keleseth <b>Battlecry:</b> If your deck has no 2-Cost cards, give all minions in your deck +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_851", foo);
+            //Prince Taldaram <b>Battlecry:</b> If your deck has no 3-Cost cards, transform into a 3/3 copy of a minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_852", foo);
+            //Prince Valanar <b>Battlecry:</b> If your deck has no 4-Cost cards, gain <b>Lifesteal</b> and <b>Taunt</b>.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_853", foo);
+            //Arfus <b>Deathrattle:</b> Add a random <b>Death Knight</b> card to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_854", foo);
+            //Hyldnir Frostrider <b>Battlecry:</b> <b>Freeze</b> your other minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_855", foo);
+            //Spellweaver <b>Spell Damage +2</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_856", foo);
+            //Necrotic Geist Whenever one of your other minions dies, summon a 2/2 Ghoul.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_900", foo);
+            //Ghoul 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_900t", foo);
+            //Drakkari Enchanter Your end of turn effects trigger twice.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_901", foo);
+            //Mindbreaker Hero Powers are disabled.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_902", foo);
+            //Wicked Skeleton <b>Battlecry:</b> Gain +1/+1 for each minion that died this turn.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_904", foo);
+            //Bloodworm <b>Lifesteal</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_905", foo);
+            //Keening Banshee Whenever you play a card, remove the top 3 cards of your deck.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_911", foo);
+            //Corpsetaker [x]<b>Battlecry:</b> Gain <b>Taunt</b> if your deck has a<b> Taunt</ b > minion. Repeat for < b > Divine Shield </ b >, < b > Lifesteal </ b >, < b > Windfury </ b >.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_912", foo);
+            //Tainted Zealot <b>Divine Shield</b> < b > Spell Damage + 1 </ b >
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICC_913", foo);
+
+            //The Lich King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_001", foo);
+            //Ghoul <b>Taunt</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_004t", foo);
+            //Eager Rogue Deals no damage while attacking.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_007", foo);
+            //Terrible Tank 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_008", foo);
+            //Needy Hunter Whenever this minion attacks, add a Coin to your hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_009", foo);
+            //A. F. Kay Can't attack.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_010", foo);
+            //Warlock on Fire At the end of your turn, deal 1 damage to this minion.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA01_011", foo);
+            //Secrets of the Citadel 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA03_001", foo);
+            //Sindragosa 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_001", foo);
+            //Block of Ice 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_004", foo);
+            //Frost Breath <b>Hero Power</b> Permanently<b> Freeze</ b > all enemy minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_008p", foo);
+            //Frost Breath <b>Triggered Power</b> At 20 Health, transforms all enemy minions into blocks of ice.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_009p", foo);
+            //Frost Breath <b>Triggered Power</b> At 10 Health, transforms all enemy minions into blocks of ice.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_010p", foo);
+            //Ice Claw <b>Hero Power</b> Deal $2 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA04_011p", foo);
+            //Blood-Queen Lana'thel 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA05_001", foo);
+            //Vampiric Bite <b>Hero Power</b> Give a non - Vampire + 2 / +2.You < i > must </ i > use this.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA05_002p", foo);
+            //Sleeping Acolyte 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA05_003", foo);
+            //Vampiric Leech <b>Hero Power</b> < b > Lifesteal </ b > Deal $3 damage.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA05_004p", foo);
+            //Lord Marrowgar 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA06_001", foo);
+            //Skeletal Reconstruction <b>Hero Power</b> Restore your hero to full Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA06_002p", foo);
+            //Bryn'troll, the Bone Arbiter <b>Windfury</b>
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA06_003", foo);
+            //Bone Storm Deal $1 damage to all enemies. Draw a card.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA06_004", foo);
+            //Bone Spike At the start of your turn, deal 15 damage to the enemy hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA06_005", foo);
+            //Professor Putricide 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_001", foo);
+            //Professor Putricide 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_001h2", foo);
+            //Professor Putricide 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_001h3", foo);
+            //Mad Science <b>Passive Hero Power</b> All<b> Secrets</ b > cost(0).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_002p", foo);
+            //Madder Science <b>Passive Hero Power</b> All weapons cost(1).
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_003p", foo);
+            //Growing Ooze At the start of your turn, gain +1/+1.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_004", foo);
+            //Maddest Science <b>Passive Hero Power</b> All cards cost(5). Because SCIENCE!
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_005p", foo);
+            //Festergut At the end of your turn, deal 3 damage to all enemy minions.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_008", foo);
+            //Tentacles 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA07_020", foo);
+            //The Lich King 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_001", foo);
+            //The Scourge <b>Hero Power</b> Summon a 2 / 2 Ghoul.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_002p", foo);
+            //Ghoul 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_002t", foo);
+            //Val'kyr Shadowguard At the start of your turn, destroy a random enemy minion and this one.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_017", foo);
+            //Harvest of Souls <b>Passive Hero Power</b> You are < b > Immune </ b > if you control a Trapped Soul.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_032p", foo);
+            //Trapped Soul 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA08_033", foo);
+            //Blood Rune <b>Passive Hero Power</b> Can only take damage from weapons.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA09_001p", foo);
+            //Blood Beast At the start of your turn, restore 3 Health to your hero.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA09_001t1", foo);
+            //Deathbringer Saurfang 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA09_002", foo);
+            //Valithria Dreamwalker Can't attack or be attacked while damaged.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA10_001", foo);
+            //Lady Deathwhisper 
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA10_009", foo);
+            //Whisper of Death [x]<b>Hero Power</b> Damage all enemy minions until they have 1 Health.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA10_009p", foo);
+            //Skeletal Knight <b>Deathrattle:</b> Add a < b > Knights of the Frozen Throne</ b > card to your opponent's hand.
+            foo = new CardBase();
+            foo.PlayFunc = Play.Minion;
+            Dict.Add("ICCA11_001", foo);
+
         }
         public static void TB(Dictionary<string, CardBase> Dict)
         {
