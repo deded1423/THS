@@ -833,7 +833,7 @@ namespace THS.HSApp.Dictionaries.Misc
             {
                 return false;
             }
-            if (Game.GetUserSecret().Any(i => i.Id.Equals(id)))
+            if (Game.GetUserSecret().Any(i => i.CardDB.Id.Equals(id)))
             {
                 return false;
             }

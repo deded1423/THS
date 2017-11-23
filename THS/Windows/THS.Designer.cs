@@ -30,11 +30,11 @@ namespace THS.Windows
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("4");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("5");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("3");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("4");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("5");
             this.ButtonConfig = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.checkBoxTCP = new System.Windows.Forms.CheckBox();
@@ -104,6 +104,7 @@ namespace THS.Windows
             this.buttonActions = new System.Windows.Forms.Button();
             this.listViewActions = new System.Windows.Forms.ListView();
             this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonProcessIRC = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageControl.SuspendLayout();
             this.tabPageUI.SuspendLayout();
@@ -112,9 +113,9 @@ namespace THS.Windows
             // 
             // ButtonConfig
             // 
-            this.ButtonConfig.Location = new System.Drawing.Point(113, 6);
+            this.ButtonConfig.Location = new System.Drawing.Point(100, 6);
             this.ButtonConfig.Name = "ButtonConfig";
-            this.ButtonConfig.Size = new System.Drawing.Size(75, 23);
+            this.ButtonConfig.Size = new System.Drawing.Size(88, 23);
             this.ButtonConfig.TabIndex = 0;
             this.ButtonConfig.Text = "Config";
             this.ButtonConfig.UseVisualStyleBackColor = true;
@@ -128,7 +129,7 @@ namespace THS.Windows
             this.ButtonStart.TabIndex = 1;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
-            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
+            this.ButtonStart.Click += new System.EventHandler(this.ButtonStartHS_Click);
             // 
             // checkBoxTCP
             // 
@@ -253,6 +254,7 @@ namespace THS.Windows
             // 
             // tabPageControl
             // 
+            this.tabPageControl.Controls.Add(this.buttonProcessIRC);
             this.tabPageControl.Controls.Add(this.checkBoxDeletePower);
             this.tabPageControl.Controls.Add(this.buttonStartTCP);
             this.tabPageControl.Controls.Add(this.buttonTest8);
@@ -700,11 +702,11 @@ namespace THS.Windows
             this.listViewActions.GridLines = true;
             this.listViewActions.HideSelection = false;
             this.listViewActions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5});
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10});
             this.listViewActions.Location = new System.Drawing.Point(8, 6);
             this.listViewActions.MultiSelect = false;
             this.listViewActions.Name = "listViewActions";
@@ -717,6 +719,16 @@ namespace THS.Windows
             // columnHeader31
             // 
             this.columnHeader31.Width = 590;
+            // 
+            // buttonProcessIRC
+            // 
+            this.buttonProcessIRC.Location = new System.Drawing.Point(6, 6);
+            this.buttonProcessIRC.Name = "buttonProcessIRC";
+            this.buttonProcessIRC.Size = new System.Drawing.Size(88, 23);
+            this.buttonProcessIRC.TabIndex = 27;
+            this.buttonProcessIRC.Text = "Start Process";
+            this.buttonProcessIRC.UseVisualStyleBackColor = true;
+            this.buttonProcessIRC.Click += new System.EventHandler(this.buttonProcessIRC_Click);
             // 
             // THS
             // 
@@ -825,6 +837,7 @@ namespace THS.Windows
         private ListView listViewActions;
         protected Button buttonActions;
         private ColumnHeader columnHeader31;
+        protected Button buttonProcessIRC;
     }
 }
 

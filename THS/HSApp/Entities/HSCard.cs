@@ -3,6 +3,7 @@ using HearthDb;
 using THS.Utils;
 using HearthDb.Enums;
 using System;
+using THS.HSApp.Dictionaries;
 
 namespace THS.HSApp
 {
@@ -120,6 +121,15 @@ namespace THS.HSApp
                     return (Rarity)Tags[GameTag.RARITY];
                 }
                 return Rarity.INVALID;
+            }
+
+        }
+        public CardBase CardBase
+        {
+            get
+            {
+                
+                return CardDict.GetCard(CardDB.Id);
             }
 
         }

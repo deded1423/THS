@@ -120,6 +120,23 @@ namespace THS.HSImport
 
         public void Stop()
         {
+            switch (Namespace)
+            {
+                case "Power":
+                    handler.PowerWait.Set();
+                    break;
+                case "Rachelle":
+                    handler.RachelleWait.Set();
+                    break;
+                case "LoadingScreen":
+                    handler.LoadingScreenWait.Set();
+                    break;
+                case "FullScreenFX":
+                    handler.FullscreenWait.Set();
+                    break;
+                default:
+                    break;
+            }
             _stop = true;
         }
     }

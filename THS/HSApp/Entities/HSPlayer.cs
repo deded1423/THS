@@ -310,91 +310,121 @@ namespace THS.HSApp
             return tmp;
         }
 
-        public HSCard GetHandCard(string name, bool exact = false, int precision = 4)
+        public HSCard GetHandCard(string name, int num, bool exact = false, int precision = 4)
         {
+            List<HSCard> cards = new List<HSCard>();
+
             foreach (var card in Hand)
             {
                 if (card.Name.ToLower().Equals(name.ToLower()))
                 {
-                    return card;
+                    cards.Add(card);
                 }
             }
 
-            if (!exact)
+            if (!exact && cards.Count == 0)
             {
 
                 bool repeated = false;
-                HSCard correct = null;
+                cards = new List<HSCard>();
                 foreach (var card in Hand)
                 {
                     if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
                     {
-                        if (repeated) return null;
-                        correct = card;
+                        if (repeated && cards[0].Name.Equals(card.Name) && num == 0) return null;
+                        cards.Add(card);
+                        repeated = true;
                     }
                 }
-                return correct;
+            }
+            if (num == 0)
+            {
+                return cards[0];
+            }
+            else if (cards.Count >= num)
+            {
+                return cards[num - 1];
             }
             return null;
         }
 
-        public HSCard GetDeckCard(string name, bool exact = false, int precision = 4)
+        public HSCard GetDeckCard(string name, int num, bool exact = false, int precision = 4)
         {
-            foreach (var card in Deck)
+            List<HSCard> cards = new List<HSCard>();
+
+            foreach (var card in Hand)
             {
                 if (card.Name.ToLower().Equals(name.ToLower()))
                 {
-                    return card;
+                    cards.Add(card);
                 }
             }
 
-            if (!exact)
+            if (!exact && cards.Count == 0)
             {
 
                 bool repeated = false;
-                HSCard correct = null;
-                foreach (var card in Deck)
+                cards = new List<HSCard>();
+                foreach (var card in Hand)
                 {
                     if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
                     {
-                        if (repeated) return null;
-                        correct = card;
+                        if (repeated && cards[0].Name.Equals(card.Name) && num == 0) return null;
+                        cards.Add(card);
+                        repeated = true;
                     }
                 }
-                return correct;
+            }
+            if (num == 0)
+            {
+                return cards[0];
+            }
+            else if (cards.Count >= num)
+            {
+                return cards[num - 1];
             }
             return null;
         }
 
-        public HSCard GetPlayCard(string name, bool exact = false, int precision = 4)
+        public HSCard GetPlayCard(string name, int num, bool exact = false, int precision = 4)
         {
+            List<HSCard> cards = new List<HSCard>();
+
             foreach (var card in Play)
             {
                 if (card.Name.ToLower().Equals(name.ToLower()))
                 {
-                    return card;
+                    cards.Add(card);
                 }
             }
 
-            if (!exact)
+            if (!exact && cards.Count == 0)
             {
 
                 bool repeated = false;
-                HSCard correct = null;
+                cards = new List<HSCard>();
                 foreach (var card in Play)
                 {
                     if (name.Length >= precision && card.Name.ToLower().Contains(name.ToLower()))
                     {
-                        if (repeated) return null;
-                        correct = card;
+                        if (repeated && cards[0].Name.Equals(card.Name) && num == 0) return null;
+                        cards.Add(card);
+                        repeated = true;
                     }
                 }
-                return correct;
+            }
+            if (num == 0)
+            {
+                return cards[0];
+            }
+            else if (cards.Count >= num)
+            {
+                return cards[num - 1];
             }
             return null;
         }
 
-        public HSCard GetSetasideCard(string name, bool exact = true, int precision = 4)
+        public HSCard GetSetasideCard(string name, int num, bool exact = true, int precision = 4)
         {
             foreach (var card in Setaside)
             {
@@ -422,7 +452,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetGraveyardCard(string name, bool exact = true, int precision = 4)
+        public HSCard GetGraveyardCard(string name, int num, bool exact = true, int precision = 4)
         {
             foreach (var card in Graveyard)
             {
@@ -450,7 +480,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetRemovedCard(string name, bool exact = true, int precision = 4)
+        public HSCard GetRemovedCard(string name, int num, bool exact = true, int precision = 4)
         {
             foreach (var card in Removed)
             {
@@ -478,7 +508,7 @@ namespace THS.HSApp
             return null;
         }
 
-        public HSCard GetSecretCard(string name, bool exact = true, int precision = 4)
+        public HSCard GetSecretCard(string name, int num, bool exact = true, int precision = 4)
         {
             foreach (var card in Secret)
             {

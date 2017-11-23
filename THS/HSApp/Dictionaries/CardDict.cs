@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using THS.HSApp.Dictionaries.Classes;
+using THS.Utils;
 
 namespace THS.HSApp.Dictionaries
 {
@@ -32,5 +33,18 @@ namespace THS.HSApp.Dictionaries
             Misc.Choose.Game = Game;
             Misc.Choose.Core = Game.GameCore;
         }
+        public static CardBase GetCard(string id)
+        {
+            if (Dict.ContainsKey(id))
+            {
+                return Dict[id];
+            }
+            else
+            {
+                IO.LogDebug("NO CARD IN DB"+ id);
+                return new CardBase();
+            }
+        }
+
     }
 }

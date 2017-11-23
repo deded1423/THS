@@ -10,12 +10,14 @@ namespace THS.Utils
     }
     public class InstructionRegexType
     { //TODO: Ver como se diferencian 2 cartas que son iguales
-        public static Regex InstructionPlayRegex = new Regex(@"(play|use)\s+(?<name>(.+))");
-        public static Regex InstructionPlayOnRegex = new Regex(@"(play|use)\s+(?<name>(.+))\s+on\s+(?<target>.+)");
-        public static Regex InstructionHeroPowerRegex = new Regex(@"hp");
-        public static Regex InstructionHeroPowerOnRegex = new Regex(@"hp\s+on\s+(?<target>.+)");
-        public static Regex InstructionAttackRegex = new Regex(@"(?<name>.+)\s+(attacks?|trade|atk)\s+(?<target>.+)");
+        public static Regex InstructionPlayRegex = new Regex(@"^(play|use)\s+(?<name>(.+))");
+        public static Regex InstructionPlayOnRegex
+            = new Regex(@"^(play|use)\s+(?<name>(.+))\s+on\s+(?<target>.+)");
+        public static Regex InstructionHeroPowerRegex = new Regex(@"^hp");
+        public static Regex InstructionHeroPowerOnRegex = new Regex(@"^hp\s+on\s+(?<target>.+)");
+        public static Regex InstructionAttackRegex = new Regex(@"^(?<name>.+)\s+(attacks?|trade|atk)\s+(?<target>.+)");
         public static Regex InstructionEndRegex = new Regex(@"^(end turn)|(end)$");
+        public static Regex InstructionNameRegex = new Regex(@"^(?<namepos>\d )*(?<nameuser>[em] )*(?<namepos>\d )*(?<name>(.+))$");
 
         public static Regex PlayRegex = new Regex(@"^play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))$");
         public static Regex PlayOnBoardRegex = new Regex(@"^play\s(?<handSize>(\d{1,2}))\s(?<handNumber>(\d{1,2}))\s(?<enemy>([ef]))\s(?<boardSize>(\d))\s(?<boardNumber>(\d))$");

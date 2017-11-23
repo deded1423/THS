@@ -2,6 +2,7 @@
 using HearthDb.Enums;
 using THS.Utils;
 using THS.Twitch_Integration;
+using System.Linq;
 
 namespace THS.HSApp
 {
@@ -398,18 +399,18 @@ namespace THS.HSApp
                 }
                 if (card.Taunt)
                 {
-                    foreach (var target in targets)
+                    if (targets.Count > 0)
                     {
-                        if (!target.Taunt)
+                        if (!targets.Any((c) => c.Taunt))
                         {
-                            targets.Remove(target);
+                            targets.Clear();
                         }
                     }
                     targets.Add(card);
                 }
                 else
                 {
-                    if (targets.Count != 0 && targets[0].Taunt)
+                    if (targets.Any((c) => c.Taunt))
                     {
                         break;
                     }
@@ -419,87 +420,87 @@ namespace THS.HSApp
                     }
                 }
             }
-            if (!Opponent.Hero.Stealth || !(Opponent.Hero.Tags[GameTag.IMMUNE] == 1) || (targets.Count != 0 && targets[0].Taunt))
+            if (!Opponent.Hero.Stealth && !(Opponent.Hero.CheckTag(GameTag.IMMUNE)) && !(targets.Count != 0 && targets.Any((c) => c.Taunt)))
             {
                 targets.Add(Opponent.Hero);
             }
-
-            foreach (var card in GetUserHand())
+            foreach (var card in DictCard(GetUserMinions()))
             {
-                if (card.ManaCost <= User.Mana)
+                if (!card.Value.Exhausted)
                 {
-                    if (card.CardType == CardType.MINION)
+                    foreach (var target in DictCard(targets))
                     {
-                        if (GetUserMinions().Count < 7)
+                        if (card.Value.Attack > 0)
                         {
-                            foreach (var target in targets)
-                            {
-                                tmp.Add("Play " + card.Name + " on " + target.Name);
-                            }
-                            foreach (var target in GetUserMinions())
-                            {
-                                tmp.Add("Play " + card.Name + " on " + target.Name);
-                            }
-                            tmp.Add("Play " + card.Name + " on " + User.Hero.Name);
-                            tmp.Add("Play " + card.Name);
+                            tmp.Add(card.Key + " attack " + target.Key);
                         }
                     }
-                    else
-                    {
-                        foreach (var target in targets)
-                        {
-                            tmp.Add("Play " + card.Name + " on " + target.Name);
-                        }
-                        foreach (var target in GetUserMinions())
-                        {
-                            tmp.Add("Play " + card.Name + " on " + target.Name);
-                        }
-                        tmp.Add("Play " + card.Name + " on " + User.Hero.Name);
-                        tmp.Add("Play " + card.Name);
-                    }
-                }
-            }
-            foreach (var card in GetUserMinions())
-            {
-                if (!card.Exhausted)
-                {
-                    foreach (var target in targets)
-                    {
-                        if (card.Attack > 0)
-                        {
-                            tmp.Add(card.Name + " attack " + target.Name);
-                        }
-                    }
-                }
-            }
-            if (User.Mana >= 2 && !User.HeroPower.Exhausted)
-            {
-                if (User.HeroPowerNeedsTarget)
-                {
-                    foreach (var target in targets)
-                    {
-                        tmp.Add("HP on " + target.Name);
-                    }
-                    foreach (var target in GetUserMinions())
-                    {
-                        tmp.Add("HP on " + target.Name);
-                    }
-                    tmp.Add("HP on " + User.Hero.Name);
-                }
-                else
-                {
-                    tmp.Add("HP");
                 }
             }
             if (User.Attack > 0 && !User.Hero.Exhausted)
             {
-                foreach (var target in targets)
+                foreach (var target in DictCard(targets))
                 {
-                    tmp.Add(User.Hero.Name + " attack " + target.Name);
+                    tmp.Add(User.Hero.Name + " attack " + target.Key);
+                }
+            }
+            if (User.Mana >= 2 && !User.HeroPower.Exhausted)
+            {
+                bool tgt = false;
+                var t = DictCard(User.HeroPower.CardBase.TargetFunc());
+                foreach (var target in DictCard(User.HeroPower.CardBase.TargetFunc()))
+                {
+                    tmp.Add("HP on " + target.Key + " " + (target.Value.Controller == 2 ? "e" : "m"));
+                }
+                if (!tgt)
+                {
+                    tmp.Add("HP");
+                }
+            }
+
+            foreach (var card in DictCard(GetUserHand()))
+            {
+                bool tgt = false;
+                if (card.Value.ManaCost <= User.Mana && card.Value.CardBase.PlayFunc())
+                {
+                    foreach (var target in DictCard(card.Value.CardBase.TargetFunc()))
+                    {
+                        tgt = true;
+                        tmp.Add("Play " + card.Key + " on " + target.Key + " " + (target.Value.Controller == 2 ? "e" : "m"));
+                    }
+                    if (!tgt)
+                    {
+                        tmp.Add("Play " + card.Key);
+                    }
                 }
             }
             tmp.Add("End Turn");
             return tmp;
+        }
+        private Dictionary<string, HSCard> DictCard(List<HSCard> cards)
+        {
+            Dictionary<string, int> dup = new Dictionary<string, int>();
+            Dictionary<string, HSCard> cardsOut = new Dictionary<string, HSCard>();
+            foreach (var item in cards)
+            {
+                if (dup.ContainsKey(item.Name))
+                {
+                    dup[item.Name]++;
+                    if (dup[item.Name] == 2)
+                    {
+                        cardsOut.Add(item.Name + " 1", cardsOut[item.Name]);
+                        cardsOut.Remove(item.Name);
+                    }
+                    cardsOut.Add(item.Name + " " + dup[item.Name], item);
+
+                }
+                else
+                {
+                    dup.Add(item.Name, 1);
+                    cardsOut.Add(item.Name, item);
+                }
+            }
+            return cardsOut;
         }
         //Methods of info
         public void Debug()

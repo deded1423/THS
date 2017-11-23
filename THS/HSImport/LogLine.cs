@@ -11,6 +11,13 @@ namespace THS.HSImport
         public string Log;
         public string LogFile;
         public string Line;
+        public LogLine()
+        {
+            Process = "";
+            Log = "";
+            LogFile = "";
+            Line = "";
+        }
 
         public LogLine(string line, string logFile)
         {

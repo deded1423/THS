@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using THS.Utils;
 
 namespace THS.Twitch_Integration
@@ -9,6 +11,10 @@ namespace THS.Twitch_Integration
         public string Name;
         public string Target;
         public string Other;
+        public char NameUser;
+        public int NamePos;
+        public char TargetUser;
+        public int TargetPos;
 
         public CommandChat(PlayType type)
         {
@@ -292,20 +298,74 @@ namespace THS.Twitch_Integration
             {
                 Match match = InstructionRegexType.InstructionPlayOnRegex.Match(line);
                 Type = PlayType.Play;
-                Name = match.Groups["name"].Value;
-                Target = match.Groups["target"].Value;
+                NamePos = 0;
+                TargetPos = 0;
+                Name = new string(match.Groups["name"].Value.ToCharArray().Reverse().ToArray());
+                Match matchsub = InstructionRegexType.InstructionNameRegex.Match(Name);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    NameUser = matchsub.Groups["nameuser"].Value.ToCharArray()[0];
+                    Name = Name.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    NamePos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Name = Name.Remove(0, 2);
+                }
+                Name = new string(Name.ToCharArray().Reverse().ToArray());
+
+                Target = new string(match.Groups["target"].Value.ToCharArray().Reverse().ToArray());
+                matchsub = InstructionRegexType.InstructionNameRegex.Match(Target);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    TargetUser = matchsub.Groups["nameuser"].Value.ToCharArray()[0];
+                    Target = Target.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    TargetPos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Target = Target.Remove(0, 2);
+                }
+                Target = new string(Target.ToCharArray().Reverse().ToArray());
             }
             else if (InstructionRegexType.InstructionPlayRegex.IsMatch(line))
             {
                 Match match = InstructionRegexType.InstructionPlayRegex.Match(line);
                 Type = PlayType.Play;
-                Name = match.Groups["name"].Value;
+                NamePos = 0;
+                TargetPos = 0;
+                Name = new string(match.Groups["name"].Value.ToCharArray().Reverse().ToArray());
+                Match matchsub = InstructionRegexType.InstructionNameRegex.Match(Name);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    NameUser = matchsub.Groups["nameuser"].Value.ToCharArray()[0];
+                    Name = Name.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    NamePos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Name = Name.Remove(0, 2);
+                }
+                Name = new string(Name.ToCharArray().Reverse().ToArray());
             }
             else if (InstructionRegexType.InstructionHeroPowerOnRegex.IsMatch(line))
             {
                 Match match = InstructionRegexType.InstructionHeroPowerOnRegex.Match(line);
                 Type = PlayType.HeroPower;
-                Target = match.Groups["target"].Value;
+                TargetPos = 0;
+                Target = new string(match.Groups["target"].Value.ToCharArray().Reverse().ToArray());
+                Match matchsub = InstructionRegexType.InstructionNameRegex.Match(Target);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    TargetUser = matchsub.Groups["nameuser"].Value.ToCharArray()[0];
+                    Target = Target.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    TargetPos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Target = Target.Remove(0, 2);
+                }
+                Target = new string(Target.ToCharArray().Reverse().ToArray());
             }
             else if (InstructionRegexType.InstructionHeroPowerRegex.IsMatch(line))
             {
@@ -316,8 +376,33 @@ namespace THS.Twitch_Integration
             {
                 Match match = InstructionRegexType.InstructionAttackRegex.Match(line);
                 Type = PlayType.Attack;
-                Name = match.Groups["name"].Value;
-                Target = match.Groups["target"].Value;
+                NamePos = 0;
+                TargetPos = 0;
+                Name = new string(match.Groups["name"].Value.ToCharArray().Reverse().ToArray());
+                Match matchsub = InstructionRegexType.InstructionNameRegex.Match(Name);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    Name = Name.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    NamePos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Name = Name.Remove(0, 2);
+                }
+                Name = new string(Name.ToCharArray().Reverse().ToArray());
+
+                Target = new string(match.Groups["target"].Value.ToCharArray().Reverse().ToArray());
+                matchsub = InstructionRegexType.InstructionNameRegex.Match(Target);
+                if (!matchsub.Groups["nameuser"].Value.Equals(""))
+                {
+                    Target = Target.Remove(0, 2);
+                }
+                if (!matchsub.Groups["namepos"].Value.Equals(""))
+                {
+                    TargetPos = int.Parse(matchsub.Groups["namepos"].Value);
+                    Target = Target.Remove(0, 2);
+                }
+                Target = new string(Target.ToCharArray().Reverse().ToArray());
             }
             else if (InstructionRegexType.InstructionEndRegex.IsMatch(line))
             {

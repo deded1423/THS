@@ -1132,7 +1132,7 @@ namespace THS.HSApp.Dictionaries.Misc
             }
             else
             {
-                return null;
+                return new List<HSCard>();
             }
         }
     }

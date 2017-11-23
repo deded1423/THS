@@ -229,7 +229,7 @@ namespace THS.HSImport
                     }
                 }
             }
-            return null;
+            return new LogLine();
         }
 
         private LogLine PeekLine(LogReader log)
