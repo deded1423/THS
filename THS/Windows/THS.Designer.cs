@@ -30,11 +30,11 @@ namespace THS.Windows
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("1");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("2");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("3");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("4");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("5");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("4");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("5");
             this.ButtonConfig = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.checkBoxTCP = new System.Windows.Forms.CheckBox();
@@ -50,6 +50,7 @@ namespace THS.Windows
             this.buttonTest8 = new System.Windows.Forms.Button();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageControl = new System.Windows.Forms.TabPage();
+            this.buttonProcessIRC = new System.Windows.Forms.Button();
             this.checkBoxDeletePower = new System.Windows.Forms.CheckBox();
             this.tabPageUI = new System.Windows.Forms.TabPage();
             this.labelCOpponentGraveyard = new System.Windows.Forms.Label();
@@ -104,11 +105,14 @@ namespace THS.Windows
             this.buttonActions = new System.Windows.Forms.Button();
             this.listViewActions = new System.Windows.Forms.ListView();
             this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonProcessIRC = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControlMain.SuspendLayout();
             this.tabPageControl.SuspendLayout();
             this.tabPageUI.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ButtonConfig
@@ -246,6 +250,7 @@ namespace THS.Windows
             this.tabControlMain.Controls.Add(this.tabPageControl);
             this.tabControlMain.Controls.Add(this.tabPageUI);
             this.tabControlMain.Controls.Add(this.tabPage1);
+            this.tabControlMain.Controls.Add(this.tabPage2);
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
@@ -276,6 +281,16 @@ namespace THS.Windows
             this.tabPageControl.TabIndex = 0;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
+            // 
+            // buttonProcessIRC
+            // 
+            this.buttonProcessIRC.Location = new System.Drawing.Point(6, 6);
+            this.buttonProcessIRC.Name = "buttonProcessIRC";
+            this.buttonProcessIRC.Size = new System.Drawing.Size(88, 23);
+            this.buttonProcessIRC.TabIndex = 27;
+            this.buttonProcessIRC.Text = "Start Process";
+            this.buttonProcessIRC.UseVisualStyleBackColor = true;
+            this.buttonProcessIRC.Click += new System.EventHandler(this.buttonProcessIRC_Click);
             // 
             // checkBoxDeletePower
             // 
@@ -680,7 +695,7 @@ namespace THS.Windows
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1262, 571);
             this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Actions";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // buttonActions
@@ -702,11 +717,11 @@ namespace THS.Windows
             this.listViewActions.GridLines = true;
             this.listViewActions.HideSelection = false;
             this.listViewActions.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
             this.listViewActions.Location = new System.Drawing.Point(8, 6);
             this.listViewActions.MultiSelect = false;
             this.listViewActions.Name = "listViewActions";
@@ -720,15 +735,34 @@ namespace THS.Windows
             // 
             this.columnHeader31.Width = 590;
             // 
-            // buttonProcessIRC
+            // tabPage2
             // 
-            this.buttonProcessIRC.Location = new System.Drawing.Point(6, 6);
-            this.buttonProcessIRC.Name = "buttonProcessIRC";
-            this.buttonProcessIRC.Size = new System.Drawing.Size(88, 23);
-            this.buttonProcessIRC.TabIndex = 27;
-            this.buttonProcessIRC.Text = "Start Process";
-            this.buttonProcessIRC.UseVisualStyleBackColor = true;
-            this.buttonProcessIRC.Click += new System.EventHandler(this.buttonProcessIRC_Click);
+            this.tabPage2.Controls.Add(this.listView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1262, 571);
+            this.tabPage2.TabIndex = 3;
+            this.tabPage2.Text = "Commands";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader32});
+            this.listView1.GridLines = true;
+            this.listView1.Location = new System.Drawing.Point(6, 6);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(332, 165);
+            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader32
+            // 
+            this.columnHeader32.Text = "Command";
+            this.columnHeader32.Width = 328;
             // 
             // THS
             // 
@@ -746,6 +780,7 @@ namespace THS.Windows
             this.tabPageUI.ResumeLayout(false);
             this.tabPageUI.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -838,6 +873,9 @@ namespace THS.Windows
         protected Button buttonActions;
         private ColumnHeader columnHeader31;
         protected Button buttonProcessIRC;
+        private TabPage tabPage2;
+        private ListView listView1;
+        private ColumnHeader columnHeader32;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
+using System.Collections.Generic;
 
 namespace THS.Utils
 {

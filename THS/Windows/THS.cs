@@ -193,10 +193,6 @@ namespace THS.Windows
         {
             _configwindow = new Config();
             _configwindow.Show();
-
-            //TcpListener listener = new TcpListener(IPAddress.Parse("192.168.1.241"), 8888);
-            //listener.Start();
-            //Socket a = listener.AcceptSocket();
         }
         private void ButtonStartHS_Click(object sender, EventArgs e)
         {
@@ -240,7 +236,6 @@ namespace THS.Windows
             {
                 StartIRC();
                 buttonStartTCP.Text = "Stop Tcp";
-
             }
             else
             {
@@ -304,197 +299,12 @@ namespace THS.Windows
         }
         private void buttonProcessIRC_Click(object sender, EventArgs e)
         {
-            ircprocessThread = new Thread(StartIRCProcessing) { Name = "TwitchChatProcesser" };
+            ircprocessThread = new Thread(irc.StartIRCProcessing) { Name = "TwitchChatProcesser" };
             ircprocessThread.Start();
             buttonProcessIRC.Text = "Started";
 
         }
 
-        public void StartIRCProcessing()
-        {
-            CommandChat cmd;
-            while (!_stop)
-            {
-                while (irc.Queue.IsEmpty || GameCore == null || GameCore.Game == null)
-                {
-                    Thread.Sleep(100);
-                }
-                irc.Queue.TryDequeue(out cmd);
-                HSApp.HSCard name, target;
-                switch (cmd.Type)
-                {
-                    case PlayType.Play:
-                        if (GameCore.Game.User.GetHandCard(cmd.Name, cmd.NamePos) == null)
-                        {
-                            IO.LogDebug("FAIL " + cmd.ToString(), IO.DebugFile.Input);
-                            continue;
-                        }
-                        if (cmd.Target == null)
-                        {
-                            MouseMovement.PlayCard(GameCore.Game.User.Hand.Count, GameCore.Game.User.GetHandCard(cmd.Name, cmd.NamePos).ZonePos - 1);
-                        }
-                        else
-                        {
-                            name = GameCore.Game.User.GetHandCard(cmd.Name, cmd.NamePos);
-                            var _namepos = name.ZonePos - 1;
-
-                            if (cmd.TargetUser.Equals('e') || cmd.TargetUser.Equals('\0'))
-                            {
-                                if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.NamePos)) != null)
-                                {
-                                    MouseMovement.PlayCardOn(GameCore.Game.User.Hand.Count, _namepos, true, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
-                                }
-                                else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                                {
-                                    MouseMovement.PlayCardOn(0, 0, true, 0, 0, true);
-                                }
-                            }
-                            else if (cmd.TargetUser.Equals('m') || cmd.TargetUser.Equals('\0'))
-                            {
-                                if ((target = GameCore.Game.User.GetPlayCard(cmd.Target, cmd.NamePos)) != null)
-                                {
-                                    MouseMovement.PlayCardOn(GameCore.Game.User.Hand.Count, _namepos, false, GameCore.Game.GetUserMinions().Count, target.ZonePos - 1);
-                                }
-                                else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
-                                {
-                                    MouseMovement.PlayCardOn(0, 0, false, 0, 0, true);
-                                }
-                            }
-                        }
-                        break;
-                    case PlayType.HeroPower:
-                        if (cmd.Target == null)
-                        {
-                            MouseMovement.HeroPower();
-                        }
-                        else
-                        {
-                            if (cmd.TargetUser.Equals('e') || cmd.TargetUser.Equals('\0'))
-                            {
-                                if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
-                                {
-                                    MouseMovement.HeroPower(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1, true);
-                                }
-                                else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                                {
-                                    MouseMovement.HeroPower(true);
-                                }
-                            }
-                            else if (cmd.TargetUser.Equals('m') || cmd.TargetUser.Equals('\0'))
-                            {
-                                if ((target = GameCore.Game.User.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
-                                {
-                                    MouseMovement.HeroPower(GameCore.Game.GetUserMinions().Count, target.ZonePos - 1, false);
-                                }
-                                else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
-                                {
-                                    MouseMovement.HeroPower(false);
-                                }
-
-                            }
-                        }
-                        break;
-                    case PlayType.Attack:
-                        if (GameCore.Game.User.GetPlayCard(cmd.Name, cmd.NamePos) == null && !GameCore.Game.User.EqualsHeroName(cmd.Name))
-                        {
-                            IO.LogDebug("FAIL " + cmd.ToString(), IO.DebugFile.Input);
-                            continue;
-                        }
-                        if (GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.NamePos) == null && !GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                        {
-                            IO.LogDebug("FAIL " + cmd.ToString(), IO.DebugFile.Input);
-                            continue;
-                        }
-                        if ((name = GameCore.Game.User.GetPlayCard(cmd.Name, cmd.NamePos)) != null)
-                        {
-                            if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.NamePos)) != null)
-                            {
-                                MouseMovement.AttackCard(GameCore.Game.GetUserMinions().Count, name.ZonePos - 1, GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
-                            }
-                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                            {
-                                MouseMovement.AttackCard(GameCore.Game.GetUserMinions().Count, name.ZonePos - 1, 0, 0, true);
-                            }
-                        }
-                        else if ((name = GameCore.Game.User.Hero).Name.ToLower().Equals(cmd.Name) || GameCore.Game.User.EqualsHeroName(cmd.Name))
-                        {
-                            if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.NamePos)) != null)
-                            {
-                                MouseMovement.AttackHero(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1);
-                            }
-                            else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                            {
-                                MouseMovement.AttackHero(0, 0, true);
-                            }
-                        }
-                        break;
-                    case PlayType.Incorrect:
-                        IO.LogDebug(cmd.ToString());
-                        break;
-                    case PlayType.Mulligan:
-                        char[] mull = cmd.Other.ToCharArray();
-                        if (mull.Length == 3)
-                        {
-                            MouseMovement.Mulligan(mull[0].Equals('0') ? 0 : 1, mull[1].Equals('0') ? 0 : 1, mull[2].Equals('0') ? 0 : 1);
-                        }
-                        else
-                        {
-                            MouseMovement.MulliganCoin(mull[0].Equals('0') ? 0 : 1, mull[1].Equals('0') ? 0 : 1, mull[2].Equals('0') ? 0 : 1, mull[3].Equals('0') ? 0 : 1);
-                        }
-                        break;
-                    case PlayType.Discover:
-                        MouseMovement.Discover(int.Parse(cmd.Other));
-                        break;
-                    case PlayType.Choose:
-                        MouseMovement.ChooseOne(int.Parse(cmd.Other));
-                        break;
-                    case PlayType.Queue:
-                        MouseMovement.Requeue(int.Parse(cmd.Other));
-                        break;
-                    case PlayType.Emote:
-                        if (cmd.Other.Equals("greetings"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteGreetings);
-                        }
-                        else if (cmd.Other.Equals("wellplayed"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteWellPlayed);
-                        }
-                        else if (cmd.Other.Equals("thanks"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteThanks);
-                        }
-                        else if (cmd.Other.Equals("wow"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteWow);
-                        }
-                        else if (cmd.Other.Equals("oops"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteOops);
-                        }
-                        else if (cmd.Other.Equals("threaten"))
-                        {
-                            MouseMovement.Emote(HSPoints.EmoteThreaten);
-                        }
-
-                        break;
-                    case PlayType.Concede:
-                        MouseMovement.Concede();
-                        break;
-                    case PlayType.EndTurn:
-                        MouseMovement.EndTurn();
-                        break;
-                    case PlayType.SeeDeck:
-                        MouseMovement.SeeDeck();
-                        break;
-                    case PlayType.Other:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        
         private void StartIRC()
         {
             if (checkBoxTCP.Checked)

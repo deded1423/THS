@@ -61,73 +61,12 @@ namespace THS {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SendTCP {
+        public global::System.Collections.Specialized.StringDictionary TwitchCommands {
             get {
-                return ((bool)(this["SendTCP"]));
+                return ((global::System.Collections.Specialized.StringDictionary)(this["TwitchCommands"]));
             }
             set {
-                this["SendTCP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8888")]
-        public int SendTCPPort {
-            get {
-                return ((int)(this["SendTCPPort"]));
-            }
-            set {
-                this["SendTCPPort"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("82.158.3.104")]
-        public string SendTCPIP {
-            get {
-                return ((string)(this["SendTCPIP"]));
-            }
-            set {
-                this["SendTCPIP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ReceiveTCP {
-            get {
-                return ((bool)(this["ReceiveTCP"]));
-            }
-            set {
-                this["ReceiveTCP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8888")]
-        public int ReceiveTCPPort {
-            get {
-                return ((int)(this["ReceiveTCPPort"]));
-            }
-            set {
-                this["ReceiveTCPPort"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string ReceiveTCPIP {
-            get {
-                return ((string)(this["ReceiveTCPIP"]));
-            }
-            set {
-                this["ReceiveTCPIP"] = value;
+                this["TwitchCommands"] = value;
             }
         }
     }
