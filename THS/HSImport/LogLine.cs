@@ -43,6 +43,14 @@ namespace THS.HSImport
                     }
                     else
                     {
+                        if (line.Contains("Begin Spectating"))
+                        {
+                            Process = "";
+                            Log = "";
+                            Line = line;
+                            LogFile = logFile;
+                            return;
+                        }
                         IO.LogDebug("ERROR IN LOGLINE: " + line + " // " + logFile, IO.DebugFile.LogReader);
                     }
                 }

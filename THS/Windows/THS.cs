@@ -213,7 +213,7 @@ namespace THS.Windows
                         }
                     }
                     Point[] screenCoords = GetWindowCoords("Hearthstone");
-                    if (screenCoords[1].X != 1599 || screenCoords[1].Y != 900)
+                    if (!checkBoxHs.Checked && (screenCoords[1].X != 1599 || screenCoords[1].Y != 900))
                     {
                         ButtonStart.Text = "Stop - \nWrong Resolution";
                     }

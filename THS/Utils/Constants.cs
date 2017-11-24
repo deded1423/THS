@@ -109,7 +109,8 @@ namespace THS.Utils
 
     public static class HsConstants
     {
-        public static string[] UserHeroNames = { };
+        public static string[] UserHeroNames = { "face", "hero" };
+        public static string[] EnemyHeroNames = { "enemyface", "enemyhero" };
 
         public static int TagToInt(GameTag tag, string value)
         {

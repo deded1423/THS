@@ -73,6 +73,11 @@ namespace THS.HSImport
                 Match match;
                 line = GetLine(PowerReader);
                 //TODO: Mirar a ver si se utilizan todas las REGEX para quitarlas
+                if (line.Log.Contains("Begin Spectating"))
+                {
+                    Game.GameCore.Spectating = true;
+                    continue;
+                }
                 if (PowerTaskList.BlockStartRegex.IsMatch(line.Log))
                 {
                     match = PowerTaskList.BlockStartRegex.Match(line.Log);
@@ -307,6 +312,10 @@ namespace THS.HSImport
             if (match.Groups["entity"].Value.Equals("GameEntity"))
             {
                 Game.AddTag(match.Groups["tag"].Value, match.Groups["value"].Value);
+                if (HsConstants.StringToTag(match.Groups["tag"].Value).Equals(GameTag.STATE) && match.Groups["value"].Value.Equals("COMPLETE"))
+                {
+                    THS.Windows.THS.GameCore.EndGame();
+                }
             }
             else if (match.Groups["entity"].Value.Equals(Game.User.PlayerName))
             {
