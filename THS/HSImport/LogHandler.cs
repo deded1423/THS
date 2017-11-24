@@ -257,6 +257,7 @@ namespace THS.HSImport
             Match match;
             Game.ClearGame();
             IO.LogDebug("Creating game", IO.DebugFile.Hs);
+            Game.GameCore.Running = true;
             logline = GetLine(PowerReader);
             logline = GetLine(PowerReader);
             while (PowerTaskList.TagRegex.IsMatch(PeekLine(PowerReader).Log))

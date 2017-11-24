@@ -544,16 +544,19 @@ namespace THS.HSApp
             }
             if (!noothernames)
             {
-                if (Enemy)
+                if (!Enemy)
                 {
                     foreach (var item in HsConstants.UserHeroNames)
                     {
-
+                        name.ToLower().Equals(item.ToLower());
                     }
                 }
                 else
                 {
-
+                    foreach (var item in HsConstants.EnemyHeroNames)
+                    {
+                        name.ToLower().Equals(item.ToLower());
+                    }
                 }
             }
             if (!exact)

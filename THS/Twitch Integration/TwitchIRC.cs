@@ -69,6 +69,7 @@ namespace THS.Twitch_Integration
                         if (ConfigFile.TwitchCommands != null && ConfigFile.TwitchCommands.ContainsKey(msg))
                         {
                             SendChatMessage(ConfigFile.TwitchCommands[msg]);
+                            continue;
                         }
                         if (msg.Equals("!actions") && THS.Windows.THS.GameCore != null && !actionsCD)
                         {
@@ -88,6 +89,7 @@ namespace THS.Twitch_Integration
                             SendChatMessage(send);
                             timerActionsCD.Enabled = true;
                             actionsCD = true;
+                            continue;
                         }
                         if (msg.Contains("tmi.twitch.tv"))
                         {
@@ -170,6 +172,18 @@ namespace THS.Twitch_Integration
                     Thread.Sleep(100);
                 }
                 Queue.TryDequeue(out cmd);
+                if (!GameCore.Running || !GameCore.Game.User.IsPlaying)
+                {
+                    if (cmd.Type.Equals(PlayType.Queue))
+                    {
+                        MouseMovement.Requeue(int.Parse(cmd.Other));
+                        while (!GameCore.Running)
+                        {
+                            Thread.Sleep(200);
+                        }
+                    }
+                    continue;
+                }
                 HSApp.HSCard name, target;
                 switch (cmd.Type)
                 {
@@ -213,34 +227,37 @@ namespace THS.Twitch_Integration
                         }
                         break;
                     case PlayType.HeroPower:
-                        if (cmd.Target == null)
+                        if (GameCore.Game.User.Mana >= 2 && !GameCore.Game.User.HeroPower.Exhausted)
                         {
-                            MouseMovement.HeroPower();
-                        }
-                        else
-                        {
-                            if (cmd.TargetUser.Equals('e') || cmd.TargetUser.Equals('\0'))
+                            if (cmd.Target == null)
                             {
-                                if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
-                                {
-                                    MouseMovement.HeroPower(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1, true);
-                                }
-                                else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
-                                {
-                                    MouseMovement.HeroPower(true);
-                                }
+                                MouseMovement.HeroPower();
                             }
-                            else if (cmd.TargetUser.Equals('m') || cmd.TargetUser.Equals('\0'))
+                            else
                             {
-                                if ((target = GameCore.Game.User.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
+                                if (cmd.TargetUser.Equals('e') || cmd.TargetUser.Equals('\0'))
                                 {
-                                    MouseMovement.HeroPower(GameCore.Game.GetUserMinions().Count, target.ZonePos - 1, false);
+                                    if ((target = GameCore.Game.Opponent.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
+                                    {
+                                        MouseMovement.HeroPower(GameCore.Game.GetOpponentMinions().Count, target.ZonePos - 1, true);
+                                    }
+                                    else if (GameCore.Game.Opponent.EqualsHeroName(cmd.Target))
+                                    {
+                                        MouseMovement.HeroPower(true);
+                                    }
                                 }
-                                else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
+                                else if (cmd.TargetUser.Equals('m') || cmd.TargetUser.Equals('\0'))
                                 {
-                                    MouseMovement.HeroPower(false);
-                                }
+                                    if ((target = GameCore.Game.User.GetPlayCard(cmd.Target, cmd.TargetPos)) != null)
+                                    {
+                                        MouseMovement.HeroPower(GameCore.Game.GetUserMinions().Count, target.ZonePos - 1, false);
+                                    }
+                                    else if (GameCore.Game.User.EqualsHeroName(cmd.Target))
+                                    {
+                                        MouseMovement.HeroPower(false);
+                                    }
 
+                                }
                             }
                         }
                         break;
@@ -299,7 +316,6 @@ namespace THS.Twitch_Integration
                         MouseMovement.ChooseOne(int.Parse(cmd.Other));
                         break;
                     case PlayType.Queue:
-                        MouseMovement.Requeue(int.Parse(cmd.Other));
                         break;
                     case PlayType.Emote:
                         if (cmd.Other.Equals("greetings"))
@@ -344,6 +360,5 @@ namespace THS.Twitch_Integration
                 }
             }
         }
-
     }
 }

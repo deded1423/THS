@@ -10,9 +10,10 @@ namespace THS.HSApp
     {
         public LogHandler _logHandler;
         public HSGame Game;
-        public THS.Windows.THS ths;
+        public Windows.THS ths;
 
         public bool Spectating = false;
+        public bool Running = false;
         public string Winner = "";
 
         public HSCore(IrcClient irc, THS.Windows.THS window)
@@ -29,6 +30,7 @@ namespace THS.HSApp
         public void EndGame()
         {
             Spectating = false;
+            Running = false;
             if (Game.User.Tags[GameTag.PLAYSTATE].Equals(PlayState.WON))
             {
                 Winner = Game.User.PlayerName;
@@ -41,7 +43,7 @@ namespace THS.HSApp
             {
                 Winner = "";
             }
-            IO.LogDebug("Finished Game Winner: " + Winner, IO.DebugFile.Hs
+            IO.LogDebug("Finished Game Winner: " + Winner, IO.DebugFile.Hs);
         }
     }
 }
